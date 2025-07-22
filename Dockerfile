@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     libpq-dev \
+    npm \
+    nodejs \
     && docker-php-ext-install pdo pdo_pgsql
 
 # Install Composer globally
