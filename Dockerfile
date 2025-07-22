@@ -18,5 +18,8 @@ COPY . /app
 
 RUN composer install --no-dev --optimize-autoloader
 
+# Install Node dependencies and build Vite assets
+RUN npm install && npm run build
+
 # Run Laravel migrations & serve app
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
