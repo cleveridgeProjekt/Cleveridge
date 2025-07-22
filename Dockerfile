@@ -24,4 +24,6 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
 # Run Laravel migrations & serve app
+CMD php artisan config:clear
+CMD php artisan config:cache
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
