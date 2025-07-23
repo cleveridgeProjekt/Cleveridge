@@ -35,8 +35,13 @@ class SensorController extends Controller
     public function latest()
     {
         return response()->json([
-            'temperature' => self::$latest['temperature'],
-            'humidity' => self::$latest['humidity'],
+            'temperature' => 24.5,
+            'humidity' => 60,
+            'timestamp' => now(),
         ]);
     }
+    public function latestStatic()
+    {
+        return response()->json(self::$latest);
+}
 }
