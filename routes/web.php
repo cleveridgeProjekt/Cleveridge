@@ -17,3 +17,6 @@ Route::middleware('auth')->group(function() {
         return auth()->user();
     });
 });
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');
