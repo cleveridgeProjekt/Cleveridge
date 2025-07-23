@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Einkaufsliste</title>
+  <style>
+    .produkt-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  background-color: #f8f8f8; /* optionaler heller Hintergrund */
+  padding: 5px;
+}
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      max-width: 800px;
+      margin: 0 auto 30px auto;
+    }
+
+    .produkt-img {
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .produkt-img:hover {
+      border-color: #6ac4f1;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 8px 12px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #6ac4f1;
+      color: white;
+      cursor: pointer;
+    }
+
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 80%;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🛒 Einkaufsliste</h1>
+
+<!-- Produkt-Bilder (25 Stück) -->
+<div class="grid">
+  <!-- Beispielbilder, du kannst eigene verwenden -->
+  <img class="produkt-img" src="img/butter.png" alt="Butter" onclick="produktHinzufuegen('Butter')">
+  <img class="produkt-img" src="img/cheese.png" alt="Käse" onclick="produktHinzufuegen('Käse')">
+  <img class="produkt-img" src="img/chicken.png" alt="Hänchen" onclick="produktHinzufuegen('Hänchen')">
+  <img class="produkt-img" src="img/cucumber.png" alt="Gurke" onclick="produktHinzufuegen('Gurke')">
+  <img class="produkt-img" src="img/egg.png" alt="Ei" onclick="produktHinzufuegen('Ei')">
+
+  <img class="produkt-img" src="img/eggplant.jpg" alt="Aubergine" onclick="produktHinzufuegen('Aubergine')">
+  <img class="produkt-img" src="img/fish.png" alt="Fisch" onclick="produktHinzufuegen('Fisch')">
+  <img class="produkt-img" src="img/meat.png" alt="Rindfleisch" onclick="produktHinzufuegen('Rindfleisch')">
+  <img class="produkt-img" src="img/lettuce.png" alt="Salat" onclick="produktHinzufuegen('Salat')">
+  <img class="produkt-img" src="img/milk.png" alt="Milch" onclick="produktHinzufuegen('Milch')">
+
+  <img class="produkt-img" src="img/paprika.jpg" alt="Paprika" onclick="produktHinzufuegen('Paprika')">
+  <img class="produkt-img" src="img/pizza.jpg" alt="Pizza" onclick="produktHinzufuegen('Pizza')">
+  <img class="produkt-img" src="img/mushroom.jpg" alt="Pilze" onclick="produktHinzufuegen('Pilze')">
+  <img class="produkt-img" src="img/sausage.png" alt="Wurst" onclick="produktHinzufuegen('Wurst')">
+  <img class="produkt-img" src="img/tomato.jpg" alt="Tomate" onclick="produktHinzufuegen('Tomate')">
+
+  </div>
+
+<!-- Manuelle Eingabe -->
+<div style="margin-bottom: 20px;">
+<input type="text" id="manuellInput" placeholder="Produktname eingeben">
+<button onclick="manuellHinzufuegen()">Hinzufügen</button>
+</div>
+
+<!-- Tabelle mit Einkaufsliste -->
+<table>
+  <thead>
+    <tr>
+      <th>Produkt</th>
+      <th>Menge</th>
+      <th>Löschen</th>
+    </tr>
+  </thead>
+  <tbody id="einkaufslisteBody">
+    <!-- Dynamisch generiert -->
+  </tbody>
+</table>
+<button onclick="listeSpeichernUndZuruecksetzen()" style="margin-top: 20px; background-color: #2ecc71;">
+  💾 Liste speichern & neue starten
+</button>
+
+
+<script>
+  document.getElementById("manuellInput").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    manuellHinzufuegen();
+  }
+});
+
+  function produktHinzufuegen(name) {
+    addToList(name);
+  }
+
+  function manuellHinzufuegen() {
+    const input = document.getElementById("manuellInput");
+    const name = input.value.trim();
+    if (name !== "") {
+      addToList(name);
+      input.value = "";
+    }
+  }
+
+  function addToList(name) {
+  const tbody = document.getElementById("einkaufslisteBody");
+
+  // Prüfen, ob Produkt bereits existiert
+  const existingRows = tbody.querySelectorAll("tr");
+  for (const row of existingRows) {
+    const produktName = row.cells[0].textContent;
+    if (produktName === name) {
+      const mengeInput = row.cells[1].querySelector("input");
+      mengeInput.value = parseInt(mengeInput.value) + 1;
+      return;
+    }
+  }
+
+  // Neue Zeile erstellen
+  const tr = document.createElement("tr");
+
+  // Produktname
+  const tdName = document.createElement("td");
+  tdName.textContent = name;
+
+  // Menge + Einheit
+  const tdMenge = document.createElement("td");
+  const mengeInput = document.createElement("input");
+  mengeInput.type = "number";
+  mengeInput.value = 1;
+  mengeInput.min = 1;
+  mengeInput.style.marginRight = "5px";
+
+  const einheitSelect = document.createElement("select");
+  ["Stück", "kg", "ml"].forEach(einheit => {
+    const option = document.createElement("option");
+    option.value = einheit;
+    option.textContent = einheit;
+    einheitSelect.appendChild(option);
+  });
+
+  tdMenge.appendChild(mengeInput);
+  tdMenge.appendChild(einheitSelect);
+
+  // Löschen-Button
+  const tdAktion = document.createElement("td");
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "🗑️";
+  deleteBtn.onclick = () => tr.remove();
+  tdAktion.appendChild(deleteBtn);
+
+  // Zeile einfügen
+  tr.appendChild(tdName);
+  tr.appendChild(tdMenge);
+  tr.appendChild(tdAktion);
+  tbody.appendChild(tr);
+}
+function listeSpeichernUndZuruecksetzen() {
+  const rows = document.querySelectorAll("#einkaufslisteBody tr");
+  const liste = [];
+
+  rows.forEach(row => {
+    const produkt = row.cells[0].textContent;
+    const menge = row.cells[1].querySelector("input").value;
+    const einheit = row.cells[1].querySelector("select").value;
+
+    liste.push({ produkt, menge, einheit });
+  });
+
+  if (liste.length === 0) {
+    alert("Die Liste ist leer.");
+    return;
+  }
+
+  // Daten als Text vorbereiten (alternativ JSON.stringify für JSON)
+  let text = "🛒 Einkaufsliste:\n\n";
+  liste.forEach(item => {
+    text += `- ${item.produkt}: ${item.menge} ${item.einheit}\n`;
+  });
+
+  // Datei generieren und herunterladen
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "einkaufsliste.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+
+  // Tabelle zurücksetzen
+  document.getElementById("einkaufslisteBody").innerHTML = "";
+}
+
+</script>
+
+</body>
+</html>
