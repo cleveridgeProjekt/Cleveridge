@@ -21,7 +21,10 @@ const toggleSubmenu = () => {
         <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
         <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
         <div class="submenu-toggle" @click="toggleSubmenu">
-            <span class="submenu-link"><i class="fas fa-layer-group"></i> Finanzen <i :class="showSubmenu ? 'fas fa-angle-up' : 'fal fa-angle-down'"></i></span>
+            <span class="submenu-link">
+                <i class="fas fa-layer-group"></i>Finanzen
+                <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
+            </span>
         </div>
         <div v-if="showSubmenu" class="submenu">
             <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> Cleveridge Status</RouterLink>
@@ -63,7 +66,7 @@ const toggleSubmenu = () => {
 }
 .nav-item i {
     justify-self: center;
-    font-size: 20px;
+    font-size: 17px;
 }
 .nav-item:hover,
 .nav-item.router-link-active {
@@ -94,7 +97,7 @@ const toggleSubmenu = () => {
     align-items: center;
     color: white;
     font-weight: bold;
-    font-size: 19px;
+    font-size: 17px;
     text-decoration: none;
 }
 .submenu {
@@ -103,18 +106,19 @@ const toggleSubmenu = () => {
     display: grid;
     grid-auto-rows: max-content;
     border-left: 4px solid #005fa3;
+    row-gap: 5px;
 }
 .submenu-item {
     display: grid;
     grid-template-columns: 40px 1fr;
     align-items: center;
-    padding: 20px 40px 20px 56px;
+    padding: 15px 30px 15px 50px;
     font-size: 16px;
     transition: background .18s;
 }
 .submenu-item i {
     justify-self: center;
-    font-size: 18px;
+    font-size: 17px;
 }
 .submenu-item:hover,
 .submenu-item.router-link-active {
