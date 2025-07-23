@@ -32,16 +32,21 @@ class SensorController extends Controller
         return response()->json(['message' => 'Sensor data stored'], 200);
     }
 
-    public function latest()
-    {
-        return response()->json([
-            'temperature' => 24.5,
-            'humidity' => 60,
-            'timestamp' => now(),
-        ]);
+    use App\Models\Sensor;
+
+public function latest()
+{
+    $latest = Sensor::latest()->first();
+
+    if (!$latest) {
+        return response()->json(['message' => 'No sensor data found'], 404);
     }
-    public function latestStatic()
-    {
-        return response()->json(self::$latest);
+
+    return response()->json([
+        'temperature' => $latest->temperature,
+        'humidity' => $latest->humidity,
+        'timestamp' => $latest->created_at,
+    ]);
 }
+
 }
