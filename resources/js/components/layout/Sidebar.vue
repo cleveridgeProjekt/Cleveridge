@@ -33,89 +33,93 @@ const toggleSubmenu = () => {
 
 <style scoped>
 #sidebar {
-    padding-top: 40px;
-    width: 330px;
-    height: 100vh;
-    background-color: rgb(0, 103, 184);
+    position: sticky;
+    top: 62px;
+    padding-top: 28px;
+    width: 300px;
+    height: calc(100vh - 62px);
+    background-color: #0067b8;
     color: white;
     display: grid;
     grid-auto-rows: max-content;
-    gap: 10px;
+    /*gap: 10px;*/
+    box-shadow: 1px 0 0 #e3eefa;
+    z-index: 10;
+    overflow-y: auto;
 }
 
 .nav-item {
     display: grid;
-    grid-template-columns: 35px auto;
-    column-gap: 12px;
+    grid-template-columns: 40px 1fr;
     align-items: center;
-    padding: 15px 40px;
+    padding: 22px 32px 22px 38px;
     font-weight: bold;
+    font-size: 17px;
     color: white;
     text-decoration: none;
-
-    i {
-        justify-self: center;
-    }
-
-    &:hover {
-        background-color: rgb(0, 85, 152);
-    }
+    box-sizing: border-box;
+    border-radius: 0;
+    transition: background .18s;
+}
+.nav-item i {
+    justify-self: center;
+    font-size: 20px;
+}
+.nav-item:hover,
+.nav-item.router-link-active {
+    background-color: #005fa3;
+    color: #fff;
 }
 
 .submenu-toggle {
     display: grid;
-    grid-template-columns: auto 35px;
+    grid-template-columns: 1fr 40px;
     align-items: center;
-    padding: 15px 40px;
-    column-gap: 12px;
+    padding: 22px 32px 22px 38px;
+    font-size: 19px;
     color: white;
     cursor: pointer;
-
-    .submenu-link {
-        display: grid;
-        grid-template-columns: 35px 150px 35px; /* icon, text, arrow */
-        align-items: center;
-        column-gap: 12px;
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-            background-color: rgb(0, 85, 152);
-        }
-    }
-
-    .icon {
-        display: flex;
-        justify-content: center;
-        cursor: pointer;
-
-        i {
-            font-size: 14px;
-        }
-    }
+    box-sizing: border-box;
+    border-radius: 0;
+    background: none;
+    transition: background .18s;
+}
+.submenu-toggle:hover {
+    background-color: #005fa3;
 }
 
+.submenu-link {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 19px;
+    text-decoration: none;
+}
 .submenu {
-    background-color: rgb(0, 103, 184);
+    background-color: #0067b8;
+    width: 100%;
     display: grid;
     grid-auto-rows: max-content;
-
-    .submenu-item {
-        display: grid;
-        grid-template-columns: 35px auto;
-        column-gap: 12px;
-        align-items: center;
-        padding: 10px 75px;
-        color: white;
-        text-decoration: none;
-
-        i {
-            justify-self: center;
-        }
-
-        &:hover {
-            background-color: rgb(0, 85, 152);
-        }
-    }
+    border-left: 4px solid #005fa3;
 }
+.submenu-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    padding: 20px 40px 20px 56px;
+    font-size: 16px;
+    transition: background .18s;
+}
+.submenu-item i {
+    justify-self: center;
+    font-size: 18px;
+}
+.submenu-item:hover,
+.submenu-item.router-link-active {
+    background-color: #005fa3;
+    color: #fff;
+}
+
 </style>
