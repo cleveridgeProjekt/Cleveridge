@@ -8,8 +8,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // You can fetch products or shopping list from database here
-        // For now, use demo data:
         $products = [
             ['name' => 'Pizza', 'img' => 'pizza.jpg'],
             ['name' => 'Tomate', 'img' => 'tomate.JPG'],
