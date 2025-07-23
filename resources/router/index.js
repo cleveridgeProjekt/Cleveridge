@@ -26,7 +26,6 @@ router.beforeEach(async (to, from, next) => {
     const publicPages = ['/login', '/register']
     const authRequired = !publicPages.includes(to.path)
 
-    // If we don't have user loaded, try fetch
     if (user.value === null && authRequired) {
         await fetchUser()
     }
@@ -35,7 +34,6 @@ router.beforeEach(async (to, from, next) => {
         return next('/login')
     }
     if (publicPages.includes(to.path) && user.value) {
-        // Prevent visiting login/register if already logged in
         return next('/')
     }
     next()

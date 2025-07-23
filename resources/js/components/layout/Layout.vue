@@ -4,14 +4,14 @@
             <span class="logo-box">Cleveridge</span>
             <div class="user-box" @mouseenter="hovered = true" @mouseleave="hovered = false" @click="toggleDropdown" :class="{ hovered }">
                 <span class="user-name">{{ fullName }}</span>
-                <i class="fal fa-angle-down"></i>
+                <i class="fas fa-angle-down"></i>
                 <div v-if="dropdown" class="dropdown-menu">
                     <div class="dropdown-info">
                         <div><strong>{{ user?.name }} {{ user?.surname }}</strong></div>
                         <div>{{ user?.email }}</div>
                     </div>
                     <a @click="logout" class="dropdown-item">
-                        <i class="fal fa-sign-out"></i> Logout
+                        <i class="fas fa-sign-out"></i> Logout
                     </a>
                 </div>
             </div>
@@ -50,7 +50,7 @@ const fullName = computed(() => user.value ? `${user.value.name} ${user.value.su
     top: 0;
     z-index: 20;
     width: 100%;
-    height: 62px;
+    height: 72px;
     display: flex;
     align-items: stretch;
     background: #94cfff;;
@@ -60,7 +60,7 @@ const fullName = computed(() => user.value ? `${user.value.name} ${user.value.su
     display: flex;
     align-items: center;
     height: 100%;
-    color: #0077d9;
+    color: #0c5288;
     font-weight: bold;
     font-size: 22px;
     padding: 0 34px 0 36px;
