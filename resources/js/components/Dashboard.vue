@@ -18,11 +18,11 @@
 
 <script setup>
 const tiles = [
-    { label: "What's in your fridge", path: "/fridge", img: "/img/fridge.jpg" },
-    { label: "Produkte", path: "/products", img: "/img/produkte.jpg" },
-    { label: "Einkaufsliste", path: "/shopping-list", img: "/img/einkauf.jpg" },
-    { label: "Cleveridge Status", path: "/status", img: "/img/status.jpg" },
-    { label: "Ablaufwarnungen", path: "/expiry", img: "/img/warning.jpg" },
-    { label: "Barcode Scannen!", path: "/barcode", img: "/img/barcode.jpg" },
+    { label: "What's in your fridge", path: "/fridge", img: "/media/fridge.jpg" },
+    { label: "Produkte", path: "/products", img: "/media/produkte.jpg" },
+    { label: "Einkaufsliste", path: "/shopping-list", img: "/media/einkauf.jpg" },
+    { label: "Cleveridge Status", path: "/status", img: "/media/status.jpg" },
+    { label: "Ablaufwarnungen", path: "/expiry", img: "/media/warning.jpg" },
+    { label: "Barcode Scannen!", path: "/barcode", img: "/media/barcode.jpg" },
 ];
 </script>

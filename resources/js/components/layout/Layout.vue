@@ -1,79 +1,103 @@
-<script setup>
-import Sidebar from './Sidebar.vue'
-</script>
-
 <template>
-    <div class="layout-wrapper">
-        <!-- Header -->
-        <header class="layout-header">
-            <div class="header-grid">
-                <span class="header-title">Cleveridge</span>
-                <a href="/logout" class="logout-link"><i class="fal fa-user"></i> Abmelden</a>
-            </div>
-        </header>
-        <!-- Sidebar + Page Content -->
-        <div class="layout-body">
-            <Sidebar />
-            <main class="layout-content">
+    <div style="display: flex; min-height: 100vh;">
+        <Sidebar />
+        <div style="flex:1; display: flex; flex-direction: column;">
+            <header class="layout-header">
+                <div class="header-grid">
+                    <span class="header-title">Cleveridge</span>
+                    <div class="user-dropdown" @click="toggleDropdown">
+                        <i class="fal fa-user"></i>
+                        <span>{{ fullName }}</span>
+                        <i class="fal fa-angle-down"></i>
+                        <div v-if="dropdown" class="dropdown-menu">
+                            <div class="dropdown-info">
+                                <div><strong>{{ user?.name }} {{ user?.surname }}</strong></div>
+                                <div>{{ user?.email }}</div>
+                            </div>
+                            <a @click="logout" class="dropdown-item">
+                                <i class="fal fa-sign-out"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main style="flex:1; padding: 40px 50px;">
                 <slot />
             </main>
         </div>
     </div>
 </template>
 
-<style scoped>
-.layout-wrapper {
-    display: grid;
-    grid-template-rows: 60px 1fr;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background: #f9fafb;
+<script setup>
+import Sidebar from './Sidebar.vue'
+import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { user, fetchUser } from '../../composables/useUser'
+
+const router = useRouter()
+const dropdown = ref(false)
+function toggleDropdown() { dropdown.value = !dropdown.value }
+function logout() {
+    axios.post('/logout').then(() => router.push('/login'))
 }
+const fullName = computed(() => user.value ? `${user.value.name} ${user.value.surname}` : 'Benutzer')
+
+onMounted(() => {
+    fetchUser()
+})
+</script>
+<style scoped>
 .layout-header {
-    background-color: #005598;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-    margin: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background: #f8fbff;
+    border-bottom: 1px solid #e3eefa;
+    padding: 0 30px 0 0;
 }
 .header-grid {
-    display: grid;
-    grid-template-columns: 1fr auto;
+    display: flex;
     align-items: center;
-    height: 60px;
-    padding: 0 32px;
+    width: 100%;
 }
 .header-title {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #0067b8;
+    margin-right: 18px;
 }
-.logout-link {
-    color: white;
-    font-weight: 500;
-    display: inline-grid;
-    grid-auto-flow: column;
+.user-dropdown {
+    margin-left: auto;
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
     align-items: center;
-    column-gap: 10px;
-    padding: 18px 16px;
-    transition: background-color 0.2s ease;
-    text-decoration: none;
+    gap: 9px;
 }
-.logout-link:hover {
-    background-color: #0067b8;
+.dropdown-menu {
+    position: absolute;
+    top: 115%;
+    right: 0;
+    min-width: 210px;
+    background: #fff;
+    color: #222;
+    border-radius: 12px;
+    box-shadow: 0 10px 32px 0 rgba(0,0,0,.16);
+    padding: 12px 0;
+    z-index: 30;
 }
-.layout-body {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    height: 100%;
+.dropdown-info {
+    padding: 8px 18px 8px 22px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 8px;
+    color: #1163a7;
 }
-main.layout-content {
-    padding: 32px 32px 0 32px;
-    background: #f9fafb;
-    min-height: 0;
-    height: 100%;
-    overflow-y: auto;
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+.dropdown-item {
+    display: flex; gap: 12px; align-items: center;
+    color: #333;
+    padding: 12px 20px; text-decoration: none;
+    font-size: 15px; font-weight: 500;
+    cursor: pointer;
 }
+.dropdown-item:hover { background: #f0f7fa; color: #0077d9; }
 </style>
