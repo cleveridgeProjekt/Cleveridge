@@ -3,8 +3,8 @@
         <header class="main-header">
             <span class="logo-box">Cleveridge</span>
             <div class="user-box" @mouseenter="hovered = true" @mouseleave="hovered = false" @click="toggleDropdown" :class="{ hovered }">
+                <i class="fas fa-user mr-2"></i>
                 <span class="user-name">{{ fullName }}</span>
-                <i class="fas fa-angle-down"></i>
                 <div v-if="dropdown" class="dropdown-menu">
                     <div class="dropdown-info">
                         <div><strong>{{ user?.name }} {{ user?.surname }}</strong></div>
@@ -62,7 +62,7 @@ const fullName = computed(() => user.value ? `${user.value.name} ${user.value.su
     height: 100%;
     color: #0c5288;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
     padding: 0 34px 0 36px;
     margin-right: 30px;
     box-sizing: border-box;
@@ -90,7 +90,7 @@ const fullName = computed(() => user.value ? `${user.value.name} ${user.value.su
     transition: background 0.2s;
 }
 .user-name {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 .fal.fa-angle-down {
