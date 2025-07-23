@@ -2,29 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SensorController extends Controller
 {
+    // Simple static storage (resets on each app restart)
+    private static $latest = [
+        'temperature' => null,
+        'humidity' => null,
+    ];
+
     public function store(Request $request)
-{
-    Log::info('API /api/sensor called'); // This logs when the endpoint is hit
-    Log::info('Sensor request payload:', $request->all()); // Logs the incoming data
+    {
+        $data = $request->only(['temperature', 'humidity']);
+        
+        // Optional: validate the incoming data
+        $request->validate([
+            'temperature' => 'required|numeric',
+            'humidity' => 'required|numeric',
+        ]);
 
-    // Example data handling
-    $temperature = $request->input('temperature');
-    $humidity = $request->input('humidity');
+        // Log for debugging
+        Log::info('Sensor data received:', $data);
 
-    // Optional error check
-    if (!$temperature || !$humidity) {
-        Log::warning('Missing sensor data!', ['temperature' => $temperature, 'humidity' => $humidity]);
-        return response()->json(['error' => 'Invalid data'], 400);
+        // Store data temporarily
+        self::$latest = $data;
+
+        return response()->json(['message' => 'Sensor data stored'], 200);
     }
 
-    // Proceed with saving data or whatever is needed
-    Log::info('Sensor data saved successfully');
-
-    return response()->json(['status' => 'success']);
-}
+    public function latest()
+    {
+        return response()->json([
+            'temperature' => self::$latest['temperature'],
+            'humidity' => self::$latest['humidity'],
+        ]);
+    }
 }
