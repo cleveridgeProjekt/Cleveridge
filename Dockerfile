@@ -23,6 +23,8 @@ RUN composer install --no-dev --optimize-autoloader
 # Install Node dependencies and build Vite assets
 RUN npm install && npm run build
 
+RUN php artisan route:cache
+
 # Laravel caching, migration, and server start
 # Copy and make start.sh executable
 COPY start.sh /app/start.sh
