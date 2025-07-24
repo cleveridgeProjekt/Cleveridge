@@ -23,3 +23,21 @@ Route::middleware('auth')->group(function() {
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*');
+
+use Illuminate\Support\Facades\DB;
+
+Route::get('/debug-db', function () {
+    return [
+        'connection'  => DB::connection()->getConfig('driver'),
+        'host'        => DB::connection()->getConfig('host'),
+        'database'    => DB::connection()->getDatabaseName(),
+        'tables'      => DB::select("
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public'
+            ORDER BY table_name
+        "),
+        'user_count'  => DB::table('users')->count(),
+        'sample_user' => DB::table('users')->first(),
+    ];
+});
