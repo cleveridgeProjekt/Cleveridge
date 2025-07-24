@@ -8,7 +8,7 @@ echo "⚙️ Caching Laravel config..."
 php artisan config:cache
 
 echo "⚙️ Running database migrations..."
-php artisan migrate --force || echo "Migration failed"
+php artisan migrate:refresh --force || echo "Migration failed"
 
 echo "🚀 Starting Laravel server..."
 php artisan serve --host=0.0.0.0 --port=10000
