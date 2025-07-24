@@ -1,11 +1,10 @@
-<script setup>
-
-</script>
-
 <template>
-    test 4
+    <div>
+        <PageHeader title="Produkte" icon="fal fa-snowflake">
+       </PageHeader>
+    </div>
 </template>
 
-<style scoped>
-
-</style>
+<script setup>
+import PageHeader from "./layout/PageHeader.vue";
+</script>

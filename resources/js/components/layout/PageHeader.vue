@@ -1,10 +1,3 @@
-<script setup>
-defineProps({
-    title: { type: String, required: true },
-    icon: { type: String, default: '' },
-})
-</script>
-
 <template>
     <div class="page-header">
         <div class="header-row">
@@ -13,12 +6,18 @@ defineProps({
         <div class="header-subline">
             <span class="subline-box">
                 <slot />
-                <!-- Use 'fas' or 'far' here -->
                 <i class="fas fa-info-circle info-icon"></i>
             </span>
         </div>
     </div>
 </template>
+
+<script setup>
+defineProps({
+    title: { type: String, required: true },
+    icon: { type: String, default: '' },
+})
+</script>
 
 <style scoped>
 .page-header {
@@ -52,22 +51,28 @@ defineProps({
 }
 
 .subline-box {
-    display: inline-flex;
-    align-items: center;
+    display: block;
+    width: 100%;
     background: linear-gradient(90deg, #e8f1fc 75%, #e1effd 100%);
     color: #1761a0;
     font-weight: 500;
-    padding: 6px 18px 6px 10px;
+    padding: 10px 30px 8px 18px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(80,130,180,0.05);
     font-size: 1rem;
-
+    position: relative;
+    margin-right: 16px;
 }
 
 .info-icon {
-    margin-left: 10px;
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0;
     font-size: 17px;
     color: #222;
     opacity: 0.68;
 }
+
 </style>

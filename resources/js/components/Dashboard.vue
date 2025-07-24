@@ -1,27 +1,12 @@
-
 <template>
     <div>
-        <PageHeader
-            title="Dashboard"
-            icon="fal fa-th-large"
-        >
+        <PageHeader title="Dashboard" icon="fal fa-th-large">
             Übersicht über deine wichtigsten Cleveridge-Funktionen.
             Klicke auf eine Kachel, um direkt zum gewünschten Bereich zu gelangen.
         </PageHeader>
-
-
         <div class="dashboard-tiles grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-6">
-            <router-link
-                v-for="tile in tiles"
-                :key="tile.label"
-                :to="tile.path"
-                class="dashboard-tile rounded-xl bg-white/90 p-6 shadow-lg hover:shadow-xl transition flex flex-col items-center justify-center hover:bg-blue-50 group"
-            >
-                <img
-                    :src="tile.img"
-                    alt=""
-                    class="w-24 h-24 mb-4 rounded-full object-cover border-2 border-blue-200 group-hover:border-blue-400 shadow"
-                />
+            <router-link v-for="tile in tiles" :key="tile.label" :to="tile.path" class="dashboard-tile rounded-xl bg-white/90 p-6 shadow-lg hover:shadow-xl transition flex flex-col items-center justify-center hover:bg-blue-50 group">
+                <img :src="tile.img" alt="" class="w-24 h-24 mb-4 rounded-full object-cover border-2 border-blue-200 group-hover:border-blue-400 shadow"/>
                 <div class="text-lg font-semibold mb-2 text-blue-900 tracking-tight">{{ tile.label }}</div>
                 <span class="text-blue-700 text-sm group-hover:underline">Mehr</span>
             </router-link>
@@ -31,7 +16,6 @@
 
 <script>
 import PageHeader from './layout/PageHeader.vue';
-
 export default {
     name: 'Dashboard',
     components: { PageHeader },
