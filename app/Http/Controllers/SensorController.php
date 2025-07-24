@@ -29,6 +29,11 @@ class SensorController extends Controller
 
         // Store data temporarily
         self::$latest = $data;
+        // Persist to the database
+        Sensor::create([
+            'temperature' => $data['temperature'],
+            'humidity' => $data['humidity'],
+        ]);
 
         return response()->json(['message' => 'Sensor data stored'], 200);
     }
