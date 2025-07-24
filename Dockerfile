@@ -24,7 +24,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
 # Laravel caching, migration, and server start
-CMD php artisan config:clear && \
-    php artisan config:cache && \
-    php artisan migrate --force || echo "Migration failed" && \
-    php artisan serve --host=0.0.0.0 --port=10000
+# Copy and make start.sh executable
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Use start.sh as the container entrypoint
+CMD ["sh", "/app/start.sh"]
