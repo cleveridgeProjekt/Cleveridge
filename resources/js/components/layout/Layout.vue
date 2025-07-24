@@ -74,7 +74,7 @@ const fullName = computed(() => user.value ? `${user.value.name} ${user.value.su
     display: flex;
     align-items: center;
     height: 100%;
-    background: #0077d9;
+    background: #0c5288;
     color: #fff;
     padding: 0 40px;
     font-weight: bold;
