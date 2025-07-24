@@ -56,7 +56,7 @@ defineProps({
     background: linear-gradient(90deg, #e8f1fc 75%, #e1effd 100%);
     color: #1761a0;
     font-weight: 500;
-    padding: 10px 30px 8px 18px;
+    padding: 10px 50px 8px 18px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(80,130,180,0.05);
     font-size: 1rem;
