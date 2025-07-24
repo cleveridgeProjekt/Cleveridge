@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Sensor;
 
 class SensorController extends Controller
 {
@@ -31,8 +32,6 @@ class SensorController extends Controller
 
         return response()->json(['message' => 'Sensor data stored'], 200);
     }
-
-    use App\Models\Sensor;
 
 public function latest()
 {
