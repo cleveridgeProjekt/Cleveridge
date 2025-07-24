@@ -23,8 +23,8 @@ RUN composer install --no-dev --optimize-autoloader
 # Install Node dependencies and build Vite assets
 RUN npm install && npm run build
 
-# Run Laravel migrations & serve app
-RUN php artisan route:cache
-CMD php artisan config:clear
-CMD php artisan config:cache
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
+# Laravel caching, migration, and server start
+CMD php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan migrate --force || echo "Migration failed" && \
+    php artisan serve --host=0.0.0.0 --port=10000
