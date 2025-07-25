@@ -1,46 +1,40 @@
-# Use official PHP CLI image
 FROM php:8.2-cli
 
-# Install system dependencies and PHP extensions
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
     zip \
-    libpq-dev \
     libzip-dev \
     libpng-dev \
-    libonig-dev \
-    libxml2-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libmysqlclient-dev \
+    libonig-dev \
+    libxml2-dev \
     default-mysql-client \
     npm \
     nodejs \
-    && docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-configure zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql zip gd
 
 # Install Composer globally
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /app
-
-# Copy application source
 COPY . /app
 
-# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Node dependencies and build assets
+# Build frontend assets
 RUN npm install && npm run build
 
-# Laravel optimizations
-RUN php artisan route:cache
+# Cache routes/config
+RUN php artisan config:cache && php artisan route:cache
 
-# Copy and make start.sh executable
+# Copy startup script
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-# Set entrypoint
 CMD ["sh", "/app/start.sh"]
