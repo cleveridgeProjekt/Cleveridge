@@ -18,8 +18,6 @@ const toggleSubmenu = () => {
     <div id="sidebar" class="sidebar">
         <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> Dashboard</RouterLink>
         <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> What's in your fridge</RouterLink>
-        <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
-        <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
         <div class="submenu-toggle" @click="toggleSubmenu">
             <span class="submenu-link">
                 <i class="fas fa-layer-group"></i>Finanzen
@@ -31,6 +29,8 @@ const toggleSubmenu = () => {
             <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> Ablaufwarnungen</RouterLink>
             <RouterLink class="submenu-item" to="/barcode"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
         </div>
+        <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
+        <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
     </div>
 </template>
 
@@ -78,7 +78,7 @@ const toggleSubmenu = () => {
     display: grid;
     grid-template-columns: 1fr 40px;
     align-items: center;
-    padding: 22px 32px 22px 38px;
+    padding: 22px 32px 22px 49px;
     font-size: 19px;
     color: white;
     cursor: pointer;
@@ -112,7 +112,7 @@ const toggleSubmenu = () => {
     display: grid;
     grid-template-columns: 40px 1fr;
     align-items: center;
-    padding: 15px 30px 15px 50px;
+    padding: 15px 30px 15px 75px;
     font-size: 16px;
     transition: background .18s;
 }
