@@ -69,7 +69,13 @@
 <h3>➕ Manuell hinzufügen</h3>
 <input type="text" id="produktInput" placeholder="Produktname">
 <button onclick="hinzufuegen()">Hinzufügen</button>
-
+<script>
+  document.getElementById("produktInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      hinzufuegen();
+    }
+  });
+</script>
 <h3>📋 Deine Stammprodukte:</h3>
 <ul id="liste">
   <!-- dynamisch -->
@@ -77,17 +83,17 @@
 
 <script>
   const alleProdukte = [
-    { name: "Butter", bild: "img/butter.png" },
+    { name: "banana", bild: "img/banana.png" },
     { name: "Käse", bild: "img/cheese.png" },
     { name: "Hänchen", bild: "img/chicken.png" },
     { name: "Gurke", bild: "img/cucumber.png" },
     { name: "Ei", bild: "img/egg.png" },
     { name: "Aubergine", bild: "img/eggplant.jpg" },
-    { name: "Fisch", bild: "img/fish.png" },
+    { name: "Karotte", bild: "img/karotte.jpg" },
     { name: "Rindfleisch", bild: "img/meat.png" },
     { name: "Salat", bild: "img/lettuce.png" },
     { name: "Milch", bild: "img/milk.png" },
-    { name: "Paprika", bild: "img/paprika.jpg" },
+    { name: "Apfel", bild: "img/apfel.jpg" },
     { name: "Pizza", bild: "img/pizza.jpg" },
     { name: "Pilze", bild: "img/mushroom.jpg" },
     { name: "Wurst", bild: "img/sausage.png" },

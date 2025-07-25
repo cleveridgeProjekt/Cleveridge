@@ -88,26 +88,30 @@
 <!-- Produkt-Bilder (25 Stück) -->
 <div class="grid">
   <!-- Beispielbilder, du kannst eigene verwenden -->
-  <img class="produkt-img" src="img/butter.png" alt="Butter" onclick="produktHinzufuegen('Butter')">
+  <img class="produkt-img" src="img/banana.png" alt="Banana" onclick="produktHinzufuegen('Banana')">
   <img class="produkt-img" src="img/cheese.png" alt="Käse" onclick="produktHinzufuegen('Käse')">
   <img class="produkt-img" src="img/chicken.png" alt="Hänchen" onclick="produktHinzufuegen('Hänchen')">
   <img class="produkt-img" src="img/cucumber.png" alt="Gurke" onclick="produktHinzufuegen('Gurke')">
   <img class="produkt-img" src="img/egg.png" alt="Ei" onclick="produktHinzufuegen('Ei')">
 
   <img class="produkt-img" src="img/eggplant.jpg" alt="Aubergine" onclick="produktHinzufuegen('Aubergine')">
-  <img class="produkt-img" src="img/fish.png" alt="Fisch" onclick="produktHinzufuegen('Fisch')">
+  <img class="produkt-img" src="img/Karotte.jpg" alt="Fisch" onclick="produktHinzufuegen('Karotte')">
   <img class="produkt-img" src="img/meat.png" alt="Rindfleisch" onclick="produktHinzufuegen('Rindfleisch')">
   <img class="produkt-img" src="img/lettuce.png" alt="Salat" onclick="produktHinzufuegen('Salat')">
   <img class="produkt-img" src="img/milk.png" alt="Milch" onclick="produktHinzufuegen('Milch')">
 
-  <img class="produkt-img" src="img/paprika.jpg" alt="Paprika" onclick="produktHinzufuegen('Paprika')">
+  <img class="produkt-img" src="img/apfel.jpg" alt="Apfel" onclick="produktHinzufuegen('Paprika')">
   <img class="produkt-img" src="img/pizza.jpg" alt="Pizza" onclick="produktHinzufuegen('Pizza')">
   <img class="produkt-img" src="img/mushroom.jpg" alt="Pilze" onclick="produktHinzufuegen('Pilze')">
   <img class="produkt-img" src="img/sausage.png" alt="Wurst" onclick="produktHinzufuegen('Wurst')">
   <img class="produkt-img" src="img/tomato.jpg" alt="Tomate" onclick="produktHinzufuegen('Tomate')">
 
   </div>
-
+<h2>🧠 Vorschläge aus deinen Stammprodukten</h2>
+  <ul id="vorschlagsListe"></ul>
+  <button id="alleVorschlaegeBtn" onclick="alleVorschlaegeUebernehmen()" style="display: none;">
+    ➕ Alle übernehmen
+  </button>
 <!-- Manuelle Eingabe -->
 <div style="margin-bottom: 20px;">
 <input type="text" id="manuellInput" placeholder="Produktname eingeben">
@@ -240,7 +244,63 @@ function listeSpeichernUndZuruecksetzen() {
   // Tabelle zurücksetzen
   document.getElementById("einkaufslisteBody").innerHTML = "";
 }
+function zeigeStammproduktVorschlaege() {
+      const stammprodukte = JSON.parse(localStorage.getItem("stammprodukte") || "[]");
 
+      const einkaufslisteEintraege = Array.from(document.querySelectorAll("#einkaufsliste li"))
+        .map(li => li.textContent.split("–")[0].trim());
+
+      const fehlende = stammprodukte.filter(p =>
+        !einkaufslisteEintraege.includes(p)
+      );
+
+      const vorschlagsListe = document.getElementById("vorschlagsListe");
+      const alleBtn = document.getElementById("alleVorschlaegeBtn");
+
+      vorschlagsListe.innerHTML = "";
+
+      if (fehlende.length === 0) {
+        alleBtn.style.display = "none";
+        return;
+      }
+
+      fehlende.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+
+        const btn = document.createElement("button");
+        btn.textContent = "➕ auf Einkaufsliste";
+        btn.style.marginLeft = "10px";
+        btn.onclick = () => {
+          addProduktZurEinkaufsliste(p);
+          li.remove();
+          if (vorschlagsListe.children.length === 0) {
+            alleBtn.style.display = "none";
+          }
+        };
+
+        li.appendChild(btn);
+        vorschlagsListe.appendChild(li);
+      });
+
+      alleBtn.style.display = "inline-block";
+    }
+
+    function alleVorschlaegeUebernehmen() {
+      const eintraege = Array.from(document.querySelectorAll("#vorschlagsListe li"));
+      eintraege.forEach(li => {
+        const produkt = li.firstChild.textContent.trim();
+        addProduktZurEinkaufsliste(produkt);
+        li.remove();
+      });
+
+      document.getElementById("alleVorschlaegeBtn").style.display = "none";
+    }
+
+    // Vorschläge beim Laden anzeigen
+    window.addEventListener("load", () => {
+      zeigeStammproduktVorschlaege();
+    });
 </script>
 
 </body>
