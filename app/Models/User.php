@@ -30,4 +30,14 @@ class User extends Authenticatable{
             'password' => 'hashed',
         ];
     }
+
+    public function fridges()
+    {
+        return $this->hasMany(Fridge::class);
+    }
+
+    public function shoppingLists()
+    {
+        return $this->hasMany(ShoppingList::class);
+    }
 }

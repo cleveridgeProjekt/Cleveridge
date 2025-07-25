@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <PageHeader title="Fridge" icon="fal fa-snowflake">
@@ -6,8 +7,32 @@
             <br>Behalte den Überblick, damit du weniger Lebensmittel verschwendest!
         </PageHeader>
     </div>
+    <div>
+        <h1>Deine Kühlschränke</h1>
+        <ul>
+            <li v-for="fridge in fridges" :key="fridge.id">
+                {{ fridge.name || 'Ohne Name' }}
+                <ul>
+                    <li v-for="item in fridge.items" :key="item.id">
+                        {{ item.product?.name }} - Menge: {{ item.quantity }}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import PageHeader from "./layout/PageHeader.vue";
+
+const fridges = ref([])
+
+const fetchFridges = async () => {
+    const { data } = await axios.get('/api/fridges')
+    fridges.value = data
+}
+
+onMounted(fetchFridges)
 </script>
