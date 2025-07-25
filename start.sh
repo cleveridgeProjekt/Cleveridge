@@ -11,4 +11,4 @@ echo "⚙️ Running database migrations..."
 php artisan migrate:fresh --force || echo "Migration failed"
 
 echo "🚀 Starting Laravel server..."
-php artisan serve --host=0.0.0.0 --port=10000
+php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
