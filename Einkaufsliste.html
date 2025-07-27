@@ -272,7 +272,7 @@ function zeigeStammproduktVorschlaege() {
         btn.textContent = "➕ auf Einkaufsliste";
         btn.style.marginLeft = "10px";
         btn.onclick = () => {
-          addProduktZurEinkaufsliste(p);
+          addToList(p);
           li.remove();
           if (vorschlagsListe.children.length === 0) {
             alleBtn.style.display = "none";
@@ -290,7 +290,7 @@ function zeigeStammproduktVorschlaege() {
       const eintraege = Array.from(document.querySelectorAll("#vorschlagsListe li"));
       eintraege.forEach(li => {
         const produkt = li.firstChild.textContent.trim();
-        addProduktZurEinkaufsliste(produkt);
+        addToList(produkt);
         li.remove();
       });
 
