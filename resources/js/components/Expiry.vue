@@ -1,11 +1,11 @@
-<script setup>
-
-</script>
-
 <template>
-    test 2
+    <div>
+        <PageHeader title="Ablaufwarnungen" icon="fal fa-snowflake">
+            Erhalte automatische Warnungen zu Artikeln, deren Haltbarkeitsdatum bald erreicht ist, um Lebensmittelverschwendung zu vermeiden.
+        </PageHeader>
+    </div>
 </template>
 
-<style scoped>
-
-</style>
+<script setup lang="ts">
+import PageHeader from "./layout/PageHeader.vue";
+</script>

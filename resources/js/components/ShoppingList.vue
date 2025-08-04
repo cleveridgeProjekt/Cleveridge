@@ -1,7 +1,8 @@
 <template>
   <PageHeader title="Einkaufsliste" icon="fal fa-shopping-cart">
       <span>
-        Füge Produkte deiner Einkaufsliste hinzu, bearbeite Mengen und hake ab, was du schon hast.
+          Erstelle und verwalte deine intelligente Einkaufsliste.<br>
+          Basierend auf fehlenden oder bald ablaufenden Artikeln schlägt das System vor, was du nachkaufen solltest, bearbeite Mengen und hake ab, was du schon hast.
       </span>
   </PageHeader>
 

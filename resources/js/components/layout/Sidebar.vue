@@ -21,7 +21,7 @@ const toggleSubmenu = () => {
         <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
         <div class="submenu-toggle" @click="toggleSubmenu">
             <span class="submenu-link">
-                <i class="fas fa-layer-group"></i>Finanzen
+                <i class="fas fa-layer-group"></i>Einstellungen
                 <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
             </span>
         </div>

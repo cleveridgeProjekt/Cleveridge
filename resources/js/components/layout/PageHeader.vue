@@ -35,7 +35,7 @@ defineProps({
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 7px;
+    margin-bottom: 15px;
 }
 
 .header-title {
