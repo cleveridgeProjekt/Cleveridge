@@ -22,16 +22,16 @@ defineProps({
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 210px;
-    min-height: 310px;
+    width: 420px;
+    min-height: 620px;
     background: #fff;
-    border-radius: 30px;
-    box-shadow: 0 8px 28px 0 rgba(140, 180, 230, 0.11);
-    padding: 28px 16px 18px 16px;
+    border-radius: 20px;
+    box-shadow: 0 14px 46px 0 rgba(140,180,230,0.13);
+    padding: 56px 32px 34px 32px;
     transition: box-shadow 0.15s, transform 0.14s;
     opacity: 0;
-    transform: translateX(-130px);
-    animation: slidein 0.45s cubic-bezier(.36, .79, .43, 1.11) forwards;
+    transform: translateX(-180px);
+    animation: slidein 0.48s cubic-bezier(.36,.79,.43,1.11) forwards;
 }
 
 @keyframes slidein {
@@ -48,31 +48,30 @@ defineProps({
 }
 
 .tile-img {
-    width: 90px;
-    height: 90px;
-    border-radius: 24px;
-    margin-bottom: 17px;
+    width: 280px;
+    height: 280px;
+    border-radius: 8px;
+    margin-bottom: 34px;
     object-fit: cover;
     background: #f7fafb;
-    border: none;
-    box-shadow: 0 2px 12px 0 #c8e8fa3a;
+    box-shadow: 0 3px 22px 0 #c8e8fa3a;
 }
 
 .tile-label {
-    font-weight: 800;
-    font-size: 1.07rem;
+    font-weight: 900;
+    font-size: 1.9rem;
     letter-spacing: 0;
     text-align: center;
-    margin-bottom: 7px;
+    margin-bottom: 17px;
     color: #17263a;
 }
 
 .tile-desc {
     color: #333d4d;
-    font-size: 0.93rem;
+    font-size: 1.5rem;
     text-align: center;
-    line-height: 1.3;
-    opacity: 0.81;
-    margin-top: 2px;
+    line-height: 1.33;
+    opacity: 0.85;
+    margin-top: 8px;
 }
 </style>

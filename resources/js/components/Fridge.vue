@@ -22,17 +22,30 @@
     </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+<script>
 import PageHeader from "./layout/PageHeader.vue";
+import axios from 'axios';
 
-const fridges = ref([])
-
-const fetchFridges = async () => {
-    const { data } = await axios.get('/api/fridges')
-    fridges.value = data
+export default {
+    name: 'Fridge',
+    components: { PageHeader },
+    data() {
+        return {
+            fridges: []
+        }
+    },
+    methods: {
+        async fetchFridges() {
+            try {
+                const { data } = await axios.get('/api/fridges')
+                this.fridges = data
+            } catch (e) {
+                this.fridges = []
+            }
+        }
+    },
+    mounted() {
+        this.fetchFridges()
+    }
 }
-
-onMounted(fetchFridges)
 </script>

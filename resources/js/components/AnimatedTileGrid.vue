@@ -17,9 +17,10 @@ defineProps({ tiles: Array })
 <style scoped>
 .dashboard-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 34px 36px;
-    margin: 36px 0 0 0;
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    gap: 44px 46px;
+    margin: 48px 0 0 0;
     justify-items: center;
 }
+
 </style>

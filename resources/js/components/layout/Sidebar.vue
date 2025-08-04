@@ -18,6 +18,7 @@ const toggleSubmenu = () => {
     <div id="sidebar" class="sidebar">
         <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> Dashboard</RouterLink>
         <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> What's in your fridge</RouterLink>
+        <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
         <div class="submenu-toggle" @click="toggleSubmenu">
             <span class="submenu-link">
                 <i class="fas fa-layer-group"></i>Finanzen
@@ -27,9 +28,8 @@ const toggleSubmenu = () => {
         <div v-if="showSubmenu" class="submenu">
             <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> Cleveridge Status</RouterLink>
             <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> Ablaufwarnungen</RouterLink>
-            <RouterLink class="submenu-item" to="/barcode"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
+            <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
         </div>
-        <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
         <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
     </div>
 </template>

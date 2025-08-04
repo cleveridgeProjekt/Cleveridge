@@ -1,6 +1,6 @@
 <template>
     <div class="register-box">
-        <h2 style="text-align:center;font-size:28px;color:#0077d9;font-weight:700;margin-bottom:24px">Registrieren</h2>
+        <h2 style="text-align:center;font-size:28px;color:#0c5288;font-weight:700;margin-bottom:24px">Registrieren</h2>
         <form @submit.prevent="submit">
             <input v-model="name" placeholder="Vorname" required />
             <input v-model="surname" placeholder="Nachname" required />
@@ -33,7 +33,7 @@ async function submit() {
             password: password.value,
             password_confirmation: password_confirmation.value
         })
-        router.push('/') // Go to dashboard after registration
+        router.push('/')
     } catch (e) {
         error.value = e?.response?.data?.message || 'Registrierung fehlgeschlagen'
     }
@@ -44,7 +44,7 @@ async function submit() {
     max-width: 380px;
     margin: 80px auto;
     background: #fff;
-    border-radius: 16px;
+    border-radius: 5px;
     padding: 36px 32px;
     box-shadow: 0 8px 32px 0 rgba(0,0,0,0.08);
 }
@@ -62,7 +62,7 @@ button {
     width: 100%;
     padding: 10px 0;
     border: none;
-    background: #0077d9;
+    background: #0c5288;
     color: #fff;
     border-radius: 8px;
     font-weight: 600;

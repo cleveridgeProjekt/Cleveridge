@@ -14,7 +14,7 @@ const routes = [
     { path: '/shopping-list', component: () => import('../js/components/ShoppingList.vue'), name: 'shopping-list' },
     { path: '/status', component: () => import('../js/components/Status.vue'), name: 'status' },
     { path: '/expiry', component: () => import('../js/components/Expiry.vue'), name: 'expiry' },
-    { path: '/barcode', component: () => import('../js/components/Barcode.vue'), name: 'barcode' },
+    { path: '/product-recognition', component: () => import('../js/components/ProductRecognition.vue'), name: 'product-recognition' },
 ]
 
 const router = createRouter({

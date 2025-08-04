@@ -26,4 +26,10 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
+    server: {
+        cors: true,
+        host: 'localhost',
+        port: 5173,
+        strictPort: true
+    },
 });

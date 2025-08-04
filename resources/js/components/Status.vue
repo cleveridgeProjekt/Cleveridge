@@ -12,23 +12,33 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+<script>
+import axios from 'axios';
 
-const data = ref(null)
-
-const fetchSensorData = async () => {
-  try {
-    const response = await axios.get('/api/status')
-    data.value = response.data
-  } catch (err) {
-    console.error('Failed to fetch sensor data:', err)
-  }
+export default {
+    name: 'Status',
+    data() {
+        return {
+            sensorData: null,
+            intervalId: null
+        }
+    },
+    methods: {
+        async fetchSensorData() {
+            try {
+                const response = await axios.get('/api/status')
+                this.sensorData = response.data
+            } catch (err) {
+                console.error('Failed to fetch sensor data:', err)
+            }
+        }
+    },
+    mounted() {
+        this.fetchSensorData()
+        this.intervalId = setInterval(this.fetchSensorData, 5000)
+    },
+    beforeUnmount() {
+        clearInterval(this.intervalId)
+    }
 }
-
-onMounted(() => {
-  fetchSensorData()
-  setInterval(fetchSensorData, 5000) // refresh every 5 seconds
-})
 </script>
