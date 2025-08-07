@@ -40,4 +40,14 @@ class User extends Authenticatable{
     {
         return $this->hasMany(ShoppingList::class);
     }
+
+    public function mustHaveProducts()
+    {
+        return $this->belongsToMany(Product::class, 'user_must_have_products')->withTimestamps();
+    }
+
+    public function allergyProducts()
+    {
+        return $this->belongsToMany(Product::class, 'user_allergies')->withTimestamps();
+    }
 }

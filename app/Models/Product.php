@@ -22,4 +22,15 @@ class Product extends Model
     {
         return $this->hasMany(ShoppingListItem::class);
     }
+
+    public function usersMustHave()
+    {
+        return $this->belongsToMany(User::class, 'user_must_have_products');
+    }
+
+    public function usersWithAllergy()
+    {
+        return $this->belongsToMany(User::class, 'user_allergies');
+    }
+
 }

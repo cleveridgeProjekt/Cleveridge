@@ -6,7 +6,21 @@
       </span>
   </PageHeader>
 
-  <div class="add-product-section">
+    <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel" @detail="showProductDetail"/>
+
+    <div class="shoppinglist-controls">
+        <button class="btn-main" @click="openMustHaveDialog">
+            <i class="fas fa-heart"></i> Wunschliste
+        </button>
+        <button class="btn-alt" @click="openAllergyDialog">
+            <i class="fas fa-allergies"></i> Allergien
+        </button>
+    </div>
+    <MustHaveDialog v-if="showMustHaveDialog" @close="closeDialogs"/>
+    <AllergyDialog v-if="showAllergyDialog" @close="closeDialogs"/>
+
+
+    <div class="add-product-section">
     <select v-model="selectedProductId">
       <option disabled value="">Produkt auswählen...</option>
       <option v-for="p in products" :key="p.id" :value="p.id">
@@ -24,12 +38,13 @@
   <table class="shopping-list-table">
     <thead>
     <tr>
-      <th>✓</th>
-      <th>Bild</th>
-      <th>Produkt</th>
-      <th>Menge</th>
-      <th>Einheit</th>
-      <th>Löschen</th>
+      <th><i class="fas fa-check"></i></th>
+      <th><i class="fas fa-image"></i> Bild</th>
+      <th><i class="fas fa-burger"></i> Produkt</th>
+      <th> Menge</th>
+      <th> Einheit</th>
+      <th><i class="fas fa-trash-can"></i> Löschen</th>
+        <th><i class="fas fa-pen"></i> Bearbeiten</th>
     </tr>
     </thead>
     <tbody>
@@ -66,10 +81,11 @@
 <script>
 import PageHeader from "./layout/PageHeader.vue";
 import axios from "axios";
+import ShoppingCarousel from "./layout/ShoppingCarousel.vue";
 
 export default {
     name: "ShoppingList",
-    components: { PageHeader },
+    components: { PageHeader, ShoppingCarousel },
     data() {
         return {
             shoppingList: { items: [] },
@@ -78,7 +94,19 @@ export default {
             manualProduct: "",
             addQuantity: 1,
             addUnit: "Stück",
-            units: ["Stück", "kg", "g", "l", "ml", "Packung"]
+            units: ["Stück", "kg", "g", "l", "ml", "Packung"],
+            carouselIndex: 0,
+        }
+    },
+    computed: {
+        visibleCarousel() {
+            if (!this.products.length) return [];
+            let start = this.carouselIndex;
+            let arr = [];
+            for (let i = 0; i < 3; i++) {
+                arr.push(this.products[(start + i) % this.products.length]);
+            }
+            return arr;
         }
     },
     async mounted() {
@@ -137,12 +165,78 @@ export default {
             if (!confirm("Wirklich löschen?")) return;
             await axios.delete(`/api/shopping-list/items/${item.id}`);
             this.shoppingList.items = this.shoppingList.items.filter(i => i.id !== item.id);
-        }
+        },
+        prevCarousel() {
+            this.carouselIndex = (this.carouselIndex - 1 + this.products.length) % this.products.length;
+        },
+        nextCarousel() {
+            this.carouselIndex = (this.carouselIndex + 1) % this.products.length;
+        },
+        showProductDetail(product) {
+            alert(`Bald: Details für ${product.name} (z.B. Nährwerte, Kalorien, Allergene)`);
+        },
     }
 };
 </script>
 
 <style scoped>
+.product-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto 38px auto;
+    max-width: 750px;
+}
+.carousel-track {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+.carousel-item {
+    width: 90px;
+    height: 120px;
+    background: #f4fbff;
+    border-radius: 15px;
+    box-shadow: 0 2px 12px 0 #d9e9fa33;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform .24s cubic-bezier(.44,.82,.34,.98);
+    opacity: 0.65;
+    cursor: pointer;
+    padding: 6px 5px;
+    border: 2px solid transparent;
+}
+.carousel-item img {
+    width: 60px; height: 60px;
+    object-fit: contain;
+    margin-bottom: 7px;
+}
+.carousel-item.active {
+    transform: scale(1.22);
+    background: #fff;
+    opacity: 1;
+    z-index: 1;
+    border-color: #4ac0fa;
+}
+.carousel-arrow {
+    font-size: 34px;
+    border: none;
+    background: transparent;
+    color: #1680b4;
+    cursor: pointer;
+    margin: 0 18px;
+    padding: 4px 10px;
+    user-select: none;
+}
+.prod-name {
+    font-size: 0.98em;
+    color: #25548a;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.15;
+}
+
 .add-product-section {
     display: flex;
     gap: 10px;
