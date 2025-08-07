@@ -17,21 +17,6 @@
         </button>
     </div>
 
-    <div class="add-product-section">
-        <select v-model="selectedProductId">
-            <option disabled value="">Produkt auswählen...</option>
-            <option v-for="p in products" :key="p.id" :value="p.id">
-                {{ p.name }}
-            </option>
-        </select>
-        <input v-model="manualProduct" placeholder="Oder neuen Artikel eingeben..." />
-        <input v-model.number="addQuantity" type="number" min="1" max="999" style="width:70px"/>
-        <select v-model="addUnit">
-            <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
-        </select>
-        <button @click="addItem">Hinzufügen</button>
-    </div>
-
     <table class="shopping-list-table">
         <thead>
         <tr>
