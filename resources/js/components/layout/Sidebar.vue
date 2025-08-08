@@ -1,3 +1,32 @@
+<template>
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-content">
+            <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> Dashboard</RouterLink>
+            <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> What's in your fridge</RouterLink>
+            <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
+            <div class="submenu-toggle" @click="toggleSubmenu">
+                <span class="submenu-link">
+                    <i class="fas fa-layer-group"></i>Einstellungen
+                    <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
+                </span>
+            </div>
+            <div v-if="showSubmenu" class="submenu">
+                <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> Cleveridge Status</RouterLink>
+                <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> Ablaufwarnungen</RouterLink>
+                <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
+            </div>
+            <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
+            <RouterLink class="nav-item" to="/receipts"><i class="fas fa-receipt"></i> Rezepte</RouterLink>
+
+
+
+        </div>
+        <div class="sidebar-footer">
+            <img src="/media/cleveridge_prototype.png" alt="Cleveridge Prototype" class="sidebar-img"/>
+        </div>
+    </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import { RouterLink } from 'vue-router';
@@ -14,45 +43,43 @@ const toggleSubmenu = () => {
 };
 </script>
 
-<template>
-    <div id="sidebar" class="sidebar">
-        <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> Dashboard</RouterLink>
-        <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> What's in your fridge</RouterLink>
-        <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
-        <div class="submenu-toggle" @click="toggleSubmenu">
-            <span class="submenu-link">
-                <i class="fas fa-layer-group"></i>Einstellungen
-                <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
-            </span>
-        </div>
-        <div v-if="showSubmenu" class="submenu">
-            <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> Cleveridge Status</RouterLink>
-            <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> Ablaufwarnungen</RouterLink>
-            <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
-        </div>
-        <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
-        <RouterLink class="nav-item" to="/receipts"><i class="fas fa-receipt"></i> Rezepte</RouterLink>
-
-    </div>
-</template>
-
 <style scoped>
 #sidebar {
     position: sticky;
     top: 62px;
-    padding-top: 28px;
     width: 300px;
     height: calc(100vh - 62px);
     background-color: #0c5288;
     color: white;
     display: grid;
-    grid-auto-rows: max-content;
-    /*gap: 10px;*/
+    grid-template-rows: 1fr auto;
     box-shadow: 1px 0 0 #e3eefa;
     z-index: 10;
     overflow-y: auto;
+    padding-top: 28px;
 }
-
+.sidebar-content {
+    display: grid;
+    grid-auto-rows: max-content;
+}
+.sidebar-footer {
+    display: grid;
+    place-items: center;
+    padding-bottom: 28px;
+    padding-top: 10px;
+}
+.sidebar-img {
+    max-width: 70%;
+    height: auto;
+    box-shadow: 0 10px 24px 0 rgba(24, 48, 105, 0.25), 0 1.5px 6px 0 rgba(40, 94, 142, 0.22);
+    border-radius: 16px;
+    background: #fff;
+    padding: 10px 30px;
+    transition: box-shadow 0.22s;
+    display: block;
+    margin: 0 auto;
+    pointer-events: auto;
+}
 .nav-item {
     display: grid;
     grid-template-columns: 40px 1fr;
