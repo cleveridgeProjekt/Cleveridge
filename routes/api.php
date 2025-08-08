@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductNutritionController;
 use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SensorController;
@@ -11,6 +12,7 @@ Route::post('/sensor', [SensorController::class, 'store']);
 Route::get('/status', [SensorController::class, 'latest']);
 Route::apiResource('products', ProductController::class);
 Route::get('/user/allergies-test', [UserPreferenceController::class, 'allergyList']);
+Route::get('/products/{product}/nutrition', [ProductNutritionController::class, 'show']);
 
 
 Route::middleware('auth:sanctum')->group(function () {

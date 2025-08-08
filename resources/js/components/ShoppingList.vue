@@ -7,6 +7,8 @@
     </PageHeader>
 
     <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel" @detail="showProductDetail"/>
+    <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId" :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible" @close="nutritionEtiquetteVisible = false"/>
+
 
     <MustHaveDialog v-if="showMustHaveDialog" :units="units" @close="closeDialogs"/>
     <AllergyDialog v-if="showAllergyDialog" :products="products" @close="closeDialogs"/>
@@ -65,13 +67,14 @@
 <script>
 import PageHeader from "./layout/PageHeader.vue";
 import ShoppingCarousel from "./layout/ShoppingCarousel.vue";
+import NutritionEtiquette from "./NutritionEtiquette.vue";
 import axios from "axios";
 import MustHaveDialog from "./MustHaveDialog.vue";
 import AllergyDialog from "./AllergyDialog.vue";
 
 export default {
     name: "ShoppingList",
-    components: { PageHeader, ShoppingCarousel, MustHaveDialog, AllergyDialog },
+    components: { PageHeader, ShoppingCarousel, NutritionEtiquette, MustHaveDialog, AllergyDialog },
     data() {
         return {
             shoppingList: { items: [] },
@@ -82,6 +85,9 @@ export default {
             addUnit: "Stück",
             units: ["Stück", "kg", "g", "l", "ml", "Packung"],
             carouselIndex: 0,
+            nutritionEtiquetteProductId: null,
+            nutritionEtiquetteProductName: "",
+            nutritionEtiquetteVisible: false,
             showMustHaveDialog: false,
             showAllergyDialog: false,
         };
@@ -168,7 +174,9 @@ export default {
             this.carouselIndex = (this.carouselIndex + 1) % this.products.length;
         },
         showProductDetail(product) {
-            alert(`Bald: Details für ${product.name} (z.B. Nährwerte, Kalorien, Allergene)`);
+            this.nutritionEtiquetteProductId = product.id;
+            this.nutritionEtiquetteProductName = product.name;
+            this.nutritionEtiquetteVisible = true;
         }
     }
 };
