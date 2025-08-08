@@ -132,7 +132,6 @@ onMounted(fetchNutrition);
     background: #f3f3f3;
     border: none;
     border-radius: 50%;
-    font-size: 1.3em;
     width: 38px;
     height: 38px;
     color: #222;
@@ -140,9 +139,17 @@ onMounted(fetchNutrition);
     z-index: 2;
     box-shadow: 0 2px 6px #0002;
     transition: background .13s;
+    display: grid;
+    place-items: center;
+    padding: 0;
 }
 .close-btn:hover {
     background: #ffeaea;
+}
+.close-btn i {
+    font-size: 1.3em;
+    line-height: 1;
+    display: block;
 }
 .nutrition-label {
     font-family: "Arial Narrow", Arial, sans-serif;
