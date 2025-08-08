@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 Route::post('/sensor', [SensorController::class, 'store']);
 Route::get('/status', [SensorController::class, 'latest']);
 Route::apiResource('products', ProductController::class);
+Route::get('/user/allergies-test', [UserPreferenceController::class, 'allergyList']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('fridges', FridgeController::class);

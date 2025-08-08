@@ -8,6 +8,9 @@
 
     <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel" @detail="showProductDetail"/>
 
+    <MustHaveDialog v-if="showMustHaveDialog" :units="units" @close="closeDialogs"/>
+    <AllergyDialog v-if="showAllergyDialog" :products="products" @close="closeDialogs"/>
+
     <div class="shoppinglist-controls">
         <button class="btn-main" @click="openMustHaveDialog">
             <i class="fas fa-heart"></i> Zu meiner Wunschliste hinzufügen
@@ -63,10 +66,12 @@
 import PageHeader from "./layout/PageHeader.vue";
 import ShoppingCarousel from "./layout/ShoppingCarousel.vue";
 import axios from "axios";
+import MustHaveDialog from "./MustHaveDialog.vue";
+import AllergyDialog from "./AllergyDialog.vue";
 
 export default {
     name: "ShoppingList",
-    components: { PageHeader, ShoppingCarousel },
+    components: { PageHeader, ShoppingCarousel, MustHaveDialog, AllergyDialog },
     data() {
         return {
             shoppingList: { items: [] },
@@ -77,6 +82,8 @@ export default {
             addUnit: "Stück",
             units: ["Stück", "kg", "g", "l", "ml", "Packung"],
             carouselIndex: 0,
+            showMustHaveDialog: false,
+            showAllergyDialog: false,
         };
     },
     computed: {
@@ -100,6 +107,10 @@ export default {
         await this.fetchShoppingList();
     },
     methods: {
+        openMustHaveDialog() { this.showMustHaveDialog = true; },
+        openAllergyDialog() { this.showAllergyDialog = true; },
+        closeDialogs() { this.showMustHaveDialog = false; this.showAllergyDialog = false; },
+
         async fetchProducts() {
             const { data } = await axios.get('/api/products');
             this.products = data;
@@ -158,13 +169,7 @@ export default {
         },
         showProductDetail(product) {
             alert(`Bald: Details für ${product.name} (z.B. Nährwerte, Kalorien, Allergene)`);
-        },
-        openMustHaveDialog() {
-        },
-        openAllergyDialog() {
-        },
-        closeDialogs() {
-        },
+        }
     }
 };
 </script>

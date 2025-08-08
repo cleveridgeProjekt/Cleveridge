@@ -33,4 +33,9 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'user_allergies');
     }
 
+    public function nutrition()
+    {
+        return $this->hasOne(ProductNutrition::class);
+    }
+
 }

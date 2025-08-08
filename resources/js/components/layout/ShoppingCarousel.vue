@@ -88,7 +88,7 @@ defineProps({
     background: #fff;
     opacity: 1;
     z-index: 3;
-    border: 2.7px solid #32adfa;
+    border: 2.7px solid #94cfff;
     box-shadow: 0 3px 24px 0 #a7e8fc26;
 }
 
@@ -108,7 +108,7 @@ defineProps({
     user-select: none;
 }
 .carousel-arrow:hover {
-    color: #055086;
+    color: #0c5288;
 }
 
 .prod-name {
