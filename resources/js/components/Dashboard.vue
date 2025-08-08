@@ -40,16 +40,16 @@ export default {
                     desc: "Temperatur- & Feuchtigkeitsanzeige in Echtzeit"
                 },
                 {
-                    label: "ABLAUFDATUM",
-                    path: "/expiry",
-                    img: "/media/tiles/expiry_warning.webp",
-                    desc: "Intelligente Einkaufsliste basierend auf fehlenden Artikeln"
-                },
-                {
                     label: "PRODUKTERKENNUNG",
                     path: "/product-recognition",
                     img: "/media/tiles/product_recognition.webp",
                     desc: "Automatische Produkterkennung durch Kamera & KI"
+                },
+                {
+                    label: "ABLAUFDATUM",
+                    path: "/expiry",
+                    img: "/media/tiles/expiry_warning.webp",
+                    desc: "Intelligente Einkaufsliste basierend auf fehlenden Artikeln"
                 },
                 {
                     label: "REZEPTE",
