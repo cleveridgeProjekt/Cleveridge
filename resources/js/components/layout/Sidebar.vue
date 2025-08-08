@@ -31,6 +31,8 @@ const toggleSubmenu = () => {
             <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
         </div>
         <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
+        <RouterLink class="nav-item" to="/receipts"><i class="fas fa-receipt"></i> Rezepte</RouterLink>
+
     </div>
 </template>
 

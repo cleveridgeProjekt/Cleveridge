@@ -50,6 +50,12 @@ export default {
                     path: "/product-recognition",
                     img: "/media/tiles/product_recognition.webp",
                     desc: "Automatische Produkterkennung durch Kamera & KI"
+                },
+                {
+                    label: "REZEPTE",
+                    path: "/receipts",
+                    img: "/media/tiles/blueberry_receipt.png",
+                    desc: "Alle gespeicherten Rezepte & Ideen für deine Zutaten"
                 }
             ]
         }

@@ -11,6 +11,7 @@ const routes = [
     { path: '/register', component: RegisterForm, name: 'register' },
     { path: '/fridge', component: () => import('../js/components/Fridge.vue'), name: 'fridge' },
     { path: '/products', component: () => import('../js/components/Products.vue'), name: 'products' },
+    { path: '/receipts', component: () => import('../js/components/Receipts.vue'), name: 'receipts' },
     { path: '/shopping-list', component: () => import('../js/components/ShoppingList.vue'), name: 'shopping-list' },
     { path: '/status', component: () => import('../js/components/Status.vue'), name: 'status' },
     { path: '/expiry', component: () => import('../js/components/Expiry.vue'), name: 'expiry' },

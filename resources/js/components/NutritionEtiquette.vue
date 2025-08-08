@@ -61,6 +61,7 @@
                     <div class="common-uses">
                         <b>Common uses:</b> {{ nutrition.common_uses || '—' }}
                     </div>
+                    <RouterLink to="/receipts" class="receipts-link">See matching recipes <i class="fa-solid fa-arrow-right"></i></RouterLink>
                 </div>
             </div>
             <div v-else>
@@ -73,6 +74,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
+import { RouterLink } from 'vue-router';
 
 const props = defineProps({
     productId: Number,
@@ -205,4 +207,18 @@ onMounted(fetchNutrition);
     font-size: 0.98em;
     color: #234;
 }
+.receipts-link {
+    display: inline-block;
+    margin-top: 7px;
+    color: #0c5288;
+    font-weight: 600;
+    font-size: 1.05em;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color .18s;
+}
+.receipts-link:hover {
+    color: #1267b5;
+}
+
 </style>
