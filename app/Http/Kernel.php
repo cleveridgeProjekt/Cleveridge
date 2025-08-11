@@ -8,6 +8,8 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -50,7 +52,6 @@ class Kernel extends HttpKernel
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             SubstituteBindings::class,
-            EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             SubstituteBindings::class,
@@ -61,7 +62,9 @@ class Kernel extends HttpKernel
      * The application's route middleware.
      */
     protected $routeMiddleware = [
-        'auth' => Authenticate::class,
-        'guest' => RedirectIfAuthenticated::class,
+        'auth'   => Authenticate::class,
+        'guest'  => RedirectIfAuthenticated::class,
+        'can'    => Authorize::class,
+        'verified' => EnsureEmailIsVerified::class,
     ];
 }
