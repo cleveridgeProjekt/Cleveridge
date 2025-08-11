@@ -15,7 +15,8 @@
 
     <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded"
                     @close="onCloseMustHave"/>
-    <AllergyDialog v-if="showAllergyDialog" :products="products" @close="closeDialogs"/>
+
+    <AllergyDialog v-if="showAllergyDialog" :products="products" @saved="onAllergySaved" @close="closeDialogs"/>
 
     <div class="shoppinglist-controls">
         <button class="btn-main" @click="openMustHaveDialog">
@@ -77,6 +78,18 @@
         </tbody>
     </table>
 
+    <div class="allergy-summary">
+        <template v-if="allergyNames.length">
+            <div class="allergy-title">Du hast Allergien für diese Produkte:</div>
+            <ul class="allergy-list">
+                <li v-for="n in allergyNames" :key="n">{{ n }}</li>
+            </ul>
+        </template>
+        <template v-else>
+            <div class="allergy-title">Super, aktuell sind keine Allergien eingetragen.</div>
+        </template>
+    </div>
+
 </template>
 
 <script>
@@ -105,6 +118,8 @@ export default {
             nutritionEtiquetteVisible: false,
             showMustHaveDialog: false,
             showAllergyDialog: false,
+            allergies: [],
+            allergyNames: [],
         };
     },
     computed: {
@@ -129,6 +144,7 @@ export default {
     async mounted() {
         await this.fetchProducts();
         await this.fetchShoppingList();
+        await this.fetchAllergies();
     },
     methods: {
         openMustHaveDialog() {
@@ -156,30 +172,16 @@ export default {
             const {data} = await axios.get('/api/shopping-list');
             this.shoppingList = data;
         },
-        async addItem() {
-            let name = "";
-            let product_id = null;
-            if (this.manualProduct.trim() !== "") {
-                name = this.manualProduct.trim();
-            } else if (this.selectedProductId) {
-                product_id = this.selectedProductId;
-                name = this.products.find(p => p.id == product_id)?.name || "";
-            } else {
-                alert("Bitte Produkt wählen oder eingeben!");
-                return;
-            }
-            const payload = {
-                product_id,
-                name,
-                quantity: this.addQuantity,
-                unit: this.addUnit,
-            };
-            const {data} = await axios.post('/api/shopping-list/items', payload);
-            this.shoppingList.items.push(data);
-            this.selectedProductId = "";
-            this.manualProduct = "";
-            this.addQuantity = 1;
-            this.addUnit = "Stück";
+        async fetchAllergies() {
+            const {data} = await axios.get('/api/user/allergies');
+            this.allergies = data.map(a => a.id ?? a.product_id).filter(Boolean);
+            const fromApi = data.map(a => a.name).filter(Boolean);
+            this.allergyNames = fromApi.length
+                ? fromApi
+                : this.products
+                    .filter(p => this.allergies.includes(p.id))
+                    .map(p => p.name)
+                    .sort((a, b) => a.localeCompare(b));
         },
         async updateItem(item) {
             await axios.put(`/api/shopping-list/items/${item.id}`, {
@@ -188,9 +190,8 @@ export default {
             });
         },
         async toggleCheck(item) {
-            item.checked_off = !item.checked_off;
             await axios.put(`/api/shopping-list/items/${item.id}`, {
-                checked_off: item.checked_off
+                checked_off: item.checked_off,
             });
         },
         async deleteItem(item) {
@@ -208,18 +209,51 @@ export default {
             this.nutritionEtiquetteProductId = product.id;
             this.nutritionEtiquetteProductName = product.name;
             this.nutritionEtiquetteVisible = true;
-        }
+        },
+        onAllergySaved() {
+            this.fetchAllergies();
+            this.showAllergyDialog = false;
+        },
     }
 };
 </script>
 
 <style scoped>
+.allergy-summary {
+    margin-top: 28px;
+    background: #fff;
+    border: 1px solid #eaeef4;
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 8px rgba(0,0,0,.03);
+}
+
+.allergy-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #25548a;
+}
+
+.allergy-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 22px;
+}
+
+.allergy-list li {
+    color: #111;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 2px 0;
+}
+
 .shoppinglist-controls {
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 12px;
     margin-bottom: 22px;
 }
+
 .empty-state {
     margin-top: 12px;
     background: #fff;
@@ -230,11 +264,13 @@ export default {
     box-shadow: 0 2px 20px 0 #b9e8fa0d;
     border: 1.5px dashed #cfe1ef;
 }
+
 .empty-state h4 {
     margin: 10px 0 6px 0;
     font-size: 1.18rem;
     color: #144b78;
 }
+
 .empty-state p {
     margin: 0 0 14px 0;
     color: #557a9a;
@@ -361,4 +397,3 @@ export default {
     background: #fff5f5;
 }
 </style>
-

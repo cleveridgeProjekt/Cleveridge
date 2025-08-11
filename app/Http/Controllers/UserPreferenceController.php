@@ -52,16 +52,21 @@ class UserPreferenceController extends Controller
         $entry->delete();
         return response()->json(['success' => true]);
     }
-
-    public function allergyList(Request $request)
+    public function allergyIds(Request $request)
     {
-        return $request->user()->allergyProducts()->get();
+        return $request->user()->allergyProducts()->pluck('products.id');
     }
 
-    public function addAllergy(Request $request)
+    public function saveAllergies(Request $request)
     {
-        $request->validate(['product_id' => 'required|exists:products,id']);
-        $request->user()->allergyProducts()->syncWithoutDetaching($request->product_id);
+        $data = $request->validate([
+            'allergies'   => 'array',
+            'allergies.*' => 'integer|exists:products,id',
+        ]);
+
+        $ids = $data['allergies'] ?? [];
+        $request->user()->allergyProducts()->sync($ids);
+
         return response()->json(['success' => true]);
     }
 
@@ -70,4 +75,25 @@ class UserPreferenceController extends Controller
         $request->user()->allergyProducts()->detach($product->id);
         return response()->json(['success' => true]);
     }
+    public function allergyList(Request $request)
+    {
+        return $request->user()
+            ->allergyProducts()
+            ->select('products.id', 'products.name')
+            ->orderBy('products.name')
+            ->get();
+    }
+
+    public function setAllergies(Request $request)
+    {
+        $validated = $request->validate([
+            'allergies' => 'array',
+            'allergies.*' => 'integer|exists:products,id',
+        ]);
+        $ids = $validated['allergies'] ?? [];
+        $request->user()->allergyProducts()->sync($ids);
+
+        return $this->allergyList($request);
+    }
+
 }

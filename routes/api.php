@@ -20,9 +20,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('fridges/{fridge}/items', [FridgeItemController::class, 'store']);
     Route::patch('fridge-items/{id}', [FridgeItemController::class, 'update']);
     Route::delete('fridge-items/{id}', [FridgeItemController::class, 'destroy']);
-
-    // Allergies
-    Route::get('/user/allergies', [UserPreferenceController::class, 'allergyList']);
-    Route::post('/user/allergies', [UserPreferenceController::class, 'addAllergy']);
-    Route::delete('/user/allergies/{product}', [UserPreferenceController::class, 'removeAllergy']);
 });

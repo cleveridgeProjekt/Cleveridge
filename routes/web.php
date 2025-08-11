@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::put   ('/api/shopping-list/items/{item}',  [ShoppingListItemController::class, 'update']);
     Route::delete('/api/shopping-list/items/{item}',  [ShoppingListItemController::class, 'destroy']);
 
+    // allergies
+    Route::get   ('/api/user/allergies',           [UserPreferenceController::class, 'allergyList']);
+    Route::post  ('/api/user/allergies',             [UserPreferenceController::class, 'saveAllergies']);
+    Route::delete('/api/user/allergies/{product}',   [UserPreferenceController::class, 'removeAllergy']);
+
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });

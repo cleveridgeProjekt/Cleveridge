@@ -90,7 +90,7 @@ export default {
 
 .dialog {
     background: #fff;
-    border-radius: 18px;
+    border-radius: 5px;
     max-width: 720px;
     width: calc(100% - 32px);
     padding: 26px 26px 18px;
