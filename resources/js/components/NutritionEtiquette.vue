@@ -7,69 +7,77 @@
             <div v-if="nutrition">
                 <div class="nutrition-label">
                     <div class="product-title">{{ props.productName }}</div>
-                    <h2>Nutrition Facts</h2>
+                    <h2>Nährwertangaben</h2>
                     <div class="serving">
-                        <b>Serving Size:</b> {{ nutrition.serving_size || '—' }}
+                        <b>Portionsgröße:</b> {{ nutrition.serving_size || '—' }}
                     </div>
                     <div class="calories">
-                        <b>Calories</b> {{ nutrition.calories || 0 }}
+                        <b>Kalorien</b> {{ nutrition.calories || 0 }}
                     </div>
+
                     <table class="nutri-table">
+                        <tbody>
                         <tr>
-                            <td>Fat</td>
+                            <td>Fett</td>
                             <td>{{ nutrition.fat || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>&emsp;Saturated</td>
+                            <td>&emsp;davon gesättigt</td>
                             <td>{{ nutrition.saturated_fat || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>&emsp;Monounsaturated</td>
+                            <td>&emsp;einfach ungesättigt</td>
                             <td>{{ nutrition.monounsaturated_fat || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>&emsp;Polyunsaturated</td>
+                            <td>&emsp;mehrfach ungesättigt</td>
                             <td>{{ nutrition.polyunsaturated_fat || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>Carbohydrate</td>
+                            <td>Kohlenhydrate</td>
                             <td>{{ nutrition.carbs || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>&emsp;Sugar</td>
+                            <td>&emsp;Zucker</td>
                             <td>{{ nutrition.sugar || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>&emsp;Fiber</td>
+                            <td>&emsp;Ballaststoffe</td>
                             <td>{{ nutrition.fiber || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>Protein</td>
+                            <td>Eiweiß</td>
                             <td>{{ nutrition.protein || 0 }} g</td>
                         </tr>
                         <tr>
-                            <td>Salt</td>
+                            <td>Salz</td>
                             <td>{{ nutrition.salt || 0 }} mg</td>
                         </tr>
+                        </tbody>
                     </table>
+
                     <div class="micro-nutrients">
-                        <b>Vitamins/Minerals:</b> {{ nutrition.vitamins_minerals || '—' }}
+                        <b>Vitamine/Mineralstoffe:</b> {{ nutrition.vitamins_minerals || '—' }}
                     </div>
                     <div class="allergens">
-                        <b>Allergens:</b> {{ nutrition.allergens || '—' }}
+                        <b>Allergene:</b> {{ nutrition.allergens || '—' }}
                     </div>
                     <div class="common-uses">
-                        <b>Common uses:</b> {{ nutrition.common_uses || '—' }}
+                        <b>Häufige Verwendung:</b> {{ nutrition.common_uses || '—' }}
                     </div>
-                    <RouterLink to="/receipts" class="receipts-link">See matching recipes <i class="fa-solid fa-arrow-right"></i></RouterLink>
+
+                    <RouterLink to="/receipts" class="receipts-link">
+                        Passende Rezepte anzeigen <i class="fa-solid fa-arrow-right"></i>
+                    </RouterLink>
                 </div>
             </div>
             <div v-else>
-                <em>No nutrition info available.</em>
+                <em>Keine Nährwertangaben verfügbar.</em>
             </div>
         </div>
     </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
