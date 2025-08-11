@@ -2,38 +2,23 @@
     <div class="dialog-overlay" @click.self="close">
         <div class="dialog">
             <h3>Wunschliste bearbeiten</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Bild</th>
-                    <th>Produkt</th>
-                    <th>Menge</th>
-                    <th>Einheit</th>
-                    <th>Löschen</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="item in mustHaveItems" :key="item.id">
-                    <td>
-                        <img :src="item.product.image_url" :alt="item.product.name"
-                             style="width:42px;height:42px;border-radius:5px;background:#f7f7f7;">
-                    </td>
-                    <td>{{ item.product.name }}</td>
-                    <td>
-                        <input type="number" min="1" v-model.number="item.quantity" @change="updateItem(item)"
-                               style="width:50px"/>
-                    </td>
-                    <td>
-                        <select v-model="item.unit" @change="updateItem(item)">
-                            <option v-for="unit in units" :value="unit">{{ unit }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button @click="removeItem(item)" style="color:#b90000">🗑️</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+            <div class="add-row">
+                <select v-model="selectedProductId">
+                    <option disabled value="">Produkt wählen…</option>
+                    <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
+                </select>
+                <input type="number" min="1" v-model.number="addQuantity"/>
+                <select v-model="addUnit">
+                    <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
+                </select>
+                <button class="btn" @click="addItem" :disabled="!selectedProductId">Hinzufügen</button>
+            </div>
+
+            <p style="margin:8px 0 20px 0;color:#6b7b8a;font-size:.95rem">
+                Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.
+            </p>
+
             <div class="dialog-actions">
                 <button class="btn" @click="close">Schließen</button>
             </div>
@@ -45,31 +30,44 @@
 import axios from "axios";
 
 export default {
-    props: ["units"],
-    emits: ["close"],
+    props: ["units", "products"],
+    emits: ["close", "added"],
     data() {
         return {
-            mustHaveItems: [],
+            selectedProductId: "",
+            addQuantity: 1,
+            addUnit: "Stück",
+            busy: false,
         };
-    },
-    async mounted() {
-        const {data} = await axios.get('/api/user/must-have');
-        this.mustHaveItems = data;
     },
     methods: {
         close() {
             this.$emit("close");
         },
-        async updateItem(item) {
-            await axios.put(`/api/shopping-list/items/${item.id}`, {
-                quantity: item.quantity,
-                unit: item.unit,
-            });
+        async addItem() {
+            if (!this.selectedProductId) return;
+
+            this.busy = true;
+            try {
+                const payload = {
+                    product_id: this.selectedProductId,
+                    quantity: this.addQuantity,
+                    unit: this.addUnit,
+                };
+                const {data} = await axios.post('/api/shopping-list/items', payload);
+
+                this.$emit('added', data);
+
+                this.selectedProductId = "";
+                this.addQuantity = 1;
+                this.addUnit = "Stück";
+            } catch (e) {
+                console.error(e);
+                alert("Konnte Produkt nicht hinzufügen.");
+            } finally {
+                this.busy = false;
+            }
         },
-        async removeItem(item) {
-            await axios.delete(`/api/user/must-have/${item.product.id}`);
-            this.mustHaveItems = this.mustHaveItems.filter(i => i.id !== item.id);
-        }
     }
 };
 </script>
@@ -88,7 +86,7 @@ export default {
 .dialog {
     background: #fff;
     border-radius: 16px;
-    max-width: 540px;
+    max-width: 680px;
     padding: 28px 30px 18px 30px;
     box-shadow: 0 5px 60px 0 #3360a911;
     min-width: 330px;
@@ -99,14 +97,12 @@ export default {
     margin-bottom: 17px;
 }
 
-table {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-th, td {
-    text-align: center;
-    padding: 9px 6px;
+.add-row {
+    display: grid;
+    grid-template-columns: 1fr 90px 120px 120px;
+    gap: 10px;
+    margin-bottom: 14px;
+    align-items: center;
 }
 
 .dialog-actions {

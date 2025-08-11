@@ -10,7 +10,16 @@ class ShoppingListItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'shopping_list_id', 'product_id', 'quantity', 'checked_off'
+        'shopping_list_id',
+        'product_id',
+        'name',
+        'quantity',
+        'unit',
+        'checked_off',
+    ];
+
+    protected $casts = [
+        'checked_off' => 'bool',
     ];
 
     public function shoppingList()

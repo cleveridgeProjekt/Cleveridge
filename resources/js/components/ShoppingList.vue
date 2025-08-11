@@ -10,7 +10,7 @@
     <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId" :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible" @close="nutritionEtiquetteVisible = false"/>
 
 
-    <MustHaveDialog v-if="showMustHaveDialog" :units="units" @close="closeDialogs"/>
+    <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded" @close="onCloseMustHave"/>
     <AllergyDialog v-if="showAllergyDialog" :products="products" @close="closeDialogs"/>
 
     <div class="shoppinglist-controls">
@@ -27,7 +27,7 @@
         <tr>
             <th><i class="fas fa-check"></i></th>
             <th><i class="fas fa-image"></i> Bild</th>
-            <th><i class="fas fa-burger"></i> Produkt</th>
+            <th><i class="fas fa-pizza-slice"></i> Produkt</th>
             <th>Menge</th>
             <th>Einheit</th>
             <th><i class="fas fa-trash-can"></i> Löschen</th>
@@ -114,6 +114,13 @@ export default {
     },
     methods: {
         openMustHaveDialog() { this.showMustHaveDialog = true; },
+        onItemAdded(newItem) {
+            this.shoppingList.items.push(newItem);
+        },
+        onCloseMustHave() {
+            this.showMustHaveDialog = false;
+            // this.fetchShoppingList();
+        },
         openAllergyDialog() { this.showAllergyDialog = true; },
         closeDialogs() { this.showMustHaveDialog = false; this.showAllergyDialog = false; },
 

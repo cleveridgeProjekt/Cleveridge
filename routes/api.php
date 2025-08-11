@@ -21,9 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('fridge-items/{id}', [FridgeItemController::class, 'update']);
     Route::delete('fridge-items/{id}', [FridgeItemController::class, 'destroy']);
 
-    Route::get('/user/must-have', [UserPreferenceController::class, 'mustHaveList']);
-    Route::post('/user/must-have', [UserPreferenceController::class, 'addMustHave']);
-    Route::delete('/user/must-have/{product}', [UserPreferenceController::class, 'removeMustHave']);
+    // Allergies
     Route::get('/user/allergies', [UserPreferenceController::class, 'allergyList']);
     Route::post('/user/allergies', [UserPreferenceController::class, 'addAllergy']);
     Route::delete('/user/allergies/{product}', [UserPreferenceController::class, 'removeAllergy']);

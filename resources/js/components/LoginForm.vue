@@ -15,6 +15,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { initSanctum } from '../bootstrap'
+
 const router = useRouter()
 const email = ref('')
 const password = ref('')
@@ -23,8 +26,9 @@ const error = ref('')
 async function submitLogin() {
     error.value = ''
     try {
+        await initSanctum()
         await axios.post('/login', { email: email.value, password: password.value })
-        router.push('/') // Go to dashboard
+        router.push('/')
     } catch (e) {
         error.value = e?.response?.data?.message || 'Login fehlgeschlagen'
     }
