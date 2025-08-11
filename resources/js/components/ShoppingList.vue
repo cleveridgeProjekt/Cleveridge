@@ -26,7 +26,13 @@
         </button>
     </div>
 
-    <table class="shopping-list-table">
+    <div v-if="isEmptyList" class="empty-state">
+        <i class="fas fa-clipboard-list empty-icon"></i>
+        <h4>Deine Einkaufsliste ist leer</h4>
+        <p>Füge Produkte über die Wunschliste hinzu und lege gegebenenfalls Allergien fest.</p>
+    </div>
+
+    <table v-else class="shopping-list-table">
         <thead>
         <tr>
             <th class="th-icon"><i class="fas fa-check"></i></th>
@@ -102,6 +108,9 @@ export default {
         };
     },
     computed: {
+        isEmptyList() {
+            return !this.shoppingList?.items || this.shoppingList.items.length === 0
+        },
         visibleCarousel() {
             if (!this.products.length) return [];
             const len = this.products.length;
@@ -130,7 +139,6 @@ export default {
         },
         onCloseMustHave() {
             this.showMustHaveDialog = false;
-            // this.fetchShoppingList();
         },
         openAllergyDialog() {
             this.showAllergyDialog = true;
@@ -211,6 +219,31 @@ export default {
     grid-template-columns: repeat(2, auto);
     gap: 12px;
     margin-bottom: 22px;
+}
+.empty-state {
+    margin-top: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    color: #27598a;
+    box-shadow: 0 2px 20px 0 #b9e8fa0d;
+    border: 1.5px dashed #cfe1ef;
+}
+.empty-state h4 {
+    margin: 10px 0 6px 0;
+    font-size: 1.18rem;
+    color: #144b78;
+}
+.empty-state p {
+    margin: 0 0 14px 0;
+    color: #557a9a;
+    font-size: .98rem;
+}
+
+.empty-icon {
+    font-size: 38px;
+    color: #69aee3;
 }
 
 .btn-main,
