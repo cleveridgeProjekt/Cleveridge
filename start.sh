@@ -10,7 +10,7 @@ echo "⚙️ Caching Laravel config..."
 php artisan config:cache
 
 echo "⚙️ Running database migrations..."
-php artisan migrate:fresh --force || echo "Migration failed"
+php artisan migrate --force || echo "Migration failed"
 
 echo "⚙️ Seeding database..."
 php artisan db:seed --force || echo "Seeding failed"
