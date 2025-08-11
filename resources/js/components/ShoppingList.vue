@@ -6,11 +6,15 @@
     </span>
     </PageHeader>
 
-    <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel" @detail="showProductDetail"/>
-    <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId" :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible" @close="nutritionEtiquetteVisible = false"/>
+    <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel"
+                      @detail="showProductDetail"/>
+    <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId"
+                        :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible"
+                        @close="nutritionEtiquetteVisible = false"/>
 
 
-    <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded" @close="onCloseMustHave"/>
+    <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded"
+                    @close="onCloseMustHave"/>
     <AllergyDialog v-if="showAllergyDialog" :products="products" @close="closeDialogs"/>
 
     <div class="shoppinglist-controls">
@@ -25,43 +29,48 @@
     <table class="shopping-list-table">
         <thead>
         <tr>
-            <th><i class="fas fa-check"></i></th>
-            <th><i class="fas fa-image"></i> Bild</th>
-            <th><i class="fas fa-pizza-slice"></i> Produkt</th>
-            <th>Menge</th>
-            <th>Einheit</th>
-            <th><i class="fas fa-trash-can"></i> Löschen</th>
+            <th class="th-icon"><i class="fas fa-check"></i></th>
+            <th class="th-icon"><i class="fas fa-image"></i> Bild</th>
+            <th class="th-icon"><i class="fas fa-pizza-slice"></i> Produkt</th>
+            <th class="th-icon"><i class="fas fa-sort-numeric-up"></i> Menge</th>
+            <th class="th-icon"><i class="fas fa-ruler-combined"></i> Einheit</th>
+            <th class="th-icon"><i class="fas fa-trash"></i> Löschen</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in shoppingList.items" :key="item.id">
             <td>
-                <input type="checkbox" v-model="item.checked_off" @change="toggleCheck(item)" />
+                <input type="checkbox" v-model="item.checked_off" @change="toggleCheck(item)"/>
             </td>
             <td>
-                <img v-if="item.product && item.product.image_url"
-                     :src="item.product.image_url"
-                     alt=""
-                     class="produkt-img"
-                     style="width:60px;height:60px;border-radius:7px;background:#f7f7f7;"/>
+                <img
+                    v-if="item.product && item.product.image_url"
+                    :src="item.product.image_url"
+                    alt=""
+                    class="produkt-img"
+                />
             </td>
             <td>
                 {{ item.product ? item.product.name : item.name }}
             </td>
             <td>
-                <input type="number" min="1" v-model.number="item.quantity" @change="updateItem(item)" style="width:60px"/>
+                <input class="ui-input qty" type="number" min="1"
+                       v-model.number="item.quantity" @change="updateItem(item)"/>
             </td>
             <td>
-                <select v-model="item.unit" @change="updateItem(item)">
-                    <option v-for="unit in units" :value="unit">{{ unit }}</option>
+                <select class="ui-select unit" v-model="item.unit" @change="updateItem(item)">
+                    <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
                 </select>
             </td>
             <td>
-                <button @click="deleteItem(item)" style="color:#b90000">🗑️</button>
+                <button class="icon-btn danger" @click="deleteItem(item)" title="Löschen">
+                    <i class="fas fa-trash"></i>
+                </button>
             </td>
         </tr>
         </tbody>
     </table>
+
 </template>
 
 <script>
@@ -74,10 +83,10 @@ import AllergyDialog from "./AllergyDialog.vue";
 
 export default {
     name: "ShoppingList",
-    components: { PageHeader, ShoppingCarousel, NutritionEtiquette, MustHaveDialog, AllergyDialog },
+    components: {PageHeader, ShoppingCarousel, NutritionEtiquette, MustHaveDialog, AllergyDialog},
     data() {
         return {
-            shoppingList: { items: [] },
+            shoppingList: {items: []},
             products: [],
             selectedProductId: "",
             manualProduct: "",
@@ -113,7 +122,9 @@ export default {
         await this.fetchShoppingList();
     },
     methods: {
-        openMustHaveDialog() { this.showMustHaveDialog = true; },
+        openMustHaveDialog() {
+            this.showMustHaveDialog = true;
+        },
         onItemAdded(newItem) {
             this.shoppingList.items.push(newItem);
         },
@@ -121,15 +132,20 @@ export default {
             this.showMustHaveDialog = false;
             // this.fetchShoppingList();
         },
-        openAllergyDialog() { this.showAllergyDialog = true; },
-        closeDialogs() { this.showMustHaveDialog = false; this.showAllergyDialog = false; },
+        openAllergyDialog() {
+            this.showAllergyDialog = true;
+        },
+        closeDialogs() {
+            this.showMustHaveDialog = false;
+            this.showAllergyDialog = false;
+        },
 
         async fetchProducts() {
-            const { data } = await axios.get('/api/products');
+            const {data} = await axios.get('/api/products');
             this.products = data;
         },
         async fetchShoppingList() {
-            const { data } = await axios.get('/api/shopping-list');
+            const {data} = await axios.get('/api/shopping-list');
             this.shoppingList = data;
         },
         async addItem() {
@@ -150,7 +166,7 @@ export default {
                 quantity: this.addQuantity,
                 unit: this.addUnit,
             };
-            const { data } = await axios.post('/api/shopping-list/items', payload);
+            const {data} = await axios.post('/api/shopping-list/items', payload);
             this.shoppingList.items.push(data);
             this.selectedProductId = "";
             this.manualProduct = "";
@@ -196,6 +212,7 @@ export default {
     gap: 12px;
     margin-bottom: 22px;
 }
+
 .btn-main,
 .btn-alt {
     background: #f6fafe;
@@ -209,19 +226,13 @@ export default {
     cursor: pointer;
     transition: background .13s, color .13s;
 }
+
 .btn-main:hover,
 .btn-alt:hover {
     background: #d7f1ff;
     color: #0a457a;
 }
 
-.add-product-section {
-    display: grid;
-    grid-template-columns: 200px 1fr 70px 110px 100px;
-    gap: 10px;
-    margin-bottom: 18px;
-    align-items: center;
-}
 .shopping-list-table {
     width: 100%;
     margin-top: 12px;
@@ -232,16 +243,89 @@ export default {
     border-collapse: separate;
     border-spacing: 0;
 }
+
 .shopping-list-table th,
 .shopping-list-table td {
     padding: 13px 8px;
     text-align: center;
     border-bottom: 1px solid #f0f5fa;
 }
+
 .shopping-list-table th {
     background: #e9f6ff;
 }
+
 .shopping-list-table tr:last-child td {
     border-bottom: none;
 }
+
+.th-icon i {
+    margin-right: 6px;
+}
+
+.produkt-img {
+    display: block;
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
+    background: #f7f7f7;
+    object-fit: cover;
+}
+
+.ui-input,
+.ui-select {
+    width: 84px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid #cfe1ef;
+    background: #f6fbff;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #164b76;
+    outline: none;
+    transition: box-shadow .12s, border-color .12s, background .12s;
+}
+
+.ui-input:focus,
+.ui-select:focus {
+    border-color: #9ed2f5;
+    box-shadow: 0 0 0 3px #bfe7ff66;
+    background: #ffffff;
+}
+
+.qty {
+    text-align: center;
+    width: 64px;
+}
+
+.unit {
+    width: 120px;
+}
+
+.icon-btn {
+    height: 34px;
+    min-width: 34px;
+    border: 1px solid #d9e7f2;
+    background: #fff;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-btn:hover {
+    background: #f4f9ff;
+}
+
+.icon-btn.danger {
+    color: #b90000;
+    border-color: #f1d2d2;
+}
+
+.icon-btn.danger:hover {
+    background: #fff5f5;
+}
 </style>
+

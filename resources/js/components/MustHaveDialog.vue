@@ -4,23 +4,28 @@
             <h3>Wunschliste bearbeiten</h3>
 
             <div class="add-row">
-                <select v-model="selectedProductId">
+                <select class="ui-select" v-model="selectedProductId">
                     <option disabled value="">Produkt wählen…</option>
                     <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
                 </select>
-                <input type="number" min="1" v-model.number="addQuantity"/>
-                <select v-model="addUnit">
+
+                <input class="ui-input qty" type="number" min="1" v-model.number="addQuantity"/>
+
+                <select class="ui-select" v-model="addUnit">
                     <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
                 </select>
-                <button class="btn" @click="addItem" :disabled="!selectedProductId">Hinzufügen</button>
+
+                <button class="btn" @click="addItem" :disabled="!selectedProductId || busy">
+                    <i class="fas fa-plus"></i> Hinzufügen
+                </button>
             </div>
 
-            <p style="margin:8px 0 20px 0;color:#6b7b8a;font-size:.95rem">
+            <p class="hint">
                 Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.
             </p>
 
             <div class="dialog-actions">
-                <button class="btn" @click="close">Schließen</button>
+                <button class="btn ghost" @click="close">Schließen</button>
             </div>
         </div>
     </div>
@@ -54,9 +59,9 @@ export default {
                     quantity: this.addQuantity,
                     unit: this.addUnit,
                 };
-                const {data} = await axios.post('/api/shopping-list/items', payload);
+                const {data} = await axios.post("/api/shopping-list/items", payload);
 
-                this.$emit('added', data);
+                this.$emit("added", data);
 
                 this.selectedProductId = "";
                 this.addQuantity = 1;
@@ -68,7 +73,7 @@ export default {
                 this.busy = false;
             }
         },
-    }
+    },
 };
 </script>
 
@@ -76,7 +81,7 @@ export default {
 .dialog-overlay {
     position: fixed;
     inset: 0;
-    background: #1027484d;
+    background: #0b20384d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,41 +90,100 @@ export default {
 
 .dialog {
     background: #fff;
-    border-radius: 16px;
-    max-width: 680px;
-    padding: 28px 30px 18px 30px;
-    box-shadow: 0 5px 60px 0 #3360a911;
-    min-width: 330px;
+    border-radius: 18px;
+    max-width: 720px;
+    width: calc(100% - 32px);
+    padding: 26px 26px 18px;
+    box-shadow: 0 18px 60px #0b2a5214;
 }
 
 .dialog h3 {
-    font-size: 1.25em;
-    margin-bottom: 17px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0 0 16px;
+    color: #0c5288;
 }
 
 .add-row {
     display: grid;
-    grid-template-columns: 1fr 90px 120px 120px;
+    grid-template-columns: 1fr 96px 150px 150px;
     gap: 10px;
-    margin-bottom: 14px;
     align-items: center;
+}
+
+.ui-input,
+.ui-select {
+    width: 100%;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #cfe1ef;
+    background: #f6fbff;
+    padding: 0 12px;
+    font-size: 14.5px;
+    color: #164b76;
+    outline: none;
+    transition: box-shadow .12s, border-color .12s, background .12s;
+    appearance: none;
+}
+
+.ui-input:focus,
+.ui-select:focus {
+    border-color: #9ed2f5;
+    box-shadow: 0 0 0 3px #bfe7ff66;
+    background: #ffffff;
+}
+
+.ui-select:invalid,
+.ui-select option[disabled] {
+    color: #90a4b8;
+}
+
+.qty {
+    text-align: center;
+}
+
+.btn {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px solid #b7e9fa;
+    background: #f4fbff;
+    color: #2568ad;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #eaf6ff;
+    color: #134a81;
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.btn.ghost {
+    background: #fff;
+    border-color: #d5e7f5;
+    color: #2b5c8c;
+}
+
+.btn.ghost:hover {
+    background: #f5fbff;
+}
+
+.hint {
+    margin: 10px 0 18px;
+    color: #6b7b8a;
+    font-size: .95rem;
 }
 
 .dialog-actions {
     text-align: right;
-}
-
-.btn {
-    background: #f4fbff;
-    border-radius: 7px;
-    border: 1px solid #b7e9fa;
-    color: #2568ad;
-    padding: 7px 18px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: #daf1ff;
-    color: #054b7e;
 }
 </style>
