@@ -14,8 +14,7 @@ class FridgePolicy
     {
         return true;
     }
-
-    public function view(User $user, Fridge $fridge): bool
+    public function view(User $user, Fridge $fridge)
     {
         return $fridge->user_id === $user->id;
     }
@@ -25,12 +24,11 @@ class FridgePolicy
         return true;
     }
 
-    public function update(User $user, Fridge $fridge): bool
+    public function update(User $user, Fridge $fridge)
     {
         return $fridge->user_id === $user->id;
     }
-
-    public function delete(User $user, Fridge $fridge): bool
+    public function delete(User $user, Fridge $fridge)
     {
         return $fridge->user_id === $user->id;
     }

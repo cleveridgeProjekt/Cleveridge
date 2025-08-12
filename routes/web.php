@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExpiryController;
 use App\Http\Controllers\FridgeController;
 use App\Http\Controllers\FridgeItemController;
 use App\Http\Controllers\ProductController;
@@ -24,15 +25,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/user', fn () => auth()->user());
 
     // products
-
-    Route::post('/api/products/{product}/nutrition', [ProductNutritionController::class, 'store']);
-    Route::put ('/api/products/{product}/nutrition', [ProductNutritionController::class, 'update']);
-
     Route::get   ('/api/products',            [ProductController::class, 'index']);
     Route::get   ('/api/products/{id}',       [ProductController::class, 'show']);
     Route::post  ('/api/products',            [ProductController::class, 'store']);
     Route::put   ('/api/products/{id}',       [ProductController::class, 'update']);
     Route::delete('/api/products/{id}',       [ProductController::class, 'destroy']);
+
+    // nutrition
+    Route::get ('/api/products/{product}/nutrition', [ProductNutritionController::class, 'show']);
+    Route::post('/api/products/{product}/nutrition', [ProductNutritionController::class, 'store']);
+    Route::put ('/api/products/{product}/nutrition', [ProductNutritionController::class, 'update']);
 
     // must-have
     Route::get   ('/api/user/must-have',              [UserPreferenceController::class, 'mustHaveList']);
@@ -62,6 +64,8 @@ Route::middleware('auth')->group(function () {
     Route::post  ('/api/fridges/{fridge}/items', [FridgeItemController::class, 'store']);
     Route::patch ('/api/fridge-items/{item}',    [FridgeItemController::class, 'update']);
     Route::delete('/api/fridge-items/{item}',    [FridgeItemController::class, 'destroy']);
+
+    Route::get('/api/expiry', [ExpiryController::class, 'index']);
 
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

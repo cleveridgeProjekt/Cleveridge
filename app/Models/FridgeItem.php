@@ -24,4 +24,16 @@ class FridgeItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function scopeExpired($q)
+    {
+        $from = today()->toDateString();
+        return $q->whereNotNull('expiry_date')->whereDate('expiry_date', '<', $from);
+    }
+
+    public function scopeExpiringSoon($q, $days = 3)
+    {
+        $from = today()->toDateString();
+        $to   = today()->addDays((int) max($days, 1))->toDateString();
+        return $q->whereNotNull('expiry_date')->whereBetween('expiry_date', [$from, $to]);
+    }
 }

@@ -35,15 +35,10 @@ class FridgeController extends Controller
     {
         $this->authorize('update', $fridge);
 
-        $data = $request->validate([
-            'name'         => 'nullable|string|max:255',
-            'temperature'  => 'nullable|numeric',
-            'humidity'     => 'nullable|numeric',
-        ]);
-
+        $data = $request->validate(['name' => 'nullable|string|max:255']);
         $fridge->update($data);
 
-        return $fridge->load('items.product');
+        return $fridge->fresh('items.product');
     }
 
     // Delete fridge
