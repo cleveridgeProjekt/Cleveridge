@@ -245,19 +245,32 @@ export default {
 .section-title {
     margin: 14px 0 8px;
     color: #25548a;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .table-wrap {
-    overflow-x: auto;
+    padding-inline: 18px;
 }
 
 .items-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 1rem;
+    table-layout: fixed;
 }
 
+.items-table th:first-child,
+.items-table td:first-child {
+    padding-left: 12px;
+}
+
+.items-table th:last-child,
+.items-table td:last-child {
+    padding-right: 12px;
+}
+
+.section-title + .table-wrap {
+    margin-top: 6px;
+}
 .items-table th, .items-table td {
     padding: 10px 8px;
     border-bottom: 1px solid #f0f5fa;
