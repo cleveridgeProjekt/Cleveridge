@@ -52,15 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/user/allergies/{product}',   [UserPreferenceController::class, 'removeAllergy']);
 
     // fridges
-    Route::get   ('/api/fridges',                   [FridgeController::class, 'index']);
-    Route::get   ('/api/fridges/{id}',              [FridgeController::class, 'show']);
-    Route::post  ('/api/fridges',                   [FridgeController::class, 'store']);
-    Route::put   ('/api/fridges/{id}',              [FridgeController::class, 'update']);
-    Route::delete('/api/fridges/{id}',              [FridgeController::class, 'destroy']);
+    Route::get   ('/api/fridges',                [FridgeController::class, 'index']);
+    Route::post  ('/api/fridges',                [FridgeController::class, 'store']);
+    Route::get   ('/api/fridges/{fridge}',       [FridgeController::class, 'show']);
+    Route::put   ('/api/fridges/{fridge}',       [FridgeController::class, 'update']);
+    Route::delete('/api/fridges/{fridge}',       [FridgeController::class, 'destroy']);
 
-    Route::post  ('/api/fridges/{fridge}/items',    [FridgeItemController::class, 'store']);
-    Route::patch ('/api/fridge-items/{id}',         [FridgeItemController::class, 'update']);
-    Route::delete('/api/fridge-items/{id}',         [FridgeItemController::class, 'destroy']);
+    // fridge items
+    Route::post  ('/api/fridges/{fridge}/items', [FridgeItemController::class, 'store']);
+    Route::patch ('/api/fridge-items/{item}',    [FridgeItemController::class, 'update']);
+    Route::delete('/api/fridge-items/{item}',    [FridgeItemController::class, 'destroy']);
 
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

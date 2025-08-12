@@ -9,8 +9,10 @@ class FridgeItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'fridge_id', 'product_id', 'expiry_date', 'quantity'
+    protected $fillable = ['fridge_id','product_id','expiry_date','quantity'];
+
+    protected $casts = [
+        'expiry_date' => 'date:Y-m-d',
     ];
 
     public function fridge()

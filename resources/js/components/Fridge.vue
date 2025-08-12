@@ -173,8 +173,10 @@ export default {
             }
         },
         async updateItem(it, extra = {}) {
-            const payload = {quantity: it.quantity, expiry_date: this.formatDateForInput(it.expiry_date), ...extra}
-            const {data} = await axios.patch(`/api/fridge-items/${it.id}`, payload)
+            const payload = { quantity: it.quantity, ...extra }
+            const d = this.formatDateForInput(it.expiry_date)
+            if (d) payload.expiry_date = d
+            const { data } = await axios.patch(`/api/fridge-items/${it.id}`, payload)
             Object.assign(it, data)
         },
         async deleteItem(it) {

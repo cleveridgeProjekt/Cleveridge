@@ -14,11 +14,10 @@ class FridgeController extends Controller
     }
 
     // Show a single fridge (with items)
-    public function show($id)
+    public function show(Fridge $fridge)
     {
-        $fridge = Fridge::with('items.product')->findOrFail($id);
         $this->authorize('view', $fridge);
-        return $fridge;
+        return $fridge->load('items.product');
     }
 
     // Create a new fridge
@@ -32,21 +31,28 @@ class FridgeController extends Controller
     }
 
     // Update fridge
-    public function update(Request $request, $id)
+    public function update(Request $request, FridgeItem $item)
     {
-        $fridge = Fridge::findOrFail($id);
-        $this->authorize('update', $fridge);
-        $fridge->update($request->only('name', 'temperature', 'humidity'));
-        return $fridge;
+        $this->authorize('update', $item->fridge);
+
+        $data = $request->only('quantity', 'expiry_date');
+        if (array_key_exists('expiry_date', $data) && $data['expiry_date'] === '') {
+            $data['expiry_date'] = null;
+        }
+
+        $item->update($data);
+        return $item->load('product');
     }
 
     // Delete fridge
-    public function destroy($id)
+    public function destroy(Fridge $fridge)
     {
-        $fridge = Fridge::findOrFail($id);
         $this->authorize('delete', $fridge);
+
+        $fridge->items()->delete();
         $fridge->delete();
-        return response()->json(['message' => 'Deleted']);
+
+        return response()->noContent();
     }
 }
 

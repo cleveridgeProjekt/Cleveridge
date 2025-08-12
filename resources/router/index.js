@@ -1,43 +1,57 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-import Dashboard from "../js/components/Dashboard.vue"
-import LoginForm from '../js/components/LoginForm.vue'
-import RegisterForm from '../js/components/RegisterForm.vue'
 import { user, fetchUser } from '../js/composables/useUser'
 
+const Dashboard           = () => import('../js/components/Dashboard.vue')
+const LoginForm           = () => import('../js/components/LoginForm.vue')
+const RegisterForm        = () => import('../js/components/RegisterForm.vue')
+const Fridge              = () => import('../js/components/Fridge.vue')
+const Products            = () => import('../js/components/Products.vue')
+const Receipts            = () => import('../js/components/Receipts.vue')
+const ShoppingList        = () => import('../js/components/ShoppingList.vue')
+const Status              = () => import('../js/components/Status.vue')
+const Expiry              = () => import('../js/components/Expiry.vue')
+const ProductRecognition  = () => import('../js/components/ProductRecognition.vue')
+
 const routes = [
-    { path: '/', component: Dashboard, name: 'dashboard' },
-    { path: '/login', component: LoginForm, name: 'login' },
-    { path: '/register', component: RegisterForm, name: 'register' },
-    { path: '/fridge', component: () => import('../js/components/Fridge.vue'), name: 'fridge' },
-    { path: '/products', component: () => import('../js/components/Products.vue'), name: 'products' },
-    { path: '/receipts', component: () => import('../js/components/Receipts.vue'), name: 'receipts' },
-    { path: '/shopping-list', component: () => import('../js/components/ShoppingList.vue'), name: 'shopping-list' },
-    { path: '/status', component: () => import('../js/components/Status.vue'), name: 'status' },
-    { path: '/expiry', component: () => import('../js/components/Expiry.vue'), name: 'expiry' },
-    { path: '/product-recognition', component: () => import('../js/components/ProductRecognition.vue'), name: 'product-recognition' },
+    // Public pages
+    { path: '/login',    name: 'login',    component: LoginForm,    meta: { public: true } },
+    { path: '/register', name: 'register', component: RegisterForm, meta: { public: true } },
+
+    { path: '/',                   name: 'dashboard',           component: Dashboard },
+    { path: '/fridge',             name: 'fridge',              component: Fridge },
+    { path: '/products',           name: 'products',            component: Products },
+    { path: '/receipts',           name: 'receipts',            component: Receipts },
+    { path: '/shopping-list',      name: 'shopping-list',       component: ShoppingList },
+    { path: '/status',             name: 'status',              component: Status },
+    { path: '/expiry',             name: 'expiry',              component: Expiry },
+    { path: '/product-recognition',name: 'product-recognition', component: ProductRecognition },
+
+    { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+    scrollBehavior() {
+        return { top: 0 }
+    },
 })
 
 router.beforeEach(async (to, from, next) => {
-    const publicPages = ['/login', '/register']
-    const authRequired = !publicPages.includes(to.path)
-
-    if (user.value === null && authRequired) {
+    const isPublic = to.matched.some(r => r.meta?.public)
+    if (!isPublic && user.value === null) {
         await fetchUser()
     }
 
-    if (authRequired && !user.value) {
-        return next('/login')
+    if (!isPublic && !user.value) {
+        return next({ name: 'login', query: { redirect: to.fullPath } })
     }
-    if (publicPages.includes(to.path) && user.value) {
-        return next('/')
+
+    if (isPublic && user.value) {
+        return next({ name: 'dashboard' })
     }
-    next()
+
+    return next()
 })
 
 export default router
