@@ -5,6 +5,7 @@ use App\Http\Controllers\FridgeController;
 use App\Http\Controllers\FridgeItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductNutritionController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\ShoppingListItemController;
 use App\Http\Controllers\UserPreferenceController;
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/products/{product}/nutrition', [ProductNutritionController::class, 'store']);
     Route::put ('/api/products/{product}/nutrition', [ProductNutritionController::class, 'update']);
 
+    // products expiry
+    Route::get('/api/expiry', [ExpiryController::class, 'index']);
+
     // must-have
     Route::get   ('/api/user/must-have',              [UserPreferenceController::class, 'mustHaveList']);
     Route::post  ('/api/user/must-have',              [UserPreferenceController::class, 'addMustHave']);
@@ -65,7 +69,8 @@ Route::middleware('auth')->group(function () {
     Route::patch ('/api/fridge-items/{item}',    [FridgeItemController::class, 'update']);
     Route::delete('/api/fridge-items/{item}',    [FridgeItemController::class, 'destroy']);
 
-    Route::get('/api/expiry', [ExpiryController::class, 'index']);
+    // recipes
+    Route::post('/api/recipes/suggest', [RecipeController::class, 'suggest']);
 
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

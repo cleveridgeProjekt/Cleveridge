@@ -6,7 +6,7 @@ const LoginForm           = () => import('../js/components/LoginForm.vue')
 const RegisterForm        = () => import('../js/components/RegisterForm.vue')
 const Fridge              = () => import('../js/components/Fridge.vue')
 const Products            = () => import('../js/components/Products.vue')
-const Receipts            = () => import('../js/components/Receipts.vue')
+const Recipes            = () => import('../js/components/Recipes.vue')
 const ShoppingList        = () => import('../js/components/ShoppingList.vue')
 const Status              = () => import('../js/components/Status.vue')
 const Expiry              = () => import('../js/components/Expiry.vue')
@@ -20,7 +20,7 @@ const routes = [
     { path: '/',                   name: 'dashboard',           component: Dashboard },
     { path: '/fridge',             name: 'fridge',              component: Fridge },
     { path: '/products',           name: 'products',            component: Products },
-    { path: '/receipts',           name: 'receipts',            component: Receipts },
+    { path: '/receipts',           name: 'recipes',            component: Recipes },
     { path: '/shopping-list',      name: 'shopping-list',       component: ShoppingList },
     { path: '/status',             name: 'status',              component: Status },
     { path: '/expiry',             name: 'expiry',              component: Expiry },
