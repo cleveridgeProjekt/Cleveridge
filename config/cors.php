@@ -2,7 +2,7 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://localhost:5173', 'http://cleveridge'],
+    'allowed_origins' => ['http://localhost:5173', 'https://cleveridge.onrender.com'],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
     'max_age' => 0,
