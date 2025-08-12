@@ -9,19 +9,29 @@
             <section class="card">
                 <h3 class="card-title">Meine Kühlschränke</h3>
 
-                <ul class="fridge-list">
-                    <li v-for="f in fridges" :key="f.id"
-                        :class="['fridge-row', { active: f.id === selectedFridgeId }]"
-                        @click="selectFridge(f.id)">
-                        <span>{{ f.name || 'Ohne Name' }}</span>
-                        <div class="row-actions" @click.stop>
-                            <button class="icon-btn" title="Umbenennen" @click="promptRename(f)"><i
-                                class="fas fa-pen"></i></button>
-                            <button class="icon-btn danger" title="Löschen" @click="deleteFridge(f)"><i
-                                class="fas fa-trash"></i></button>
-                        </div>
-                    </li>
-                </ul>
+                <template v-if="fridges.length">
+                    <ul class="fridge-list">
+                        <li v-for="f in fridges" :key="f.id" :class="['fridge-row', { active: f.id === selectedFridgeId }]" @click="selectFridge(f.id)">
+                            <span>{{ f.name || 'Ohne Name' }}</span>
+                            <div class="row-actions" @click.stop>
+                                <button class="icon-btn" title="Umbenennen" @click="promptRename(f)">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="icon-btn danger" title="Löschen" @click="deleteFridge(f)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </template>
+
+                <template v-else>
+                    <div class="empty-state">
+                        <i class="fas fa-snowflake empty-icon"></i>
+                        <h4>Du hast noch keinen Kühlschrank</h4>
+                        <p>Lege deinen ersten Kühlschrank an, um Produkte zu verwalten.</p>
+                    </div>
+                </template>
 
                 <div class="new-fridge">
                     <input class="ui-input" v-model="newFridgeName" placeholder="Neuen Kühlschrank benennen…"/>
@@ -41,19 +51,17 @@
                         <option disabled value="">Produkt wählen…</option>
                         <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
                     </select>
-
-                    <input class="ui-input qty" type="number" min="1" v-model.number="add.quantity"
-                           placeholder="Menge"/>
-
+                    <input class="ui-input qty" type="number" min="1" v-model.number="add.quantity" placeholder="Menge"/>
                     <input class="ui-input" type="date" v-model="add.expiry_date"/>
-
                     <button class="btn" :disabled="!add.product_id || busyAdd" @click="addItem">
                         <i class="fas fa-plus"></i> Hinzufügen
                     </button>
                 </div>
 
-                <div v-if="(currentFridge.items || []).length === 0" class="empty">
-                    <i class="fas fa-ice-cream"></i> Noch keine Produkte in diesem Kühlschrank.
+                <div v-if="(currentFridge.items || []).length === 0" class="empty-state">
+                    <i class="fas fa-box-open empty-icon"></i>
+                    <h4>Keine Produkte vorhanden</h4>
+                    <p>Füge oben Produkte hinzu – Produkt wählen, Menge & Ablaufdatum setzen und auf „Hinzufügen“ klicken.</p>
                 </div>
 
                 <table v-else class="items-table">
@@ -73,17 +81,11 @@
                         </td>
                         <td>{{ it.product?.name || '—' }}</td>
                         <td>
-                            <input class="ui-input qty" type="number" min="1"
-                                   v-model.number="it.quantity"
-                                   @change="updateItem(it)">
+                            <input class="ui-input qty" type="number" min="1" v-model.number="it.quantity" @change="updateItem(it)">
                         </td>
                         <td>
-                            <input class="ui-input" type="date"
-                                   :value="formatDateForInput(it.expiry_date)"
-                                   @change="e => updateItem(it, { expiry_date: e.target.value })">
-                            <span class="badge" :class="expiryClass(it.expiry_date)">{{
-                                    expiryLabel(it.expiry_date)
-                                }}</span>
+                            <input class="ui-input" type="date" :value="formatDateForInput(it.expiry_date)" @change="e => updateItem(it, { expiry_date: e.target.value })">
+                            <span class="badge" :class="expiryClass(it.expiry_date)">{{ expiryLabel(it.expiry_date) }}</span>
                         </td>
                         <td>
                             <button class="icon-btn danger" title="Entfernen" @click="deleteItem(it)">
@@ -97,6 +99,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -217,6 +220,33 @@ export default {
 </script>
 
 <style scoped>
+.empty-state {
+    margin-top: 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    color: #27598a;
+    box-shadow: 0 2px 20px 0 #b9e8fa0d;
+    border: 1.5px dashed #cfe1ef;
+}
+
+.empty-state h4 {
+    margin: 10px 0 6px 0;
+    font-size: 1.18rem;
+    color: #144b78;
+}
+
+.empty-state p {
+    margin: 0 0 14px 0;
+    color: #557a9a;
+    font-size: .98rem;
+}
+
+.empty-icon {
+    font-size: 38px;
+    color: #69aee3;
+}
 .fridge-grid {
     display: grid;
     grid-template-columns: 520px 1fr;

@@ -31,14 +31,11 @@ class FridgeItemController extends Controller
     }
 
     // Update item
-    public function update(Request $request, $id)
+    public function update(Request $request, FridgeItem $item)
     {
-        $item = \App\Models\FridgeItem::findOrFail($id);
-        $fridge = $item->fridge;
-        $this->authorize('update', $fridge);
+        $this->authorize('update', $item->fridge);
 
         $data = $request->only('quantity', 'expiry_date');
-
         if (array_key_exists('expiry_date', $data) && $data['expiry_date'] === '') {
             $data['expiry_date'] = null;
         }

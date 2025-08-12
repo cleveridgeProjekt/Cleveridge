@@ -31,17 +31,19 @@ class FridgeController extends Controller
     }
 
     // Update fridge
-    public function update(Request $request, FridgeItem $item)
+    public function update(Request $request, Fridge $fridge)
     {
-        $this->authorize('update', $item->fridge);
+        $this->authorize('update', $fridge);
 
-        $data = $request->only('quantity', 'expiry_date');
-        if (array_key_exists('expiry_date', $data) && $data['expiry_date'] === '') {
-            $data['expiry_date'] = null;
-        }
+        $data = $request->validate([
+            'name'         => 'nullable|string|max:255',
+            'temperature'  => 'nullable|numeric',
+            'humidity'     => 'nullable|numeric',
+        ]);
 
-        $item->update($data);
-        return $item->load('product');
+        $fridge->update($data);
+
+        return $fridge->load('items.product');
     }
 
     // Delete fridge
@@ -50,6 +52,8 @@ class FridgeController extends Controller
         $this->authorize('delete', $fridge);
 
         $fridge->items()->delete();
+        $fridge->sensors()->delete();
+
         $fridge->delete();
 
         return response()->noContent();
