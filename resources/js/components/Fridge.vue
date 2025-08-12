@@ -75,7 +75,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="it in currentFridge.items" :key="it.id">
+                    <tr v-for="it in sortedItems" :key="it.id">
                         <td>
                             <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt="">
                         </td>
@@ -121,6 +121,20 @@ export default {
     computed: {
         currentFridge() {
             return this.fridges.find(f => f.id === this.selectedFridgeId)
+        },
+
+        sortedItems() {
+            if (!this.currentFridge) return []
+            const items = this.currentFridge.items || []
+            return [...items].sort((a, b) => {
+                const da = a?.expiry_date ? new Date(a.expiry_date) : null
+                const db = b?.expiry_date ? new Date(b.expiry_date) : null
+                if (!da && !db) return 0
+                if (!da) return 1
+                if (!db) return -1
+                da.setHours(0,0,0,0); db.setHours(0,0,0,0)
+                return da - db
+            })
         }
     },
     methods: {
@@ -251,6 +265,7 @@ export default {
     display: grid;
     grid-template-columns: 520px 1fr;
     gap: 20px;
+    align-items: start;
 }
 
 .card {
@@ -276,7 +291,8 @@ export default {
     list-style: none;
     padding: 0;
     margin: 0 0 12px;
-}
+    max-height: 50vh;
+    overflow:auto; }
 
 .fridge-row {
     display: grid;
@@ -312,6 +328,7 @@ export default {
     gap: 10px;
     margin-bottom: 12px;
 }
+.btn { white-space: nowrap; }
 
 .ui-input, .ui-select {
     height: 36px;

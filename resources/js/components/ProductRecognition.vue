@@ -472,7 +472,7 @@ export default {
     height: 36px;
     border: 1px solid #cfe1ef;
     border-radius: 2px;
-    padding: 0 10px;
+    padding: 0 80px;
     background: #f6fbff;
 }
 
