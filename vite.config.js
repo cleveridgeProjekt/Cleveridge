@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
+import fs from 'fs'
+
 export default defineConfig({
     base: '/build/',
     plugins: [
@@ -27,6 +29,10 @@ export default defineConfig({
         },
     },
     server: {
+        https: {
+            key: fs.readFileSync('./.cert/localhost-key.pem'),
+            cert: fs.readFileSync('./.cert/localhost.pem'),
+        },
         cors: true,
         host: 'localhost',
         port: 5173,

@@ -133,7 +133,7 @@ export default {
 .ui-input {
     height: 36px;
     border: 1px solid #cfe1ef;
-    border-radius: 9px;
+    border-radius: 2px;
     padding: 0 10px;
     background: #f6fbff;
 }
@@ -145,7 +145,7 @@ export default {
 .btn {
     height: 36px;
     padding: 0 14px;
-    border-radius: 9px;
+    border-radius: 2px;
     border: 1px solid #b7e9fa;
     background: #f4fbff;
     color: #2568ad;

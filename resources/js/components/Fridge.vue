@@ -6,7 +6,6 @@
         </PageHeader>
 
         <div class="fridge-grid">
-            <!-- Left: Fridge list & actions -->
             <section class="card">
                 <h3 class="card-title">Meine Kühlschränke</h3>
 
@@ -30,7 +29,6 @@
                 </div>
             </section>
 
-            <!-- Right: Items in selected fridge -->
             <section class="card" v-if="currentFridge">
                 <div class="card-title-row">
                     <h3 class="card-title">
@@ -38,7 +36,6 @@
                     </h3>
                 </div>
 
-                <!-- Add item -->
                 <div class="add-item">
                     <select class="ui-select" v-model="add.product_id">
                         <option disabled value="">Produkt wählen…</option>
@@ -55,7 +52,6 @@
                     </button>
                 </div>
 
-                <!-- Items table -->
                 <div v-if="(currentFridge.items || []).length === 0" class="empty">
                     <i class="fas fa-ice-cream"></i> Noch keine Produkte in diesem Kühlschrank.
                 </div>
@@ -127,7 +123,6 @@ export default {
     methods: {
         async fetchFridges() {
             const {data} = await axios.get('/api/fridges')
-            // ensure items array always exists
             this.fridges = (data || []).map(f => ({...f, items: f.items || []}))
             if (!this.selectedFridgeId && this.fridges.length) {
                 this.selectedFridgeId = this.fridges[0].id
@@ -190,7 +185,6 @@ export default {
 
         formatDateForInput(val) {
             if (!val) return ''
-            // accepts Date/string; returns yyyy-mm-dd
             const d = new Date(val)
             const yyyy = d.getFullYear()
             const mm = String(d.getMonth() + 1).padStart(2, '0')
@@ -223,7 +217,7 @@ export default {
 <style scoped>
 .fridge-grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 520px 1fr;
     gap: 20px;
 }
 
@@ -290,7 +284,7 @@ export default {
 .ui-input, .ui-select {
     height: 36px;
     border: 1px solid #cfe1ef;
-    border-radius: 9px;
+    border-radius: 2px;
     padding: 0 10px;
     background: #f6fbff;
 }
@@ -303,7 +297,7 @@ export default {
 .btn {
     height: 36px;
     padding: 0 14px;
-    border-radius: 9px;
+    border-radius: 2px;
     border: 1px solid #b7e9fa;
     background: #f4fbff;
     color: #2568ad;

@@ -23,6 +23,8 @@
         "vue-router": "^4.5.1"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^7.0.0"
+        "@fortawesome/fontawesome-free": "^7.0.0",
+        "@tensorflow-models/coco-ssd": "^2.2.3",
+        "@tensorflow/tfjs": "^4.22.0"
     }
 }
