@@ -1,0 +1,115 @@
+{
+    "topbar": { "logout": "Cerrar sesión" },
+    "dashboard": {
+        "title": "Panel",
+        "intro_html": "<b>Cleveridge</b> es un <b>sistema de nevera inteligente</b> que automatiza tareas del hogar de forma inteligente, aportando claridad y comodidad a tu cocina.<br>El proyecto combina tecnología web moderna, sensores e inteligencia artificial para digitalizar y gestionar por completo el contenido de tu nevera.<br><br>En su núcleo hay una cámara <b>conectada a un Raspberry Pi 5</b> que captura regularmente imágenes del interior. Una IA de visión analiza estas imágenes e identifica automáticamente los alimentos. Además, los sensores integrados monitorizan en tiempo real la temperatura y la humedad para garantizar condiciones óptimas de conservación. Toda la información se muestra en una interfaz web fácil de usar, disponible tanto en el móvil como en el PC.",
+        "tiles": {
+            "fridge": { "label": "¿QUÉ HAY EN TU NEVERA?", "desc": "Vista visual de todo el contenido" },
+            "shopping_list": { "label": "LISTA DE LA COMPRA", "desc": "Lista inteligente según lo que falta" },
+            "status": { "label": "ESTADO DE LA NEVERA", "desc": "Temperatura y humedad en tiempo real" },
+            "product_recognition": { "label": "RECONOCIMIENTO DE PRODUCTOS", "desc": "Detección automática con cámara e IA" },
+            "expiry": { "label": "CADUCIDADES", "desc": "Avisos de productos próximos a caducar" },
+            "recipes": { "label": "RECETAS", "desc": "Todas las recetas guardadas e ideas" }
+        }
+    },
+    "common": {
+        "unit": {
+            "Stück": "unidad",
+            "kg": "kg",
+            "g": "g",
+            "l": "l",
+            "ml": "ml",
+            "Packung": "paquete"
+        }
+    },
+    "fridge": {
+        "title": "Qué hay en tu nevera",
+        "intro_html": "Aquí ves todos los productos que hay actualmente en tu nevera.<br>Puedes añadir/eliminar productos, y gestionar cantidades y caducidades.",
+        "list": {
+            "title": "Mis neveras",
+            "unnamed": "Sin nombre",
+            "rename": "Renombrar",
+            "delete": "Eliminar",
+            "empty_title": "Aún no tienes ninguna nevera",
+            "empty_desc": "Crea tu primera nevera para gestionar productos.",
+            "new_placeholder": "Nombra una nueva nevera…",
+            "create": "Crear"
+        },
+        "content": { "title": "Contenido: {name}" },
+        "add": {
+            "product_placeholder": "Elige un producto…",
+            "qty_placeholder": "Cantidad",
+            "add_button": "Añadir"
+        },
+        "items_empty": {
+            "title": "No hay productos",
+            "desc": "Añade productos arriba - elige producto, establece cantidad y caducidad, y pulsa “Añadir”."
+        },
+        "table": {
+            "headers": {
+                "image": "Imagen",
+                "product": "Producto",
+                "quantity": "Cant.",
+                "expiry": "Caducidad"
+            },
+            "actions": { "remove": "Eliminar" }
+        },
+        "prompts": {
+            "rename": "Nuevo nombre:",
+            "delete_fridge": "¿Eliminar esta nevera?",
+            "delete_item": "¿Eliminar este producto?"
+        }
+    },
+    "shopping": {
+        "title": "Lista de la compra",
+        "intro_html": "Crea y gestiona tu lista de la compra inteligente.<br>Según los artículos que faltan o van a caducar, el sistema sugiere qué reponer. Edita cantidades y marca lo que ya tienes.",
+        "controls": {
+            "add_wishlist": "Añadir a mi lista de deseos",
+            "set_allergies": "Configurar alergias"
+        },
+        "empty": {
+            "title": "Tu lista de la compra está vacía",
+            "desc": "Añade productos desde la lista de deseos y configura alergias si es necesario."
+        },
+        "table": {
+            "headers": {
+                "image": "Imagen",
+                "product": "Producto",
+                "quantity": "Cant.",
+                "unit": "Unidad",
+                "delete": "Eliminar"
+            },
+            "actions": { "delete": "Eliminar" }
+        },
+        "allergy": {
+            "title_has": "Tienes alergias para estos productos:",
+            "title_none": "Genial, no hay alergias registradas."
+        },
+        "prompts": { "confirm_delete": "¿Seguro que quieres eliminar?" }
+    },
+    "products": {
+        "title": "Productos",
+        "intro": "Gestiona tus productos. Añade nuevos o edita los existentes.",
+        "create": {
+            "name_placeholder": "Nombre del producto",
+            "barcode_placeholder": "Código de barras (opcional)",
+            "shelf_life_placeholder": "Vida útil estándar (días)",
+            "image_url_placeholder": "URL de imagen (opcional)",
+            "add_button": "Añadir"
+        },
+        "search": { "placeholder": "Buscar…" },
+        "table": {
+            "headers": {
+                "image": "Imagen",
+                "name": "Nombre",
+                "barcode": "Código de barras",
+                "std_shelf_life": "Vida útil est."
+            },
+            "actions": {
+                "nutrition": "Nutrición",
+                "delete": "Eliminar"
+            }
+        },
+        "prompts": { "confirm_delete": "¿Eliminar este producto?" }
+    }
+}

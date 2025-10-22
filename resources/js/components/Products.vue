@@ -1,33 +1,29 @@
 <template>
     <div>
-        <PageHeader title="Produkte" icon="fal fa-apple-alt">
-            Verwalte deine Produkte. Füge neue hinzu oder bearbeite bestehende Einträge.
+        <PageHeader :title="$t('products.title')" icon="fal fa-apple-alt">
+            {{ $t('products.intro') }}
         </PageHeader>
 
-        <!-- Create -->
         <div class="card create">
-            <input class="ui-input" v-model="form.name" placeholder="Produktname"/>
-            <input class="ui-input" v-model="form.barcode" placeholder="Barcode (optional)"/>
-            <input class="ui-input small" type="number" min="0" v-model.number="form.default_expiry_days"
-                   placeholder="Standard-Haltbarkeit (Tage)"/>
-            <input class="ui-input" v-model="form.image_url" placeholder="Bild-URL (optional)"/>
-            <button class="btn" :disabled="!form.name" @click="create">Hinzufügen</button>
+            <input class="ui-input" v-model="form.name" :placeholder="$t('products.create.name_placeholder')" />
+            <input class="ui-input" v-model="form.barcode" :placeholder="$t('products.create.barcode_placeholder')" />
+            <input class="ui-input small" type="number" min="0" v-model.number="form.default_expiry_days" :placeholder="$t('products.create.shelf_life_placeholder')" />
+            <input class="ui-input" v-model="form.image_url" :placeholder="$t('products.create.image_url_placeholder')" />
+            <button class="btn" :disabled="!form.name" @click="create">{{ $t('products.create.add_button') }}</button>
         </div>
 
-        <!-- Search -->
         <div class="card search">
-            <input class="ui-input" v-model="q" placeholder="Suche…"/>
+            <input class="ui-input" v-model="q" :placeholder="$t('products.search.placeholder')" />
         </div>
 
-        <!-- Table -->
         <div class="card">
             <table class="tbl">
                 <thead>
                 <tr>
-                    <th>Bild</th>
-                    <th>Name</th>
-                    <th>Barcode</th>
-                    <th>Std. Haltbarkeit</th>
+                    <th>{{ $t('products.table.headers.image') }}</th>
+                    <th>{{ $t('products.table.headers.name') }}</th>
+                    <th>{{ $t('products.table.headers.barcode') }}</th>
+                    <th>{{ $t('products.table.headers.std_shelf_life') }}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -36,11 +32,11 @@
                     <td><img v-if="p.image_url" :src="p.image_url" class="thumb" alt=""></td>
                     <td><input class="ui-input" v-model="p.name" @change="save(p)"></td>
                     <td><input class="ui-input" v-model="p.barcode" @change="save(p)"></td>
-                    <td><input class="ui-input small" type="number" min="0" v-model.number="p.default_expiry_days"
-                               @change="save(p)"></td>
+                    <td><input class="ui-input small" type="number" min="0" v-model.number="p.default_expiry_days" @change="save(p)"></td>
                     <td class="actions">
-                        <button class="btn small" @click="openNutrition(p)">Nährwerte</button>
-                        <button class="icon-btn danger" title="Löschen" @click="remove(p)"><i class="fas fa-trash"></i>
+                        <button class="btn small" @click="openNutrition(p)">{{ $t('products.table.actions.nutrition') }}</button>
+                        <button class="icon-btn danger" :title="$t('products.table.actions.delete')" @click="remove(p)">
+                            <i class="fas fa-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -99,7 +95,7 @@ export default {
             Object.assign(p, data)
         },
         async remove(p) {
-            if (!confirm('Produkt wirklich löschen?')) return
+            if (!confirm(this.$t('products.prompts.confirm_delete'))) return
             await axios.delete(`/api/products/${p.id}`)
             this.products = this.products.filter(x => x.id !== p.id)
         },

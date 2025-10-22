@@ -1,0 +1,147 @@
+{
+    "topbar": {
+        "logout": "Logout"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "intro_html": "<b>Cleveridge</b> is an innovative <b>smart-fridge system</b> that intelligently automates everyday household tasks, bringing more clarity and comfort to your kitchen.<br>The project combines modern web technology, sensors, and artificial intelligence to fully digitize and manage the contents of your fridge.<br><br>At its core is a camera <b>connected to a Raspberry Pi 5</b> that regularly captures images of the inside of the fridge. An integrated computer-vision AI analyzes these images and automatically identifies the items present. In addition, built-in sensors monitor temperature and humidity in real time to ensure optimal storage conditions. All captured information is displayed in a user-friendly web interface available on both smartphone and PC.",
+        "tiles": {
+            "fridge": {
+                "label": "WHAT'S IN YOUR FRIDGE",
+                "desc": "Visual overview of all fridge contents"
+            },
+            "shopping_list": {
+                "label": "SHOPPING LIST",
+                "desc": "Smart shopping list based on missing items"
+            },
+            "status": {
+                "label": "FRIDGE STATUS",
+                "desc": "Real-time temperature & humidity"
+            },
+            "product_recognition": {
+                "label": "PRODUCT RECOGNITION",
+                "desc": "Automatic product detection via camera & AI"
+            },
+            "expiry": {
+                "label": "EXPIRY DATES",
+                "desc": "Warnings for items nearing their expiry"
+            },
+            "recipes": {
+                "label": "RECIPES",
+                "desc": "All saved recipes & ideas for your ingredients"
+            }
+        }
+    },
+    "common": {
+        "unit": {
+            "Stück": "piece(s)",
+            "kg": "kg",
+            "g": "g",
+            "l": "l",
+            "ml": "ml",
+            "Packung": "pack"
+        }
+    },
+    "fridge": {
+        "title": "What's in your fridge",
+        "intro_html": "Here you can see all products currently in your fridge.<br>You can add/remove products, manage quantities and expiry dates.",
+        "list": {
+            "title": "My fridges",
+            "unnamed": "Untitled",
+            "rename": "Rename",
+            "delete": "Delete",
+            "empty_title": "You don't have a fridge yet",
+            "empty_desc": "Create your first fridge to start managing products.",
+            "new_placeholder": "Name a new fridge…",
+            "create": "Create"
+        },
+        "content": {
+            "title": "Contents: {name}"
+        },
+        "add": {
+            "product_placeholder": "Choose a product…",
+            "qty_placeholder": "Quantity",
+            "add_button": "Add"
+        },
+        "items_empty": {
+            "title": "No products yet",
+            "desc": "Add products above - choose a product, set quantity & expiry date, then click “Add”."
+        },
+        "table": {
+            "headers": {
+                "image": "Image",
+                "product": "Product",
+                "quantity": "Qty",
+                "expiry": "Expiry date"
+            },
+            "actions": {
+                "remove": "Remove"
+            }
+        },
+        "prompts": {
+            "rename": "New name:",
+            "delete_fridge": "Delete this fridge?",
+            "delete_item": "Remove this product?"
+        }
+    },
+    "shopping": {
+        "title": "Shopping list",
+        "intro_html": "Create and manage your smart shopping list.<br>Based on missing or soon-to-expire items, the system suggests what to restock. Edit quantities and tick off what you already have.",
+        "controls": {
+            "add_wishlist": "Add to my wishlist",
+            "set_allergies": "Set allergies"
+        },
+        "empty": {
+            "title": "Your shopping list is empty",
+            "desc": "Add products via the wishlist and set allergies if needed."
+        },
+        "table": {
+            "headers": {
+                "image": "Image",
+                "product": "Product",
+                "quantity": "Qty",
+                "unit": "Unit",
+                "delete": "Delete"
+            },
+            "actions": {
+                "delete": "Delete"
+            }
+        },
+        "allergy": {
+            "title_has": "You have allergies for these products:",
+            "title_none": "Great, there are no allergies recorded."
+        },
+        "prompts": {
+            "confirm_delete": "Really delete?"
+        }
+    },
+    "products": {
+        "title": "Products",
+        "intro": "Manage your products. Add new ones or edit existing entries.",
+        "create": {
+            "name_placeholder": "Product name",
+            "barcode_placeholder": "Barcode (optional)",
+            "shelf_life_placeholder": "Standard shelf life (days)",
+            "image_url_placeholder": "Image URL (optional)",
+            "add_button": "Add"
+        },
+        "search": {
+            "placeholder": "Search…"
+        },
+        "table": {
+            "headers": {
+                "image": "Image",
+                "name": "Name",
+                "barcode": "Barcode",
+                "std_shelf_life": "Std. shelf life"
+            },
+            "actions": {
+                "nutrition": "Nutrition",
+                "delete": "Delete"
+            }
+        },
+        "prompts": {
+            "confirm_delete": "Really delete this product?"
+        }
+    }
+}

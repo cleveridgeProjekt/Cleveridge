@@ -1,76 +1,53 @@
 <template>
-    <PageHeader title="Einkaufsliste" icon="fal fa-shopping-cart">
-    <span>
-      Erstelle und verwalte deine intelligente Einkaufsliste.<br>
-      Basierend auf fehlenden oder bald ablaufenden Artikeln schlägt das System vor, was du nachkaufen solltest, bearbeite Mengen und hake ab, was du schon hast.
-    </span>
+    <PageHeader :title="$t('shopping.title')" icon="fal fa-shopping-cart">
+        <span v-html="$t('shopping.intro_html')"></span>
     </PageHeader>
-
-    <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel"
-                      @detail="showProductDetail"/>
-    <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId"
-                        :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible"
-                        @close="nutritionEtiquetteVisible = false"/>
-
-
-    <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded"
-                    @close="onCloseMustHave"/>
-
-    <AllergyDialog v-if="showAllergyDialog" :products="products" @saved="onAllergySaved" @close="closeDialogs"/>
 
     <div class="shoppinglist-controls">
         <button class="btn-main" @click="openMustHaveDialog">
-            <i class="fas fa-heart"></i> Zu meiner Wunschliste hinzufügen
+            <i class="fas fa-heart"></i> {{ $t('shopping.controls.add_wishlist') }}
         </button>
         <button class="btn-alt" @click="openAllergyDialog">
-            <i class="fas fa-allergies"></i> Allergien festlegen
+            <i class="fas fa-allergies"></i> {{ $t('shopping.controls.set_allergies') }}
         </button>
     </div>
 
     <div v-if="isEmptyList" class="empty-state">
         <i class="fas fa-clipboard-list empty-icon"></i>
-        <h4>Deine Einkaufsliste ist leer</h4>
-        <p>Füge Produkte über die Wunschliste hinzu und lege gegebenenfalls Allergien fest.</p>
+        <h4>{{ $t('shopping.empty.title') }}</h4>
+        <p>{{ $t('shopping.empty.desc') }}</p>
     </div>
 
     <table v-else class="shopping-list-table">
         <thead>
         <tr>
             <th class="th-icon"><i class="fas fa-check"></i></th>
-            <th class="th-icon"><i class="fas fa-image"></i> Bild</th>
-            <th class="th-icon"><i class="fas fa-pizza-slice"></i> Produkt</th>
-            <th class="th-icon"><i class="fas fa-sort-numeric-up"></i> Menge</th>
-            <th class="th-icon"><i class="fas fa-ruler-combined"></i> Einheit</th>
-            <th class="th-icon"><i class="fas fa-trash"></i> Löschen</th>
+            <th class="th-icon"><i class="fas fa-image"></i> {{ $t('shopping.table.headers.image') }}</th>
+            <th class="th-icon"><i class="fas fa-pizza-slice"></i> {{ $t('shopping.table.headers.product') }}</th>
+            <th class="th-icon"><i class="fas fa-sort-numeric-up"></i> {{ $t('shopping.table.headers.quantity') }}</th>
+            <th class="th-icon"><i class="fas fa-ruler-combined"></i> {{ $t('shopping.table.headers.unit') }}</th>
+            <th class="th-icon"><i class="fas fa-trash"></i> {{ $t('shopping.table.headers.delete') }}</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in shoppingList.items" :key="item.id">
+            <td><input type="checkbox" v-model="item.checked_off" @change="toggleCheck(item)" /></td>
             <td>
-                <input type="checkbox" v-model="item.checked_off" @change="toggleCheck(item)"/>
+                <img v-if="item.product && item.product.image_url" :src="item.product.image_url" alt="" class="produkt-img" />
             </td>
+            <td>{{ item.product ? item.product.name : item.name }}</td>
             <td>
-                <img
-                    v-if="item.product && item.product.image_url"
-                    :src="item.product.image_url"
-                    alt=""
-                    class="produkt-img"
-                />
-            </td>
-            <td>
-                {{ item.product ? item.product.name : item.name }}
-            </td>
-            <td>
-                <input class="ui-input qty" type="number" min="1"
-                       v-model.number="item.quantity" @change="updateItem(item)"/>
+                <input class="ui-input qty" type="number" min="1" v-model.number="item.quantity" @change="updateItem(item)" />
             </td>
             <td>
                 <select class="ui-select unit" v-model="item.unit" @change="updateItem(item)">
-                    <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
+                    <option v-for="unit in units" :key="unit" :value="unit">
+                        {{ $t('common.unit.' + unit) }}
+                    </option>
                 </select>
             </td>
             <td>
-                <button class="icon-btn danger" @click="deleteItem(item)" title="Löschen">
+                <button class="icon-btn danger" @click="deleteItem(item)" :title="$t('shopping.table.actions.delete')">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
@@ -80,13 +57,13 @@
 
     <div class="allergy-summary">
         <template v-if="allergyNames.length">
-            <div class="allergy-title">Du hast Allergien für diese Produkte:</div>
+            <div class="allergy-title">{{ $t('shopping.allergy.title_has') }}</div>
             <ul class="allergy-list">
                 <li v-for="n in allergyNames" :key="n">{{ n }}</li>
             </ul>
         </template>
         <template v-else>
-            <div class="allergy-title">Super, aktuell sind keine Allergien eingetragen.</div>
+            <div class="allergy-title">{{ $t('shopping.allergy.title_none') }}</div>
         </template>
     </div>
 
@@ -195,9 +172,9 @@ export default {
             });
         },
         async deleteItem(item) {
-            if (!confirm("Wirklich löschen?")) return;
-            await axios.delete(`/api/shopping-list/items/${item.id}`);
-            this.shoppingList.items = this.shoppingList.items.filter(i => i.id !== item.id);
+            if (!confirm(this.$t('shopping.prompts.confirm_delete'))) return
+            await axios.delete(`/api/shopping-list/items/${item.id}`)
+            this.shoppingList.items = this.shoppingList.items.filter(i => i.id !== item.id)
         },
         prevCarousel() {
             this.carouselIndex = (this.carouselIndex - 1 + this.products.length) % this.products.length;

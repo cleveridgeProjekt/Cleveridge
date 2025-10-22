@@ -1,0 +1,147 @@
+{
+    "topbar": {
+        "logout": "Abmelden"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "intro_html": "<b>Cleveridge</b> ist ein innovatives <b>Smart-Fridge-System</b>, das alltägliche Haushaltsaufgaben intelligent automatisiert und für mehr Übersicht und Komfort in deiner Küche sorgt.<br>Das Projekt kombiniert moderne Webtechnologie, Sensorik und künstliche Intelligenz, um den Inhalt deines Kühlschranks vollständig digital zu erfassen und zu verwalten.<br><br>Im Zentrum des Projekts steht eine mit dem <b>Raspberry Pi 5 verbundene Kamera</b>, die regelmäßig Bilder vom Inneren des Kühlschranks aufnimmt. Eine integrierte Bilderkennungs-KI analysiert diese Aufnahmen und identifiziert automatisch vorhandene Lebensmittel. Zusätzlich überwachen verbaute Sensoren in Echtzeit die Temperatur und Luftfeuchtigkeit, um optimale Lagerbedingungen sicherzustellen. Alle erfassten Informationen werden benutzerfreundlich über eine Weboberfläche visualisiert, die sowohl auf dem Smartphone als auch am PC verfügbar ist.",
+        "tiles": {
+            "fridge": {
+                "label": "INHALT DEINES KÜHLSCHRANKS",
+                "desc": "Visuelle Darstellung aller Kühlschrankinhalte"
+            },
+            "shopping_list": {
+                "label": "EINKAUFLISTE",
+                "desc": "Intelligente Einkaufsliste basierend auf fehlenden Artikeln"
+            },
+            "status": {
+                "label": "KÜHLSCHRANK-STATUS",
+                "desc": "Temperatur- & Feuchtigkeitsanzeige in Echtzeit"
+            },
+            "product_recognition": {
+                "label": "PRODUKTERKENNUNG",
+                "desc": "Automatische Produkterkennung durch Kamera & KI"
+            },
+            "expiry": {
+                "label": "ABLAUFDATUM",
+                "desc": "Warnungen zu bald ablaufenden Produkten"
+            },
+            "recipes": {
+                "label": "REZEPTE",
+                "desc": "Alle gespeicherten Rezepte & Ideen für deine Zutaten"
+            }
+        }
+    },
+    "common": {
+        "unit": {
+            "Stück": "Stück",
+            "kg": "kg",
+            "g": "g",
+            "l": "l",
+            "ml": "ml",
+            "Packung": "Packung"
+        }
+    },
+    "fridge": {
+        "title": "Was ist in deinem Kühlschrank",
+        "intro_html": "Hier siehst du alle Produkte, die aktuell in deinem Kühlschrank sind.<br>Du kannst Produkte hinzufügen/entfernen, Mengen und Ablaufdaten verwalten.",
+        "list": {
+            "title": "Meine Kühlschränke",
+            "unnamed": "Ohne Name",
+            "rename": "Umbenennen",
+            "delete": "Löschen",
+            "empty_title": "Du hast noch keinen Kühlschrank",
+            "empty_desc": "Lege deinen ersten Kühlschrank an, um Produkte zu verwalten.",
+            "new_placeholder": "Neuen Kühlschrank benennen…",
+            "create": "Anlegen"
+        },
+        "content": {
+            "title": "Inhalt: {name}"
+        },
+        "add": {
+            "product_placeholder": "Produkt wählen…",
+            "qty_placeholder": "Menge",
+            "add_button": "Hinzufügen"
+        },
+        "items_empty": {
+            "title": "Keine Produkte vorhanden",
+            "desc": "Füge oben Produkte hinzu – Produkt wählen, Menge & Ablaufdatum setzen und auf „Hinzufügen“ klicken."
+        },
+        "table": {
+            "headers": {
+                "image": "Bild",
+                "product": "Produkt",
+                "quantity": "Menge",
+                "expiry": "Ablaufdatum"
+            },
+            "actions": {
+                "remove": "Entfernen"
+            }
+        },
+        "prompts": {
+            "rename": "Neuer Name:",
+            "delete_fridge": "Diesen Kühlschrank löschen?",
+            "delete_item": "Produkt entfernen?"
+        }
+    },
+    "shopping": {
+        "title": "Einkaufsliste",
+        "intro_html": "Erstelle und verwalte deine intelligente Einkaufsliste.<br>Basierend auf fehlenden oder bald ablaufenden Artikeln schlägt das System vor, was du nachkaufen solltest. Bearbeite Mengen und hake ab, was du schon hast.",
+        "controls": {
+            "add_wishlist": "Zu meiner Wunschliste hinzufügen",
+            "set_allergies": "Allergien festlegen"
+        },
+        "empty": {
+            "title": "Deine Einkaufsliste ist leer",
+            "desc": "Füge Produkte über die Wunschliste hinzu und lege gegebenenfalls Allergien fest."
+        },
+        "table": {
+            "headers": {
+                "image": "Bild",
+                "product": "Produkt",
+                "quantity": "Menge",
+                "unit": "Einheit",
+                "delete": "Löschen"
+            },
+            "actions": {
+                "delete": "Löschen"
+            }
+        },
+        "allergy": {
+            "title_has": "Du hast Allergien für diese Produkte:",
+            "title_none": "Super, aktuell sind keine Allergien eingetragen."
+        },
+        "prompts": {
+            "confirm_delete": "Wirklich löschen?"
+        }
+    },
+    "products": {
+        "title": "Produkte",
+        "intro": "Verwalte deine Produkte. Füge neue hinzu oder bearbeite bestehende Einträge.",
+        "create": {
+            "name_placeholder": "Produktname",
+            "barcode_placeholder": "Barcode (optional)",
+            "shelf_life_placeholder": "Standard-Haltbarkeit (Tage)",
+            "image_url_placeholder": "Bild-URL (optional)",
+            "add_button": "Hinzufügen"
+        },
+        "search": {
+            "placeholder": "Suche…"
+        },
+        "table": {
+            "headers": {
+                "image": "Bild",
+                "name": "Name",
+                "barcode": "Barcode",
+                "std_shelf_life": "Std. Haltbarkeit"
+            },
+            "actions": {
+                "nutrition": "Nährwerte",
+                "delete": "Löschen"
+            }
+        },
+        "prompts": {
+            "confirm_delete": "Produkt wirklich löschen?"
+        }
+    }
+}

@@ -1,23 +1,22 @@
 <template>
     <div>
-        <PageHeader title="What's in your fridge" icon="fal fa-snowflake">
-            Hier siehst du alle Produkte, die aktuell in deinem Kühlschrank sind.
-            <br> Du kannst Produkte hinzufügen/entfernen, Mengen & Ablaufdaten verwalten.
+        <PageHeader :title="$t('fridge.title')" icon="fal fa-snowflake">
+            <span v-html="$t('fridge.intro_html')"></span>
         </PageHeader>
 
         <div class="fridge-grid">
             <section class="card">
-                <h3 class="card-title">Meine Kühlschränke</h3>
+                <h3 class="card-title">{{ $t('fridge.list.title') }}</h3>
 
                 <template v-if="fridges.length">
                     <ul class="fridge-list">
                         <li v-for="f in fridges" :key="f.id" :class="['fridge-row', { active: f.id === selectedFridgeId }]" @click="selectFridge(f.id)">
-                            <span>{{ f.name || 'Ohne Name' }}</span>
+                            <span>{{ f.name || $t('fridge.list.unnamed') }}</span>
                             <div class="row-actions" @click.stop>
-                                <button class="icon-btn" title="Umbenennen" @click="promptRename(f)">
+                                <button class="icon-btn" :title="$t('fridge.list.rename')" @click="promptRename(f)">
                                     <i class="fas fa-pen"></i>
                                 </button>
-                                <button class="icon-btn danger" title="Löschen" @click="deleteFridge(f)">
+                                <button class="icon-btn danger" :title="$t('fridge.list.delete')" @click="deleteFridge(f)">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -28,56 +27,54 @@
                 <template v-else>
                     <div class="empty-state">
                         <i class="fas fa-snowflake empty-icon"></i>
-                        <h4>Du hast noch keinen Kühlschrank</h4>
-                        <p>Lege deinen ersten Kühlschrank an, um Produkte zu verwalten.</p>
+                        <h4>{{ $t('fridge.list.empty_title') }}</h4>
+                        <p>{{ $t('fridge.list.empty_desc') }}</p>
                     </div>
                 </template>
 
                 <div class="new-fridge">
-                    <input class="ui-input" v-model="newFridgeName" placeholder="Neuen Kühlschrank benennen…"/>
-                    <button class="btn" @click="createFridge"><i class="fas fa-plus"></i> Anlegen</button>
+                    <input class="ui-input" v-model="newFridgeName" :placeholder="$t('fridge.list.new_placeholder')" />
+                    <button class="btn" @click="createFridge"><i class="fas fa-plus"></i> {{ $t('fridge.list.create') }}</button>
                 </div>
             </section>
 
             <section class="card" v-if="currentFridge">
                 <div class="card-title-row">
-                    <h3 class="card-title">
-                        Inhalt: {{ currentFridge.name || 'Ohne Name' }}
-                    </h3>
+                    <h3 class="card-title">{{ $t('fridge.content.title', { name: currentFridge.name || $t('fridge.list.unnamed') }) }}</h3>
                 </div>
 
                 <div class="add-item">
                     <select class="ui-select" v-model="add.product_id">
-                        <option disabled value="">Produkt wählen…</option>
+                        <option disabled value="">{{ $t('fridge.add.product_placeholder') }}</option>
                         <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
                     </select>
-                    <input class="ui-input qty" type="number" min="1" v-model.number="add.quantity" placeholder="Menge"/>
-                    <input class="ui-input" type="date" v-model="add.expiry_date"/>
+                    <input class="ui-input qty" type="number" min="1" v-model.number="add.quantity" :placeholder="$t('fridge.add.qty_placeholder')" />
+                    <input class="ui-input" type="date" v-model="add.expiry_date" />
                     <button class="btn" :disabled="!add.product_id || busyAdd" @click="addItem">
-                        <i class="fas fa-plus"></i> Hinzufügen
+                        <i class="fas fa-plus"></i> {{ $t('fridge.add.add_button') }}
                     </button>
                 </div>
 
                 <div v-if="(currentFridge.items || []).length === 0" class="empty-state">
                     <i class="fas fa-box-open empty-icon"></i>
-                    <h4>Keine Produkte vorhanden</h4>
-                    <p>Füge oben Produkte hinzu – Produkt wählen, Menge & Ablaufdatum setzen und auf „Hinzufügen“ klicken.</p>
+                    <h4>{{ $t('fridge.items_empty.title') }}</h4>
+                    <p>{{ $t('fridge.items_empty.desc') }}</p>
                 </div>
 
                 <table v-else class="items-table">
                     <thead>
                     <tr>
-                        <th>Bild</th>
-                        <th>Produkt</th>
-                        <th>Menge</th>
-                        <th>Ablaufdatum</th>
+                        <th>{{ $t('fridge.table.headers.image') }}</th>
+                        <th>{{ $t('fridge.table.headers.product') }}</th>
+                        <th>{{ $t('fridge.table.headers.quantity') }}</th>
+                        <th>{{ $t('fridge.table.headers.expiry') }}</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="it in sortedItems" :key="it.id">
                         <td>
-                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt="">
+                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt="" />
                         </td>
                         <td>{{ it.product?.name || '—' }}</td>
                         <td>
@@ -88,7 +85,7 @@
                             <span class="badge" :class="expiryClass(it.expiry_date)">{{ expiryLabel(it.expiry_date) }}</span>
                         </td>
                         <td>
-                            <button class="icon-btn danger" title="Entfernen" @click="deleteItem(it)">
+                            <button class="icon-btn danger" :title="$t('fridge.table.actions.remove')" @click="deleteItem(it)">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -164,13 +161,13 @@ export default {
             this.newFridgeName = ''
         },
         async promptRename(f) {
-            const name = window.prompt('Neuer Name:', f.name || '')
+            const name = window.prompt(this.$t('fridge.prompts.rename'), f.name || '')
             if (name === null) return
             const {data} = await axios.put(`/api/fridges/${f.id}`, {name})
             Object.assign(f, data)
         },
         async deleteFridge(f) {
-            if (!confirm('Diesen Kühlschrank löschen?')) return
+            if (!confirm(this.$t('fridge.prompts.delete_fridge'))) return
             await axios.delete(`/api/fridges/${f.id}`)
             this.fridges = this.fridges.filter(x => x.id !== f.id)
             if (this.selectedFridgeId === f.id) {
@@ -197,7 +194,7 @@ export default {
             Object.assign(it, data)
         },
         async deleteItem(it) {
-            if (!confirm('Produkt entfernen?')) return
+            if (!confirm(this.$t('fridge.prompts.delete_item'))) return
             await axios.delete(`/api/fridge-items/${it.id}`)
             this.currentFridge.items = this.currentFridge.items.filter(x => x.id !== it.id)
         },

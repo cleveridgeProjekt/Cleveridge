@@ -6,6 +6,7 @@ import { initSanctum } from './bootstrap'
 import { fetchUser } from './composables/useUser'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../css/app.css'
+import i18n from './i18n'
 
     ;(async () => {
     try { await initSanctum() } catch {}
@@ -13,5 +14,6 @@ import '../css/app.css'
 
     const app = createApp(App)
     app.use(router)
+    app.use(i18n)
     app.mount('#app')
 })()
