@@ -12,6 +12,7 @@ use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CameraController; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -25,6 +26,8 @@ Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/api/user', fn () => auth()->user());
 
+    Route::post('/camera/trigger', [CameraController::class, 'triggerCommand'])->name('camera.trigger'); 
+    
     // products
     Route::get   ('/api/products',            [ProductController::class, 'index']);
     Route::get   ('/api/products/{id}',       [ProductController::class, 'show']);
