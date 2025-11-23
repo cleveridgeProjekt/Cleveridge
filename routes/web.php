@@ -100,3 +100,12 @@ Route::get('/debug-db', function () {
         return ['error' => $e->getMessage()];
     }
 });
+
+Route::get('/fix-storage', function () {
+    try {
+        Artisan::call('storage:link');
+        return '<h1>✅ Success: The symbolic link for storage has been created.</h1> <br> <a href="/camera">Go back to Camera View</a>';
+    } catch (\Exception $e) {
+        return '<h1>❌ Error:</h1> ' . $e->getMessage();
+    }
+});
