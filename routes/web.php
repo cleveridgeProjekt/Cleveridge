@@ -15,7 +15,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CameraController; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage; 
 use Illuminate\Support\Facades\Response;
 
@@ -25,6 +24,22 @@ Route::post('/login',   [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/storage/uploads/{filename}', function ($filename) {
+    
+    $path = 'uploads/' . $filename;
+
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    $file = Storage::disk('public')->get($path);
+    $type = Storage::disk('public')->mimeType($path);
+
+    return Response::make($file, 200)
+        ->header("Content-Type", $type);
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/api/user', fn () => auth()->user());
@@ -82,9 +97,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-// SPA catch-all
-Route::get('{any}', fn () => view('app'))->where('any', '.*');
-
 
 Route::get('/debug-db', function () {
     try {
@@ -104,18 +116,4 @@ Route::get('/debug-db', function () {
     }
 });
 
-Route::get('/storage/uploads/{filename}', function ($filename) {
-    
-    $path = 'uploads/' . $filename;
-
-    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-        abort(404); // Return "Not Found" if image is missing
-    }
-
-    $file = \Illuminate\Support\Facades\Storage::disk('public')->get($path);
-    
-    $type = \Illuminate\Support\Facades\Storage::disk('public')->mimeType($path);
-
-    return \Illuminate\Support\Facades\Response::make($file, 200)
-        ->header("Content-Type", $type);
-});
+Route::get('{any}', fn () => view('app'))->where('any', '.*');
