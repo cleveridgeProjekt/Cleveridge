@@ -15,6 +15,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CameraController; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Response;
 
 // Auth pages (SPA shell rendered at /login and /register)
 Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
