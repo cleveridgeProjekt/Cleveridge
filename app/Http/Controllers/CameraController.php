@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // <-- Added for file deletion
 
 class CameraController extends Controller
 {
@@ -27,24 +28,42 @@ class CameraController extends Controller
         return response()->json(['snap' => $shouldSnap]);
     }
 
-    // 3. UPLOAD (Raspberry Pi)
+    // 3. UPLOAD (Raspberry Pi) - WITH CLEANUP AND URL FIX
     public function uploadPhotoAndResults(Request $request)
     {
         if (!$request->hasFile('file')) {
             return response()->json(['error' => 'No file'], 400);
         }
 
-        $path = $request->file('file')->store('uploads', 'public');
+        // =========================================================
+        // AUTOMATIC CLEANUP (Performance Fix)
+        // =========================================================
+        try {
+            // Get all files from 'uploads'
+            $files = Storage::disk('public')->files('uploads');
+            // Delete them to keep the folder clean
+            Storage::disk('public')->delete($files);
+        } catch (\Exception $e) {
+            // Continue even if cleanup fails
+        }
 
+        // =========================================================
+        // SAVE NEW PHOTO AND FIX URL (Visibility Fix)
+        // =========================================================
+        
+        // Store file
+        $path = $request->file('file')->store('uploads', 'public');
+        
+        // Get just the filename (e.g. capture_123.jpg)
         $filename = basename($path);
         
-
+        // Force the URL to match our "Rescue Route" in web.php
         $forcedUrl = '/storage/uploads/' . $filename;
 
         $products = json_decode($request->input('products', '[]'));
 
         $data = [
-            'image_url' => $forcedUrl, 
+            'image_url' => $forcedUrl, // Use the forced URL
             'products' => $products,
             'timestamp' => now()->toDateTimeString()
         ];
