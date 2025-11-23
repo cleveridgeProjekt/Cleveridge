@@ -45,10 +45,9 @@
                 <div v-if="detectedProducts.length > 0" class="product-list">
                     <div v-for="(item, index) in detectedProducts" :key="index" class="product-row">
                         <div class="prod-info">
-                            <span class="prod-icon">🍎</span>
                             <span class="prod-name">{{ item }}</span>
                         </div>
-                        <!-- Botón para abrir el modal de añadir al refri -->
+                      
                         <button class="btn small ghost" @click="openAddModal(item)">
                             <i class="fas fa-plus"></i> Hinzufügen
                         </button>
@@ -70,7 +69,6 @@
                 </div>
 
                 <div class="modal-grid">
-                    <!-- Columna Izquierda: Búsqueda de Producto -->
                     <div class="col">
                         <label class="lbl">Erkanntes Label</label>
                         <div class="chip">{{ modal.label }}</div>
@@ -94,7 +92,6 @@
                         </div>
                     </div>
 
-                    <!-- Columna Derecha: Selección de Refri y Cantidad -->
                     <div class="col">
                         <label class="lbl">Ziel-Kühlschrank</label>
                         <select class="ui-select" v-model="selectedFridgeId">
