@@ -1,11 +1,11 @@
 <template>
     <div class="dialog-overlay" @click.self="close">
         <div class="dialog">
-            <h3>Wunschliste bearbeiten</h3>
+            <h3>{{ $t('shopping.wishlist_dialog.title') }}</h3>
 
             <div class="add-row">
                 <select class="ui-select" v-model="selectedProductId">
-                    <option disabled value="">Produkt wählen…</option>
+                    <option disabled value="">{{ $t('shopping.wishlist_dialog.select_placeholder') }}</option>
                     <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
                 </select>
 
@@ -16,16 +16,16 @@
                 </select>
 
                 <button class="btn" @click="addItem" :disabled="!selectedProductId || busy">
-                    <i class="fas fa-plus"></i> Hinzufügen
+                    <i class="fas fa-plus"></i> {{ $t('shopping.wishlist_dialog.add') }}
                 </button>
             </div>
 
             <p class="hint">
-                Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.
+                {{ $t('shopping.wishlist_dialog.hint') }}
             </p>
 
             <div class="dialog-actions">
-                <button class="btn ghost" @click="close">Schließen</button>
+                <button class="btn ghost" @click="close">{{ $t('shopping.wishlist_dialog.close') }}</button>
             </div>
         </div>
     </div>

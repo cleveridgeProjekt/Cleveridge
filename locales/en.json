@@ -160,5 +160,52 @@
         "no_allergy_label": "I have no allergies to these products",
         "save": "Save",
         "close": "Close"
+    },
+    "product_recognition": {
+        "title": "Product recognition",
+        "intro": "Use the camera for automatic product detection. You can add detected items directly to a fridge.",
+        "status": {
+            "waiting": "Waiting for Raspberry Pi...",
+            "ready": "Ready"
+        },
+        "buttons": {
+            "trigger_photo": "Take photo (Pi)",
+            "add": "Add"
+        },
+        "sections": {
+            "last_photo": "Last photo",
+            "detected_products": "Detected products"
+        },
+        "placeholder": {
+            "no_photo": "No photo taken yet."
+        },
+        "empty": {
+            "none": "No products detected."
+        },
+        "modal": {
+            "title": "Add product",
+            "detected_label": "Detected label",
+            "mapped_product": "Mapped product",
+            "relink": "Relink…",
+            "search_placeholder": "Search product…",
+            "target_fridge": "Target fridge",
+            "qty": "Quantity",
+            "expiry": "Expiry date",
+            "add": "Add",
+            "cancel": "Cancel"
+        },
+        "alerts": {
+            "trigger_error": "Error sending command to Raspberry Pi",
+            "add_success": "Product added! ✅",
+            "add_error": "Add failed ❌"
+        }
+    },
+    "wishlist_dialog": {
+        "title": "Edit wishlist",
+        "select_placeholder": "Choose a product…",
+        "add": "Add",
+        "hint": "Tip: You can add multiple products one after another and keep this window open.",
+        "close": "Close"
     }
+
 }

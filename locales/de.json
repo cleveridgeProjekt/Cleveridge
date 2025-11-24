@@ -160,5 +160,52 @@
         "no_allergy_label": "Ich habe keine Allergien auf diese Produkte",
         "save": "Speichern",
         "close": "Schließen"
+    },
+    "product_recognition": {
+        "title": "Produk­terkennung",
+        "intro": "Nutze die Kamera zur automatischen Produkterkennung. Erkannte Artikel kannst du direkt einem Kühlschrank hinzufügen.",
+        "status": {
+            "waiting": "Warte auf Raspberry Pi...",
+            "ready": "Bereit"
+        },
+        "buttons": {
+            "trigger_photo": "Foto aufnehmen (Pi)",
+            "add": "Hinzufügen"
+        },
+        "sections": {
+            "last_photo": "Letztes Foto",
+            "detected_products": "Erkannte Produkte"
+        },
+        "placeholder": {
+            "no_photo": "Noch kein Foto aufgenommen."
+        },
+        "empty": {
+            "none": "Keine Produkte erkannt."
+        },
+        "modal": {
+            "title": "Produkt hinzufügen",
+            "detected_label": "Erkanntes Label",
+            "mapped_product": "Zugeordnetes Produkt",
+            "relink": "Neu zuordnen…",
+            "search_placeholder": "Produkt suchen…",
+            "target_fridge": "Ziel-Kühlschrank",
+            "qty": "Menge",
+            "expiry": "Ablaufdatum",
+            "add": "Hinzufügen",
+            "cancel": "Abbrechen"
+        },
+        "alerts": {
+            "trigger_error": "Fehler beim Senden an den Raspberry Pi",
+            "add_success": "Produkt hinzugefügt! ✅",
+            "add_error": "Fehler beim Hinzufügen ❌"
+        }
+    },
+    "wishlist_dialog": {
+        "title": "Wunschliste bearbeiten",
+        "select_placeholder": "Produkt wählen…",
+        "add": "Hinzufügen",
+        "hint": "Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.",
+        "close": "Schließen"
     }
+
 }

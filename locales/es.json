@@ -128,5 +128,52 @@
         "no_allergy_label": "No tengo alergias a estos productos",
         "save": "Guardar",
         "close": "Cerrar"
+    },
+    "product_recognition": {
+        "title": "Reconocimiento de productos",
+        "intro": "Usa la cámara para detectar productos automáticamente. Puedes añadir los detectados directamente a una nevera.",
+        "status": {
+            "waiting": "Esperando al Raspberry Pi...",
+            "ready": "Listo"
+        },
+        "buttons": {
+            "trigger_photo": "Tomar foto (Pi)",
+            "add": "Añadir"
+        },
+        "sections": {
+            "last_photo": "Última foto",
+            "detected_products": "Productos detectados"
+        },
+        "placeholder": {
+            "no_photo": "Aún no se ha tomado ninguna foto."
+        },
+        "empty": {
+            "none": "No se detectaron productos."
+        },
+        "modal": {
+            "title": "Añadir producto",
+            "detected_label": "Etiqueta detectada",
+            "mapped_product": "Producto asignado",
+            "relink": "Reasignar…",
+            "search_placeholder": "Buscar producto…",
+            "target_fridge": "Nevera destino",
+            "qty": "Cantidad",
+            "expiry": "Fecha de caducidad",
+            "add": "Añadir",
+            "cancel": "Cancelar"
+        },
+        "alerts": {
+            "trigger_error": "Error al enviar la orden al Raspberry Pi",
+            "add_success": "¡Producto añadido! ✅",
+            "add_error": "Error al añadir ❌"
+        }
+    },
+    "wishlist_dialog": {
+        "title": "Editar lista de deseos",
+        "select_placeholder": "Elige un producto…",
+        "add": "Añadir",
+        "hint": "Consejo: puedes añadir varios productos seguidos y mantener esta ventana abierta.",
+        "close": "Cerrar"
     }
+
 }
