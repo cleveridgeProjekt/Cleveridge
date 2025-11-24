@@ -11,7 +11,7 @@
             </div>
 
             <div class="list-wrap" :class="{ disabled: noAllergy }">
-            <div v-for="p in orderedProducts" :key="p.id" class="row">
+                <div v-for="p in orderedProducts" :key="p.id" class="row">
                     <label class="row-label" :class="{ selected: selected.includes(p.id) }">
                         <input
                             type="checkbox"
