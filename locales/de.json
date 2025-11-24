@@ -124,6 +124,13 @@
         },
         "prompts": {
             "confirm_delete": "Wirklich löschen?"
+        },
+        "wishlist_dialog": {
+            "title": "Wunschliste bearbeiten",
+            "select_placeholder": "Produkt wählen…",
+            "add": "Hinzufügen",
+            "hint": "Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.",
+            "close": "Schließen"
         }
     },
     "products": {
@@ -141,6 +148,7 @@
         },
         "table": {
             "headers": {
+                "favorite": "Favorit",
                 "image": "Bild",
                 "name": "Name",
                 "barcode": "Barcode",
@@ -150,6 +158,13 @@
                 "nutrition": "Nährwerte",
                 "delete": "Löschen"
             }
+        },
+        "favorites": {
+            "title": "Meine Lieblingsprodukte",
+            "empty": "Noch keine Lieblingsprodukte. Markiere Produkte mit der Checkbox.",
+            "select_filtered": "Gefilterte auswählen",
+            "clear_all": "Alle entfernen",
+            "remove": "Entfernen"
         },
         "prompts": {
             "confirm_delete": "Produkt wirklich löschen?"
@@ -200,12 +215,59 @@
             "add_error": "Fehler beim Hinzufügen ❌"
         }
     },
-    "wishlist_dialog": {
-        "title": "Wunschliste bearbeiten",
-        "select_placeholder": "Produkt wählen…",
-        "add": "Hinzufügen",
-        "hint": "Tipp: Du kannst mehrere Produkte nacheinander hinzufügen und das Fenster offen lassen.",
-        "close": "Schließen"
+    "status": {
+        "title": "Kühlschrank-Status",
+        "intro": "Hier kannst du die Echtzeitdaten deiner Kühlschrank-Sensoren überwachen, wie Temperatur, Luftfeuchtigkeit und Gerätestatus.",
+        "live": "🌡️ Live-Sensordaten",
+        "temperature": "Temperatur",
+        "humidity": "Luftfeuchtigkeit",
+        "last_updated": "Zuletzt aktualisiert",
+        "loading": "Lädt…"
+    },
+    "expiry": {
+        "title": "Ablaufwarnungen",
+        "intro": "Erhalte automatische Warnungen zu Artikeln, deren Haltbarkeitsdatum bald erreicht ist, um Lebensmittelverschwendung zu vermeiden.",
+        "controls": {
+            "label_days": "Zeitraum „bald“:",
+            "refresh": "Aktualisieren",
+            "day_singular": "Tag",
+            "day_plural": "Tage"
+        },
+        "soon": {
+            "title": "Bald ablaufend",
+            "ok_title": "Alles gut!",
+            "ok_desc_one": "In den nächsten {days} Tag läuft nichts ab.",
+            "ok_desc_other": "In den nächsten {days} Tagen läuft nichts ab."
+        },
+        "expired": {
+            "title": "Bereits abgelaufen",
+            "empty_title": "Nichts abgelaufen 🎉",
+            "empty_desc": "Es gibt aktuell keine abgelaufenen Artikel."
+        },
+        "loading": "Lade Daten…",
+        "table": {
+            "headers": {
+                "image": "Bild",
+                "product": "Produkt",
+                "fridge": "Kühlschrank",
+                "quantity": "Menge",
+                "expiry": "Ablaufdatum"
+            }
+        },
+        "badge": {
+            "soon": "bald",
+            "expired": "abgelaufen"
+        },
+        "actions": {
+            "consume": "Verbraucht",
+            "remove": "Entfernen"
+        },
+        "prompts": {
+            "remove_confirm": "Diesen Artikel aus dem Kühlschrank entfernen?"
+        },
+        "errors": {
+            "fetch_failed": "Konnte Daten nicht laden (bist du eingeloggt?).",
+            "remove_failed": "Entfernen fehlgeschlagen."
+        }
     }
-
 }

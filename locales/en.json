@@ -124,7 +124,15 @@
         },
         "prompts": {
             "confirm_delete": "Really delete?"
+        },
+        "wishlist_dialog": {
+            "title": "Edit wishlist",
+            "select_placeholder": "Choose a product…",
+            "add": "Add",
+            "hint": "Tip: You can add multiple products one after another and keep this window open.",
+            "close": "Close"
         }
+
     },
     "products": {
         "title": "Products",
@@ -141,6 +149,7 @@
         },
         "table": {
             "headers": {
+                "favorite": "Favorite",
                 "image": "Image",
                 "name": "Name",
                 "barcode": "Barcode",
@@ -150,6 +159,13 @@
                 "nutrition": "Nutrition",
                 "delete": "Delete"
             }
+        },
+        "favorites": {
+            "title": "My favorite products",
+            "empty": "No favorites yet. Mark products using the checkbox.",
+            "select_filtered": "Select filtered",
+            "clear_all": "Clear all",
+            "remove": "Remove"
         },
         "prompts": {
             "confirm_delete": "Really delete this product?"
@@ -200,12 +216,60 @@
             "add_error": "Add failed ❌"
         }
     },
-    "wishlist_dialog": {
-        "title": "Edit wishlist",
-        "select_placeholder": "Choose a product…",
-        "add": "Add",
-        "hint": "Tip: You can add multiple products one after another and keep this window open.",
-        "close": "Close"
+    "status": {
+        "title": "Fridge status",
+        "intro": "Here you can monitor real-time fridge sensor data such as temperature, humidity, and device status.",
+        "live": "🌡️ Live sensor data",
+        "temperature": "Temperature",
+        "humidity": "Humidity",
+        "last_updated": "Last updated",
+        "loading": "Loading..."
+    },
+    "expiry": {
+        "title": "Expiry warnings",
+        "intro": "Get automatic alerts for items approaching their expiry date to help reduce food waste.",
+        "controls": {
+            "label_days": "“Soon” window:",
+            "refresh": "Refresh",
+            "day_singular": "day",
+            "day_plural": "days"
+        },
+        "soon": {
+            "title": "Expiring soon",
+            "ok_title": "All good!",
+            "ok_desc_one": "Nothing expires in the next {days} day.",
+            "ok_desc_other": "Nothing expires in the next {days} days."
+        },
+        "expired": {
+            "title": "Already expired",
+            "empty_title": "Nothing expired 🎉",
+            "empty_desc": "There are currently no expired items."
+        },
+        "loading": "Loading…",
+        "table": {
+            "headers": {
+                "image": "Image",
+                "product": "Product",
+                "fridge": "Fridge",
+                "quantity": "Qty",
+                "expiry": "Expiry date"
+            }
+        },
+        "badge": {
+            "soon": "soon",
+            "expired": "expired"
+        },
+        "actions": {
+            "consume": "Consumed",
+            "remove": "Remove"
+        },
+        "prompts": {
+            "remove_confirm": "Remove this item from the fridge?"
+        },
+        "errors": {
+            "fetch_failed": "Could not load data (are you logged in?).",
+            "remove_failed": "Removal failed."
+        }
     }
 
 }

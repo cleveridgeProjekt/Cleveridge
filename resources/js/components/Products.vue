@@ -20,6 +20,7 @@
             <table class="tbl">
                 <thead>
                 <tr>
+                    <th>{{ $t('products.table.headers.favorite') }}</th>
                     <th>{{ $t('products.table.headers.image') }}</th>
                     <th>{{ $t('products.table.headers.name') }}</th>
                     <th>{{ $t('products.table.headers.barcode') }}</th>
@@ -29,6 +30,9 @@
                 </thead>
                 <tbody>
                 <tr v-for="p in filtered" :key="p.id">
+                    <td class="fav-cell">
+                        <input type="checkbox" :value="p.id" v-model="favoriteIds" />
+                    </td>
                     <td><img v-if="p.image_url" :src="p.image_url" class="thumb" alt=""></td>
                     <td><input class="ui-input" v-model="p.name" @change="save(p)"></td>
                     <td><input class="ui-input" v-model="p.barcode" @change="save(p)"></td>
@@ -44,6 +48,34 @@
             </table>
         </div>
 
+        <!-- Meine Lieblingsprodukte -->
+        <div class="card favs">
+            <div class="favs-header">
+                <h3 class="favs-title">{{ $t('products.favorites.title') }}</h3>
+                <div class="favs-actions">
+                    <button class="btn small ghost" @click="selectFiltered" :disabled="filtered.length===0">
+                        {{ $t('products.favorites.select_filtered') }}
+                    </button>
+                    <button class="btn small ghost" @click="clearFavorites" :disabled="favoriteIds.length===0">
+                        {{ $t('products.favorites.clear_all') }}
+                    </button>
+                </div>
+            </div>
+
+            <div v-if="favoriteProducts.length" class="fav-grid">
+                <div v-for="fp in favoriteProducts" :key="fp.id" class="fav-item">
+                    <img :src="fp.image_url || '/media/products/default.png'" :alt="fp.name" class="fav-img" />
+                    <div class="fav-name">{{ fp.name }}</div>
+                    <button class="icon-btn" @click="removeFavorite(fp.id)" :title="$t('products.favorites.remove')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div v-else class="favs-empty">
+                {{ $t('products.favorites.empty') }}
+            </div>
+        </div>
+
         <NutritionEditor v-if="nutriProduct" :product="nutriProduct" @close="nutriProduct=null"/>
     </div>
 </template>
@@ -52,6 +84,8 @@
 import axios from 'axios'
 import PageHeader from "./layout/PageHeader.vue";
 import NutritionEditor from './NutritionEditor.vue'
+
+const FAV_KEY = 'favorites:v1';
 
 export default {
     name: 'Products',
@@ -62,6 +96,7 @@ export default {
             q: '',
             form: {name: '', barcode: '', default_expiry_days: null, image_url: ''},
             nutriProduct: null,
+            favoriteIds: []
         }
     },
     computed: {
@@ -72,9 +107,46 @@ export default {
                 (p.name || '').toLowerCase().includes(q) ||
                 (p.barcode || '').toLowerCase().includes(q)
             )
+        },
+        favoriteProducts() {
+            if (!this.favoriteIds?.length) return []
+            const set = new Set(this.favoriteIds)
+            return this.products.filter(p => set.has(p.id))
+        }
+    },
+    watch: {
+        favoriteIds: {
+            deep: true,
+            handler(ids) {
+                try {
+                    const unique = Array.from(new Set(ids)).filter(x => typeof x !== 'undefined' && x !== null)
+                    localStorage.setItem(FAV_KEY, JSON.stringify(unique))
+                } catch {
+                }
+            }
         }
     },
     methods: {
+        loadFavorites() {
+            try {
+                const raw = localStorage.getItem(FAV_KEY)
+                const arr = JSON.parse(raw || '[]')
+                this.favoriteIds = Array.isArray(arr) ? arr : []
+            } catch {
+                this.favoriteIds = []
+            }
+        },
+        removeFavorite(id) {
+            this.favoriteIds = this.favoriteIds.filter(x => x !== id)
+        },
+        selectFiltered() {
+            const ids = this.filtered.map(p => p.id)
+            const set = new Set([...(this.favoriteIds || []), ...ids])
+            this.favoriteIds = Array.from(set)
+        },
+        clearFavorites() {
+            this.favoriteIds = []
+        },
         async fetch() {
             const {data} = await axios.get('/api/products')
             this.products = Array.isArray(data) ? data : []
@@ -98,12 +170,14 @@ export default {
             if (!confirm(this.$t('products.prompts.confirm_delete'))) return
             await axios.delete(`/api/products/${p.id}`)
             this.products = this.products.filter(x => x.id !== p.id)
+            this.removeFavorite(p.id)
         },
         openNutrition(p) {
             this.nutriProduct = p
         }
     },
     async mounted() {
+        this.loadFavorites()
         await this.fetch()
     }
 }
@@ -119,6 +193,7 @@ export default {
     box-shadow: 0 2px 14px 0 #b9e8fa14;
 }
 
+/* grids */
 .create, .search {
     display: grid;
     grid-template-columns: 1fr 1fr 220px 1fr auto;
@@ -126,6 +201,78 @@ export default {
     align-items: center;
 }
 
+.favs-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.fav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.fav-item {
+    display: grid;
+    grid-template-columns: 56px 1fr 36px;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #eaf2f9;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #f9fcff;
+}
+
+.fav-img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f5f7fb;
+}
+
+.fav-name {
+    font-weight: 700;
+    color: #25548a;
+}
+
+.favs-title {
+    margin: 0;
+    font-size: 1.06rem;
+    color: #0c5288;
+}
+
+.favs-actions {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 8px;
+}
+
+.favs-empty {
+    color: #6b7b8a;
+}
+
+/* table */
+.tbl {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.tbl th, .tbl td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f5fa;
+    text-align: left;
+}
+
+.fav-cell {
+    width: 48px;
+}
+
+/* inputs/buttons */
 .ui-input {
     height: 36px;
     border: 1px solid #cfe1ef;
@@ -148,33 +295,13 @@ export default {
     font-weight: 600;
 }
 
-.tbl {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-.tbl th, .tbl td {
-    padding: 10px 8px;
-    border-bottom: 1px solid #f0f5fa;
-    text-align: left;
-}
-
-.thumb {
-    width: 44px;
-    height: 44px;
-    object-fit: cover;
-    border-radius: 4px;
-    background: #f5f7fb;
-}
-
-.actions {
-    display: flex;
-    gap: 8px;
-}
-
 .btn.small {
     height: 32px;
+}
+
+.btn.ghost {
+    background: #fff;
+    color: #2568ad;
 }
 
 .icon-btn {
@@ -188,5 +315,19 @@ export default {
 .icon-btn.danger {
     color: #b90000;
     border-color: #f1d2d2;
+}
+
+.thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #f5f7fb;
+}
+
+.actions {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 8px;
 }
 </style>

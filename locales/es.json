@@ -1,15 +1,35 @@
 {
-    "topbar": { "logout": "Cerrar sesión" },
+    "topbar": {
+        "logout": "Cerrar sesión"
+    },
     "dashboard": {
         "title": "Panel",
         "intro_html": "<b>Cleveridge</b> es un <b>sistema de nevera inteligente</b> que automatiza tareas del hogar de forma inteligente, aportando claridad y comodidad a tu cocina.<br>El proyecto combina tecnología web moderna, sensores e inteligencia artificial para digitalizar y gestionar por completo el contenido de tu nevera.<br><br>En su núcleo hay una cámara <b>conectada a un Raspberry Pi 5</b> que captura regularmente imágenes del interior. Una IA de visión analiza estas imágenes e identifica automáticamente los alimentos. Además, los sensores integrados monitorizan en tiempo real la temperatura y la humedad para garantizar condiciones óptimas de conservación. Toda la información se muestra en una interfaz web fácil de usar, disponible tanto en el móvil como en el PC.",
         "tiles": {
-            "fridge": { "label": "¿QUÉ HAY EN TU NEVERA?", "desc": "Vista visual de todo el contenido" },
-            "shopping_list": { "label": "LISTA DE LA COMPRA", "desc": "Lista inteligente según lo que falta" },
-            "status": { "label": "ESTADO DE LA NEVERA", "desc": "Temperatura y humedad en tiempo real" },
-            "product_recognition": { "label": "RECONOCIMIENTO DE PRODUCTOS", "desc": "Detección automática con cámara e IA" },
-            "expiry": { "label": "CADUCIDADES", "desc": "Avisos de productos próximos a caducar" },
-            "recipes": { "label": "RECETAS", "desc": "Todas las recetas guardadas e ideas" }
+            "fridge": {
+                "label": "¿QUÉ HAY EN TU NEVERA?",
+                "desc": "Vista visual de todo el contenido"
+            },
+            "shopping_list": {
+                "label": "LISTA DE LA COMPRA",
+                "desc": "Lista inteligente según lo que falta"
+            },
+            "status": {
+                "label": "ESTADO DE LA NEVERA",
+                "desc": "Temperatura y humedad en tiempo real"
+            },
+            "product_recognition": {
+                "label": "RECONOCIMIENTO DE PRODUCTOS",
+                "desc": "Detección automática con cámara e IA"
+            },
+            "expiry": {
+                "label": "CADUCIDADES",
+                "desc": "Avisos de productos próximos a caducar"
+            },
+            "recipes": {
+                "label": "RECETAS",
+                "desc": "Todas las recetas guardadas e ideas"
+            }
         }
     },
     "sidebar": {
@@ -46,7 +66,9 @@
             "new_placeholder": "Nombra una nueva nevera…",
             "create": "Crear"
         },
-        "content": { "title": "Contenido: {name}" },
+        "content": {
+            "title": "Contenido: {name}"
+        },
         "add": {
             "product_placeholder": "Elige un producto…",
             "qty_placeholder": "Cantidad",
@@ -63,7 +85,9 @@
                 "quantity": "Cant.",
                 "expiry": "Caducidad"
             },
-            "actions": { "remove": "Eliminar" }
+            "actions": {
+                "remove": "Eliminar"
+            }
         },
         "prompts": {
             "rename": "Nuevo nombre:",
@@ -90,13 +114,24 @@
                 "unit": "Unidad",
                 "delete": "Eliminar"
             },
-            "actions": { "delete": "Eliminar" }
+            "actions": {
+                "delete": "Eliminar"
+            }
         },
         "allergy": {
             "title_has": "Tienes alergias para estos productos:",
             "title_none": "Genial, no hay alergias registradas."
         },
-        "prompts": { "confirm_delete": "¿Seguro que quieres eliminar?" }
+        "prompts": {
+            "confirm_delete": "¿Seguro que quieres eliminar?"
+        },
+        "wishlist_dialog": {
+            "title": "Editar lista de deseos",
+            "select_placeholder": "Elige un producto…",
+            "add": "Añadir",
+            "hint": "Consejo: puedes añadir varios productos seguidos y mantener esta ventana abierta.",
+            "close": "Cerrar"
+        }
     },
     "products": {
         "title": "Productos",
@@ -108,9 +143,12 @@
             "image_url_placeholder": "URL de imagen (opcional)",
             "add_button": "Añadir"
         },
-        "search": { "placeholder": "Buscar…" },
+        "search": {
+            "placeholder": "Buscar…"
+        },
         "table": {
             "headers": {
+                "favorite": "Favorito",
                 "image": "Imagen",
                 "name": "Nombre",
                 "barcode": "Código de barras",
@@ -121,7 +159,16 @@
                 "delete": "Eliminar"
             }
         },
-        "prompts": { "confirm_delete": "¿Eliminar este producto?" }
+        "favorites": {
+            "title": "Mis productos favoritos",
+            "empty": "Aún no hay favoritos. Márcalos con la casilla.",
+            "select_filtered": "Seleccionar filtrados",
+            "clear_all": "Quitar todos",
+            "remove": "Quitar"
+        },
+        "prompts": {
+            "confirm_delete": "¿Eliminar este producto?"
+        }
     },
     "allergy_dialog": {
         "title": "Configurar alergias",
@@ -168,12 +215,59 @@
             "add_error": "Error al añadir ❌"
         }
     },
-    "wishlist_dialog": {
-        "title": "Editar lista de deseos",
-        "select_placeholder": "Elige un producto…",
-        "add": "Añadir",
-        "hint": "Consejo: puedes añadir varios productos seguidos y mantener esta ventana abierta.",
-        "close": "Cerrar"
+    "status": {
+        "title": "Estado del frigorífico",
+        "intro": "Aquí puedes monitorizar en tiempo real los datos de los sensores del frigorífico: temperatura, humedad y estado del dispositivo.",
+        "live": "🌡️ Datos de sensores en vivo",
+        "temperature": "Temperatura",
+        "humidity": "Humedad",
+        "last_updated": "Última actualización",
+        "loading": "Cargando…"
+    },
+    "expiry": {
+        "title": "Avisos de caducidad",
+        "intro": "Recibe avisos automáticos de los artículos que están por caducar para evitar desperdicios.",
+        "controls": {
+            "label_days": "Ventana de «pronto»:",
+            "refresh": "Actualizar",
+            "day_singular": "día",
+            "day_plural": "días"
+        },
+        "soon": {
+            "title": "Por caducar",
+            "ok_title": "¡Todo bien!",
+            "ok_desc_one": "No caduca nada en el próximo {days} día.",
+            "ok_desc_other": "No caduca nada en los próximos {days} días."
+        },
+        "expired": {
+            "title": "Ya caducados",
+            "empty_title": "Nada caducado 🎉",
+            "empty_desc": "Actualmente no hay artículos caducados."
+        },
+        "loading": "Cargando…",
+        "table": {
+            "headers": {
+                "image": "Imagen",
+                "product": "Producto",
+                "fridge": "Nevera",
+                "quantity": "Cant.",
+                "expiry": "Caducidad"
+            }
+        },
+        "badge": {
+            "soon": "pronto",
+            "expired": "caducado"
+        },
+        "actions": {
+            "consume": "Consumido",
+            "remove": "Eliminar"
+        },
+        "prompts": {
+            "remove_confirm": "¿Eliminar este artículo de la nevera?"
+        },
+        "errors": {
+            "fetch_failed": "No se pudieron cargar los datos (¿has iniciado sesión?).",
+            "remove_failed": "No se pudo eliminar."
+        }
     }
-
 }

@@ -110,24 +110,34 @@ export default {
             showAllergyDialog: false,
             allergies: [],
             allergyNames: [],
+            favoriteIds: [],
         };
     },
     computed: {
         isEmptyList() {
             return !this.shoppingList?.items || this.shoppingList.items.length === 0
         },
-        visibleCarousel() {
+        carouselProducts() {
             if (!this.products.length) return [];
-            const len = this.products.length;
-            const center = this.carouselIndex;
-            let idx = [
+            const favSet = new Set(this.favoriteIds || []);
+            const favs = this.products.filter(p => favSet.has(p.id));
+            const rest = this.products.filter(p => !favSet.has(p.id));
+            // show favorites first; if none selected, this is just all products
+            return favs.length ? [...favs, ...rest] : this.products;
+        },
+        visibleCarousel() {
+            const src = this.carouselProducts;
+            if (!src.length) return [];
+            const len = src.length;
+            const center = this.carouselIndex % len;
+            const idx = [
                 (center - 2 + len) % len,
                 (center - 1 + len) % len,
                 center,
                 (center + 1) % len,
                 (center + 2) % len,
             ];
-            return idx.map(i => this.products[i]);
+            return idx.map(i => src[i]);
         }
     },
 
@@ -135,6 +145,7 @@ export default {
         await this.fetchProducts();
         await this.fetchShoppingList();
         await this.fetchAllergies();
+        this.loadFavorites();
     },
     methods: {
         openMustHaveDialog() {
@@ -152,6 +163,23 @@ export default {
         closeDialogs() {
             this.showMustHaveDialog = false;
             this.showAllergyDialog = false;
+        },
+        loadFavorites() {
+            try {
+                const raw = localStorage.getItem('favorites:v1');
+                const arr = JSON.parse(raw || '[]');
+                this.favoriteIds = Array.isArray(arr) ? arr : [];
+            } catch {
+                this.favoriteIds = [];
+            }
+        },
+        prevCarousel() {
+            const len = this.carouselProducts.length || 1;
+            this.carouselIndex = (this.carouselIndex - 1 + len) % len;
+        },
+        nextCarousel() {
+            const len = this.carouselProducts.length || 1;
+            this.carouselIndex = (this.carouselIndex + 1) % len;
         },
 
         async fetchProducts() {
@@ -215,7 +243,7 @@ export default {
     border: 1px solid #eaeef4;
     border-radius: 10px;
     padding: 16px 18px;
-    box-shadow: 0 1px 8px rgba(0,0,0,.03);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .03);
 }
 
 .allergy-title {

@@ -1,18 +1,20 @@
 <template>
     <div>
-        <PageHeader title="Fridge status" icon="fal fa-snowflake">
-            Hier kannst du die Echtzeitdaten deiner Kühlschrank-Sensoren überwachen, wie Temperatur, Luftfeuchtigkeit und Gerätestatus.
+        <PageHeader :title="$t('status.title')" icon="fal fa-snowflake">
+            {{ $t('status.intro') }}
         </PageHeader>
     </div>
+
     <div class="p-4">
-        <h1 class="text-xl font-bold mb-4">🌡️ Live Sensor Data</h1>
+        <h1 class="text-xl font-bold mb-4">{{ $t('status.live') }}</h1>
+
         <div v-if="sensorData">
-            <p>Temperature: {{ sensorData.temperature }} °C</p>
-            <p>Humidity: {{ sensorData.humidity }} %</p>
-            <p>Last updated: {{ sensorData.timestamp }}</p>
+            <p>{{ $t('status.temperature') }}: {{ sensorData.temperature }} °C</p>
+            <p>{{ $t('status.humidity') }}: {{ sensorData.humidity }} %</p>
+            <p>{{ $t('status.last_updated') }}: {{ sensorData.timestamp }}</p>
         </div>
         <div v-else>
-            <p>Loading...</p>
+            <p>{{ $t('status.loading') }}</p>
         </div>
     </div>
 </template>

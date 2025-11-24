@@ -1,56 +1,63 @@
 <template>
     <div>
-        <PageHeader title="Ablaufwarnungen" icon="fal fa-exclamation-triangle">
-            Erhalte automatische Warnungen zu Artikeln, deren Haltbarkeitsdatum bald erreicht ist, um
-            Lebensmittelverschwendung zu vermeiden.
+        <PageHeader :title="$t('expiry.title')" icon="fal fa-exclamation-triangle">
+            {{ $t('expiry.intro') }}
         </PageHeader>
 
         <section class="card">
             <div class="controls">
-                <label for="days" class="label">Zeitraum „bald“:</label>
-                <input id="days" type="range" min="1" max="14" v-model.number="days" @input="onDaysInput"/>
-                <span class="hint">{{ days }} Tag<span v-if="days !== 1">e</span></span>
+                <label for="days" class="label">{{ $t('expiry.controls.label_days') }}</label>
+                <input id="days" type="range" min="1" max="14" v-model.number="days" @input="onDaysInput" />
+                <span class="hint">
+          {{ days }} {{ days === 1 ? $t('expiry.controls.day_singular') : $t('expiry.controls.day_plural') }}
+        </span>
                 <button class="btn" @click="fetchData" :disabled="loading">
-                    <i class="fas fa-sync-alt" :class="{ spin: loading }"></i> Aktualisieren
+                    <i class="fas fa-sync-alt" :class="{ spin: loading }"></i> {{ $t('expiry.controls.refresh') }}
                 </button>
             </div>
 
-            <h3 class="section-title">Bald ablaufend</h3>
+            <h3 class="section-title">{{ $t('expiry.soon.title') }}</h3>
             <div v-if="loading" class="empty-state">
                 <i class="fas fa-spinner empty-icon fa-spin"></i>
-                <h4>Lade Daten…</h4>
+                <h4>{{ $t('expiry.loading') }}</h4>
             </div>
             <div v-else-if="soonSorted.length === 0" class="empty-state">
                 <i class="fas fa-check-circle empty-icon"></i>
-                <h4>Alles gut!</h4>
-                <p>In den nächsten {{ days }} Tag<span v-if="days !== 1">en</span> läuft nichts ab.</p>
+                <h4>{{ $t('expiry.soon.ok_title') }}</h4>
+                <p>
+                    {{
+                        days === 1
+                            ? $t('expiry.soon.ok_desc_one', { days })
+                            : $t('expiry.soon.ok_desc_other', { days })
+                    }}
+                </p>
             </div>
             <div v-else class="table-wrap">
                 <table class="items-table">
                     <thead>
                     <tr>
-                        <th>Bild</th>
-                        <th>Produkt</th>
-                        <th>Kühlschrank</th>
-                        <th>Menge</th>
-                        <th>Ablaufdatum</th>
+                        <th>{{ $t('expiry.table.headers.image') }}</th>
+                        <th>{{ $t('expiry.table.headers.product') }}</th>
+                        <th>{{ $t('expiry.table.headers.fridge') }}</th>
+                        <th>{{ $t('expiry.table.headers.quantity') }}</th>
+                        <th>{{ $t('expiry.table.headers.expiry') }}</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="it in soonSorted" :key="it.id">
                         <td>
-                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt=""/>
+                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt="" />
                         </td>
                         <td>{{ it.product?.name || '—' }}</td>
-                        <td>{{ it.fridge?.name || 'Ohne Name' }}</td>
+                        <td>{{ it.fridge?.name || $t('fridge.list.unnamed') }}</td>
                         <td>{{ it.quantity }}</td>
                         <td>
                             {{ formatDate(it.expiry_date) }}
-                            <span class="badge soon">bald</span>
+                            <span class="badge soon">{{ $t('expiry.badge.soon') }}</span>
                         </td>
                         <td class="actions">
-                            <button class="icon-btn danger" title="Verbraucht" @click="consume(it)">
+                            <button class="icon-btn danger" :title="$t('expiry.actions.consume')" @click="consume(it)">
                                 <i class="fas fa-check"></i>
                             </button>
                         </td>
@@ -59,42 +66,42 @@
                 </table>
             </div>
 
-            <h3 class="section-title">Bereits abgelaufen</h3>
+            <h3 class="section-title">{{ $t('expiry.expired.title') }}</h3>
             <div v-if="!loading && expiredSorted.length === 0" class="empty-state">
                 <i class="fas fa-check-circle empty-icon"></i>
-                <h4>Nichts abgelaufen 🎉</h4>
-                <p>Es gibt aktuell keine abgelaufenen Artikel.</p>
+                <h4>{{ $t('expiry.expired.empty_title') }}</h4>
+                <p>{{ $t('expiry.expired.empty_desc') }}</p>
             </div>
             <div v-else-if="loading" class="empty-state">
                 <i class="fas fa-spinner empty-icon fa-spin"></i>
-                <h4>Lade Daten…</h4>
+                <h4>{{ $t('expiry.loading') }}</h4>
             </div>
             <div v-else class="table-wrap">
                 <table class="items-table">
                     <thead>
                     <tr>
-                        <th>Bild</th>
-                        <th>Produkt</th>
-                        <th>Kühlschrank</th>
-                        <th>Menge</th>
-                        <th>Ablaufdatum</th>
+                        <th>{{ $t('expiry.table.headers.image') }}</th>
+                        <th>{{ $t('expiry.table.headers.product') }}</th>
+                        <th>{{ $t('expiry.table.headers.fridge') }}</th>
+                        <th>{{ $t('expiry.table.headers.quantity') }}</th>
+                        <th>{{ $t('expiry.table.headers.expiry') }}</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="it in expiredSorted" :key="it.id">
                         <td>
-                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt=""/>
+                            <img v-if="it.product?.image_url" :src="it.product.image_url" class="thumb" alt="" />
                         </td>
                         <td>{{ it.product?.name || '—' }}</td>
-                        <td>{{ it.fridge?.name || 'Ohne Name' }}</td>
+                        <td>{{ it.fridge?.name || $t('fridge.list.unnamed') }}</td>
                         <td>{{ it.quantity }}</td>
                         <td>
                             {{ formatDate(it.expiry_date) }}
-                            <span class="badge expired">abgelaufen</span>
+                            <span class="badge expired">{{ $t('expiry.badge.expired') }}</span>
                         </td>
                         <td class="actions">
-                            <button class="icon-btn danger" title="Entfernen" @click="consume(it)">
+                            <button class="icon-btn danger" :title="$t('expiry.actions.remove')" @click="consume(it)">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -109,6 +116,7 @@
         </section>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -145,11 +153,11 @@ export default {
             this.loading = true
             this.errorMsg = ''
             try {
-                const {data} = await axios.get('/api/expiry', {params: {days: this.days}})
+                const { data } = await axios.get('/api/expiry', { params: { days: this.days } })
                 this.soon = Array.isArray(data?.soon) ? data.soon : []
                 this.expired = Array.isArray(data?.expired) ? data.expired : []
             } catch (e) {
-                this.errorMsg = 'Konnte Daten nicht laden (bist du eingeloggt?).'
+                this.errorMsg = this.$t('expiry.errors.fetch_failed')
             } finally {
                 this.loading = false
             }
@@ -167,13 +175,13 @@ export default {
         },
 
         async consume(item) {
-            if (!confirm('Diesen Artikel aus dem Kühlschrank entfernen?')) return
+            if (!confirm(this.$t('expiry.prompts.remove_confirm'))) return
             try {
                 await axios.delete(`/api/fridge-items/${item.id}`)
                 this.soon = this.soon.filter(i => i.id !== item.id)
                 this.expired = this.expired.filter(i => i.id !== item.id)
             } catch (e) {
-                this.errorMsg = 'Entfernen fehlgeschlagen.'
+                this.errorMsg = this.$t('expiry.errors.remove_failed')
             }
         }
     },
