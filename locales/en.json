@@ -270,6 +270,34 @@
             "fetch_failed": "Could not load data (are you logged in?).",
             "remove_failed": "Removal failed."
         }
+    },
+    "recipes": {
+        "title": "Recipes",
+        "intro": "Find recipes based on your saved ingredients.",
+        "common": { "unnamed": "Untitled" },
+        "controls": {
+            "all_fridges": "All fridges",
+            "diet_placeholder": "Diet (e.g. vegetarian)",
+            "with_images": "Generate images",
+            "fetch": "Get suggestions"
+        },
+        "state": { "loading": "Loading…", "empty": "No suggestions yet." },
+        "meta": {
+            "total_time_title": "Total time",
+            "min": "min",
+            "difficulty": { "default": "easy" },
+            "servings": "servings"
+        },
+        "blocks": {
+            "ingredients_title": "Ingredients (for {n}):",
+            "optional": "optional",
+            "optional_shopping": "Optional to buy:",
+            "steps_title": "Steps:",
+            "step_label": "Step {n}",
+            "similar": "Similar recipes (search):"
+        },
+        "errors": { "load_failed": "Could not load recipes." },
+        "note": { "fallback": "Note: suggestions without AI (fallback)." }
     }
 
 }

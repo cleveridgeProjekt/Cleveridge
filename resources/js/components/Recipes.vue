@@ -1,74 +1,89 @@
 <template>
     <div>
-        <PageHeader title="Rezepte" icon="fas fa-receipt">
-            <p>Hier findest du Rezepte aus deinen gespeicherten Zutaten.</p>
+        <PageHeader :title="$t('recipes.title')" icon="fas fa-receipt">
+            <p>{{ $t('recipes.intro') }}</p>
         </PageHeader>
 
         <section class="card">
             <div class="controls">
                 <select class="ui-input" v-model.number="fridgeId">
-                    <option :value="null">Alle Kühlschränke</option>
-                    <option v-for="f in fridges" :key="f.id" :value="f.id">{{ f.name || 'Ohne Name' }}</option>
+                    <option :value="null">{{ $t('recipes.controls.all_fridges') }}</option>
+                    <option v-for="f in fridges" :key="f.id" :value="f.id">{{ f.name || $t('recipes.common.unnamed') }}</option>
                 </select>
 
-                <input class="ui-input" v-model="diet" placeholder="Ernährung (z. B. vegetarisch)"/>
+                <input class="ui-input" v-model="diet" :placeholder="$t('recipes.controls.diet_placeholder')" />
                 <select class="ui-input" v-model.number="count">
                     <option v-for="n in [3,4,5,6,7,8]" :key="n" :value="n">{{ n }}</option>
                 </select>
 
                 <label class="chk">
-                    <input type="checkbox" v-model="withImages"/>
-                    <span>Bilder generieren</span>
+                    <input type="checkbox" v-model="withImages" />
+                    <span>{{ $t('recipes.controls.with_images') }}</span>
                 </label>
 
                 <button class="btn" :disabled="loading" @click="fetchRecipes">
-                    <i class="fas fa-magic"></i> Vorschläge holen
+                    <i class="fas fa-magic"></i> {{ $t('recipes.controls.fetch') }}
                 </button>
             </div>
 
-            <div v-if="loading" class="empty-state"><i class="fas fa-spinner fa-spin"></i> Laden…</div>
-            <div v-else-if="recipes.length === 0" class="empty-state">Noch keine Vorschläge.</div>
+            <div v-if="loading" class="empty-state">
+                <i class="fas fa-spinner fa-spin"></i> {{ $t('recipes.state.loading') }}
+            </div>
+            <div v-else-if="recipes.length === 0" class="empty-state">
+                {{ $t('recipes.state.empty') }}
+            </div>
 
             <div v-else class="recipes">
                 <article class="recipe" v-for="raw in recipes" :key="raw.title">
-                    <img v-if="raw.image_url" class="cover" :src="raw.image_url" alt=""/>
+                    <img v-if="raw.image_url" class="cover" :src="raw.image_url" alt="" />
                     <h3>{{ raw.title }}</h3>
                     <div class="meta">
-                        <span title="Gesamtzeit"><i class="far fa-clock"></i> {{ raw.total_minutes ?? raw.time_minutes }} min</span>
-                        <span>• {{ (raw.difficulty || 'leicht') }}</span>
-                        <span>• {{ raw.servings }} Portionen</span>
+            <span :title="$t('recipes.meta.total_time_title')">
+              <i class="far fa-clock"></i>
+              {{ raw.total_minutes ?? raw.time_minutes }} {{ $t('recipes.meta.min') }}
+            </span>
+                        <span>• {{ raw.difficulty || $t('recipes.meta.difficulty.default') }}</span>
+                        <span>• {{ raw.servings }} {{ $t('recipes.meta.servings') }}</span>
                     </div>
+
                     <p v-if="raw.summary" class="summary">{{ raw.summary }}</p>
 
-                    <!-- Zutaten -->
                     <div class="block">
-                        <h4>Zutaten (für {{ raw.servings }}):</h4>
+                        <h4>{{ $t('recipes.blocks.ingredients_title', { n: raw.servings }) }}</h4>
                         <ul class="ingredients">
                             <li v-for="i in normalizedIngredients(raw)" :key="i._k">
                                 <span class="qty" v-if="i.amount != null">{{ i.amount }} {{ i.unit }}</span>
                                 <span class="ing-name">{{ i.name }}</span>
-                                <span class="opt" v-if="i.optional">optional</span>
+                                <span class="opt" v-if="i.optional">{{ $t('recipes.blocks.optional') }}</span>
                             </li>
                         </ul>
 
                         <div v-if="shoppingList(raw)?.length" class="shopping">
-                            <div class="lbl">Optional einkaufen:</div>
+                            <div class="lbl">{{ $t('recipes.blocks.optional_shopping') }}</div>
                             <div class="chips">
-                                <a v-for="m in shoppingList(raw)" :key="m" class="chip" :href="searchLink(m)" target="_blank" rel="noopener">
+                                <a
+                                    v-for="m in shoppingList(raw)"
+                                    :key="m"
+                                    class="chip"
+                                    :href="searchLink(m)"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
                                     {{ m }}
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Schritte -->
                     <div class="block">
-                        <h4>Schritte:</h4>
+                        <h4>{{ $t('recipes.blocks.steps_title') }}</h4>
                         <ol class="steps">
                             <li v-for="(s, idx) in normalizedSteps(raw)" :key="idx">
                                 <div class="step-head">
-                                    <span class="badge">Schritt {{ idx + 1 }}</span>
-                                    <span class="step-time" v-if="s.minutes"><i class="far fa-clock"></i> {{ s.minutes }} min</span>
+                                    <span class="badge">{{ $t('recipes.blocks.step_label', { n: idx + 1 }) }}</span>
+                                    <span class="step-time" v-if="s.minutes">
+                    <i class="far fa-clock"></i> {{ s.minutes }} {{ $t('recipes.meta.min') }}
+                  </span>
                                 </div>
                                 <div class="step-text">{{ s.text || s }}</div>
                             </li>
@@ -76,9 +91,8 @@
                         <p v-if="raw.tips" class="tips">{{ raw.tips }}</p>
                     </div>
 
-                    <!-- Referenzen -->
                     <div v-if="raw.references?.length" class="refs">
-                        <div class="lbl">Ähnliche Rezepte (Suche):</div>
+                        <div class="lbl">{{ $t('recipes.blocks.similar') }}</div>
                         <div class="chips">
                             <a v-for="ref in raw.references" :key="ref.url" :href="ref.url" class="chip" target="_blank" rel="noopener">
                                 {{ ref.site }}
@@ -89,15 +103,16 @@
             </div>
 
             <div v-if="error" class="error-note">
-                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                <i class="fas fa-exclamation-triangle"></i> {{ error || $t('recipes.errors.load_failed') }}
             </div>
         </section>
 
         <small v-if="['local-quota','local-no-key','local-exception','local-demo','local-openai-error','local-parse-fallback'].includes(source)">
-            Hinweis: Vorschläge ohne KI (Fallback).
+            {{ $t('recipes.note.fallback') }}
         </small>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios'

@@ -269,5 +269,33 @@
             "fetch_failed": "Konnte Daten nicht laden (bist du eingeloggt?).",
             "remove_failed": "Entfernen fehlgeschlagen."
         }
+    },
+    "recipes": {
+        "title": "Rezepte",
+        "intro": "Hier findest du Rezepte aus deinen gespeicherten Zutaten.",
+        "common": { "unnamed": "Ohne Name" },
+        "controls": {
+            "all_fridges": "Alle Kühlschränke",
+            "diet_placeholder": "Ernährung (z. B. vegetarisch)",
+            "with_images": "Bilder generieren",
+            "fetch": "Vorschläge holen"
+        },
+        "state": { "loading": "Laden…", "empty": "Noch keine Vorschläge." },
+        "meta": {
+            "total_time_title": "Gesamtzeit",
+            "min": "min",
+            "difficulty": { "default": "leicht" },
+            "servings": "Portionen"
+        },
+        "blocks": {
+            "ingredients_title": "Zutaten (für {n}):",
+            "optional": "optional",
+            "optional_shopping": "Optional einkaufen:",
+            "steps_title": "Schritte:",
+            "step_label": "Schritt {n}",
+            "similar": "Ähnliche Rezepte (Suche):"
+        },
+        "errors": { "load_failed": "Konnte Rezepte nicht laden." },
+        "note": { "fallback": "Hinweis: Vorschläge ohne KI (Fallback)." }
     }
 }

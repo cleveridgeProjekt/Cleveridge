@@ -269,5 +269,33 @@
             "fetch_failed": "No se pudieron cargar los datos (¿has iniciado sesión?).",
             "remove_failed": "No se pudo eliminar."
         }
+    },
+    "recipes": {
+        "title": "Recetas",
+        "intro": "Encuentra recetas según tus ingredientes guardados.",
+        "common": { "unnamed": "Sin nombre" },
+        "controls": {
+            "all_fridges": "Todas las neveras",
+            "diet_placeholder": "Dieta (p. ej., vegetariana)",
+            "with_images": "Generar imágenes",
+            "fetch": "Obtener sugerencias"
+        },
+        "state": { "loading": "Cargando…", "empty": "Todavía no hay sugerencias." },
+        "meta": {
+            "total_time_title": "Tiempo total",
+            "min": "min",
+            "difficulty": { "default": "fácil" },
+            "servings": "raciones"
+        },
+        "blocks": {
+            "ingredients_title": "Ingredientes (para {n}):",
+            "optional": "opcional",
+            "optional_shopping": "Compra opcional:",
+            "steps_title": "Pasos:",
+            "step_label": "Paso {n}",
+            "similar": "Recetas similares (búsqueda):"
+        },
+        "errors": { "load_failed": "No se pudieron cargar las recetas." },
+        "note": { "fallback": "Aviso: sugerencias sin IA (respaldo)." }
     }
 }

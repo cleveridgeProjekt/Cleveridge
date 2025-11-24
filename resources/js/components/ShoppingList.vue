@@ -173,14 +173,6 @@ export default {
                 this.favoriteIds = [];
             }
         },
-        prevCarousel() {
-            const len = this.carouselProducts.length || 1;
-            this.carouselIndex = (this.carouselIndex - 1 + len) % len;
-        },
-        nextCarousel() {
-            const len = this.carouselProducts.length || 1;
-            this.carouselIndex = (this.carouselIndex + 1) % len;
-        },
 
         async fetchProducts() {
             const {data} = await axios.get('/api/products');
@@ -218,10 +210,12 @@ export default {
             this.shoppingList.items = this.shoppingList.items.filter(i => i.id !== item.id)
         },
         prevCarousel() {
-            this.carouselIndex = (this.carouselIndex - 1 + this.products.length) % this.products.length;
+            const len = this.carouselProducts.length || 1;
+            this.carouselIndex = (this.carouselIndex - 1 + len) % len;
         },
         nextCarousel() {
-            this.carouselIndex = (this.carouselIndex + 1) % this.products.length;
+            const len = this.carouselProducts.length || 1;
+            this.carouselIndex = (this.carouselIndex + 1) % len;
         },
         showProductDetail(product) {
             this.nutritionEtiquetteProductId = product.id;
