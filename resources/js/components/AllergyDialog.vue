@@ -1,12 +1,12 @@
 <template>
     <div class="dialog-overlay" @click.self="close">
         <div class="dialog">
-            <h3>Allergien festlegen</h3>
+            <h3>{{ $t('allergy_dialog.title') }}</h3>
 
             <div class="no-allergy-card">
                 <label class="na-row">
                     <input type="checkbox" v-model="noAllergy" @change="onNoAllergyToggle"/>
-                    <span>Ich habe keine Allergien auf diese Produkte</span>
+                    <span>{{ $t('allergy_dialog.no_allergy_label') }}</span>
                 </label>
             </div>
 
@@ -27,10 +27,10 @@
 
             <div class="dialog-actions">
                 <button class="btn" @click="save" :disabled="busy">
-                    <i class="fas fa-save"></i> Speichern
+                    <i class="fas fa-save"></i> {{ $t('allergy_dialog.save') }}
                 </button>
                 <button class="btn ghost" @click="close">
-                    <i class="fas fa-times"></i> Schließen
+                    <i class="fas fa-times"></i> {{ $t('allergy_dialog.close') }}
                 </button>
             </div>
         </div>

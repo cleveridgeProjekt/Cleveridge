@@ -1,31 +1,33 @@
 <template>
     <div id="sidebar" class="sidebar">
         <div class="sidebar-content">
-            <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> Dashboard</RouterLink>
-            <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> What's in your fridge</RouterLink>
-            <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> Einkaufsliste</RouterLink>
+            <RouterLink class="nav-item" to="/"><i class="fas fa-home"></i> {{ $t('sidebar.dashboard') }}</RouterLink>
+            <RouterLink class="nav-item" to="/fridge"><i class="fas fa-ice-cream"></i> {{ $t('sidebar.fridge') }}</RouterLink>
+            <RouterLink class="nav-item" to="/shopping-list"><i class="fas fa-list-alt"></i> {{ $t('sidebar.shopping_list') }}</RouterLink>
+
             <div class="submenu-toggle" @click="toggleSubmenu">
-                <span class="submenu-link">
-                    <i class="fas fa-layer-group"></i>Einstellungen
-                    <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
-                </span>
+        <span class="submenu-link">
+          <i class="fas fa-layer-group"></i>{{ $t('sidebar.settings') }}
+          <i :class="showSubmenu ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
+        </span>
             </div>
+
             <div v-if="showSubmenu" class="submenu">
-                <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> Cleveridge Status</RouterLink>
-                <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> Ablaufwarnungen</RouterLink>
-                <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-barcode"></i> Barcode Scannen!</RouterLink>
+                <RouterLink class="submenu-item" to="/status"><i class="fas fa-lightbulb"></i> {{ $t('sidebar.status') }}</RouterLink>
+                <RouterLink class="submenu-item" to="/expiry"><i class="fas fa-exclamation-triangle"></i> {{ $t('sidebar.expiry') }}</RouterLink>
+                <RouterLink class="submenu-item" to="/product-recognition"><i class="fas fa-photo-film"></i> {{ $t('sidebar.product_recognition') }}</RouterLink>
             </div>
-            <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> Produkte</RouterLink>
-            <RouterLink class="nav-item" to="/receipts"><i class="fas fa-receipt"></i> Rezepte</RouterLink>
 
-
-
+            <RouterLink class="nav-item" to="/products"><i class="fas fa-apple-alt"></i> {{ $t('sidebar.products') }}</RouterLink>
+            <RouterLink class="nav-item" to="/receipts"><i class="fas fa-receipt"></i> {{ $t('sidebar.recipes') }}</RouterLink>
         </div>
+
         <div class="sidebar-footer">
             <img src="/media/cleveridge_prototype.png" alt="Cleveridge Prototype" class="sidebar-img"/>
         </div>
     </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from "vue";

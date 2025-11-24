@@ -12,6 +12,17 @@
             "recipes": { "label": "RECETAS", "desc": "Todas las recetas guardadas e ideas" }
         }
     },
+    "sidebar": {
+        "dashboard": "Panel",
+        "fridge": "Qué hay en tu nevera",
+        "shopping_list": "Lista de la compra",
+        "settings": "Ajustes",
+        "status": "Estado de Cleveridge",
+        "expiry": "Avisos de caducidad",
+        "product_recognition": "Reconocimiento de productos",
+        "products": "Productos",
+        "recipes": "Recetas"
+    },
     "common": {
         "unit": {
             "Stück": "unidad",
@@ -111,5 +122,11 @@
             }
         },
         "prompts": { "confirm_delete": "¿Eliminar este producto?" }
+    },
+    "allergy_dialog": {
+        "title": "Configurar alergias",
+        "no_allergy_label": "No tengo alergias a estos productos",
+        "save": "Guardar",
+        "close": "Cerrar"
     }
 }

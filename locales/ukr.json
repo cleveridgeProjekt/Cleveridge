@@ -32,6 +32,17 @@
             }
         }
     },
+    "sidebar": {
+        "dashboard": "Панель керування",
+        "fridge": "Що у твоєму холодильнику",
+        "shopping_list": "Список покупок",
+        "settings": "Налаштування",
+        "status": "Статус Cleveridge",
+        "expiry": "Попередження про терміни",
+        "product_recognition": "Розпізнавання продуктів",
+        "products": "Продукти",
+        "recipes": "Рецепти"
+    },
     "common": {
         "unit": {
             "Stück": "шт.",
@@ -143,5 +154,11 @@
         "prompts": {
             "confirm_delete": "Справді видалити продукт?"
         }
+    },
+    "allergy_dialog": {
+        "title": "Вказати алергії",
+        "no_allergy_label": "У мене немає алергій на ці продукти",
+        "save": "Зберегти",
+        "close": "Закрити"
     }
 }

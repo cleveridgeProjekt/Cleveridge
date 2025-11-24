@@ -32,6 +32,17 @@
             }
         }
     },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "fridge": "Was ist in deinem Kühlschrank",
+        "shopping_list": "Einkaufsliste",
+        "settings": "Einstellungen",
+        "status": "Cleveridge Status",
+        "expiry": "Ablaufwarnungen",
+        "product_recognition": "Bilderkennung",
+        "products": "Produkte",
+        "recipes": "Rezepte"
+    },
     "common": {
         "unit": {
             "Stück": "Stück",
@@ -143,5 +154,11 @@
         "prompts": {
             "confirm_delete": "Produkt wirklich löschen?"
         }
+    },
+    "allergy_dialog": {
+        "title": "Allergien festlegen",
+        "no_allergy_label": "Ich habe keine Allergien auf diese Produkte",
+        "save": "Speichern",
+        "close": "Schließen"
     }
 }

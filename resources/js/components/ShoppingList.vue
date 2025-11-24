@@ -3,6 +3,19 @@
         <span v-html="$t('shopping.intro_html')"></span>
     </PageHeader>
 
+    <ShoppingCarousel :visibleCarousel="visibleCarousel" @prev="prevCarousel" @next="nextCarousel"
+                      @detail="showProductDetail"/>
+    <NutritionEtiquette v-if="nutritionEtiquetteVisible" :productId="nutritionEtiquetteProductId"
+                        :productName="nutritionEtiquetteProductName" :show="nutritionEtiquetteVisible"
+                        @close="nutritionEtiquetteVisible = false"/>
+
+
+    <MustHaveDialog v-if="showMustHaveDialog" :units="units" :products="products" @added="onItemAdded"
+                    @close="onCloseMustHave"/>
+
+    <AllergyDialog v-if="showAllergyDialog" :products="products" @saved="onAllergySaved" @close="closeDialogs"/>
+
+
     <div class="shoppinglist-controls">
         <button class="btn-main" @click="openMustHaveDialog">
             <i class="fas fa-heart"></i> {{ $t('shopping.controls.add_wishlist') }}

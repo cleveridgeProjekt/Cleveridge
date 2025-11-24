@@ -32,6 +32,17 @@
             }
         }
     },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "fridge": "What's in your fridge",
+        "shopping_list": "Shopping list",
+        "settings": "Settings",
+        "status": "Cleveridge status",
+        "expiry": "Expiry warnings",
+        "product_recognition": "Product recognition",
+        "products": "Products",
+        "recipes": "Recipes"
+    },
     "common": {
         "unit": {
             "Stück": "piece(s)",
@@ -143,5 +154,11 @@
         "prompts": {
             "confirm_delete": "Really delete this product?"
         }
+    },
+    "allergy_dialog": {
+        "title": "Set allergies",
+        "no_allergy_label": "I have no allergies to these products",
+        "save": "Save",
+        "close": "Close"
     }
 }
